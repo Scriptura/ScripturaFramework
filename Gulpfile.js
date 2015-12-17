@@ -31,7 +31,7 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     //changed = require('gulp-changed'),
     ftp = require('vinyl-ftp'),
-    consolidate = require("gulp-consolidate"),
+    consolidate = require('gulp-consolidate'),
     lodash = require('lodash'),
     browserSync = require('browser-sync'),
     concat = require('gulp-concat'),
@@ -151,8 +151,6 @@ gulp.task('jade', function() {
     .pipe(replace(/<\/_endif>/g, ''))
     .pipe(replace(/<_require>/g, '<?php require \'')) // _require => require 'string.php';
     .pipe(replace(/<\/_require>/g, '.php\'; ?>'))
-    .pipe(replace(/<_require_wp>/g, '<?php require locate_template(\'')) // require de WordPress
-    .pipe(replace(/<\/_require_wp>/g, '.php\'); ?>'))
     .pipe(replace(/(\?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres.
     // END traitement des balises php
     .pipe(gulp.dest(source))
