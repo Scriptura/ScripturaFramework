@@ -1,0 +1,130 @@
+// -----------------------------------------------------------------------------
+// @section     RATATOUILLE ADD
+// @description Règles additionnelles pour le thème
+// -----------------------------------------------------------------------------
+
+  $colorAdd001 = $color6
+  $colorAdd002 = $color1
+  $colorAdd003 = $color5
+  $colorAdd004 = $color4
+
+//.footer
+//	background-image linear-gradient( rgba(255, 255, 255, 0.3) 50%, transparent 50%), linear-gradient( 90deg, rgba(255, 255, 255, 0.3) 50%, transparent 50%);
+//	background-size 2rem 2rem
+
+.footer
+	position relative
+
+.main-nav::before
+.main-nav::after
+.footer::before
+  content ''
+  display block
+  position absolute
+  top .2em
+  width 100%
+  border-bottom .1em dashed #aaa
+
+.main-nav::after
+  top 2.2em
+
+.footer::before
+  left 0
+
+//	.main-nav
+//	  background-color #efefef
+//	  background-image linear-gradient(#eee 5%, transparent 5%), linear-gradient(90deg, #eee 5%, transparent 5%)
+//	  background-size 1rem 1rem
+
+:root .main-nav *
+    color #fff
+
+@media (min-width: $sizeNav)
+  .main-nav li:nth-child(4n+1) > *
+    background-color $colorAdd001
+  .main-nav li:nth-child(4n+2) > *
+    background-color $colorAdd002
+  .main-nav li:nth-child(4n+3) > *
+    background-color $colorAdd003
+  .main-nav li:nth-child(4n+4) > *
+    background-color $colorAdd004
+  .main-nav li:nth-child(4n+1) .active::after
+    background-color $colorAdd001
+  .main-nav li:nth-child(4n+2) .active::after
+    background-color $colorAdd002
+  .main-nav li:nth-child(4n+3) .active::after
+    background-color $colorAdd003
+  .main-nav li:nth-child(4n+4) .active::after
+    background-color $colorAdd004
+
+/*
+.box
+  position relative
+  padding 1rem
+  background-color #ddd
+
+.box::before
+.box::after
+  content ''
+  position absolute
+  width 100%
+  height 100%
+
+.box::before
+  z-index: -1
+  top: -.5rem
+  left: -.5rem
+  border: .5rem solid transparent
+  border-image: url(../../Images/border31.svg) 100 repeat
+
+.box::after
+  z-index -2
+  top 0
+  left 0
+  box-shadow 0 0 2rem rgba(0, 0, 0, .2)
+*/
+
+.box
+  position relative
+  padding 1em
+  background #ddd
+  background-image linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5))
+  ifBorderRadius($r1)
+  box-shadow 0 0 2em rgba(0, 0, 0, .1)
+
+.box::before
+.box::after
+  content ''
+  z-index -1
+  position absolute
+  bottom 2em
+  left 1em
+  width 80%
+  height 1.5em
+  max-width 30em
+  box-shadow 0 1.5em 2em rgba(0, 0, 0, .4)
+  transform rotate(-3deg) translateZ(0)
+
+.box::after
+  right 1em
+  left auto
+  transform rotate(3deg)
+
+//.emphasized::before
+//.emphasized::after
+//  border-image url('../../Images/border4.svg') 0 100 100 repeat
+
+[class*="ribbon-container"].box
+  background-image none
+
+.progress:nth-child(4n+1) div
+  background-color $colorAdd001
+
+.progress:nth-child(4n+2) div
+  background-color $colorAdd002
+
+.progress:nth-child(4n+3) div
+  background-color $colorAdd003
+
+.progress:nth-child(4n+4) div
+  background-color $colorAdd004

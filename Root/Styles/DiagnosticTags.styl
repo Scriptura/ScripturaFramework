@@ -1,0 +1,322 @@
+// -----------------------------------------------------------------------------
+// @section     Diagnostic Tags
+// @description Visualisation des éléments potentiellement problématiques
+// @source :
+// @link        https://css-tricks.com/snippets/css/css-diagnostics/
+// @link        https://github.com/PhilippeVay/diagnostic.css
+// @revised     Olivier Chavarin
+// -----------------------------------------------------------------------------
+
+// Empty Elements
+div:empty
+span:empty
+li:empty
+p:empty
+  outline 5px dotted #ffff00 !important
+
+// Empty Attributes
+*[title=""]
+*[class=""]
+*[id=""]
+a[href=""]
+//a[href="#"]
+table[summary=""]
+  outline 5px solid yellow !important
+
+// Deprecated Elements - cannot be overridden by user styles
+applet
+basefont
+center
+dir
+font
+isindex
+menu
+s
+strike
+u
+hgroup
+big
+tt
+  outline 5px dotted #ff0000 !important
+
+// Proposed Deprecated Elements
+input[type="button"]
+  outline 5px dotted #33ff00 !important
+
+// Deprecated Attributes - cannot be overridden by user styles
+*[background]
+*[bgcolor]
+*[clear]
+*[color]
+*[compact]
+*[noshade]
+*[nowrap]
+*[size]
+*[start]
+*[bottommargin]
+*[leftmargin]
+*[rightmargin]
+*[topmargin]
+*[marginheight]
+*[marginwidth]
+*[alink]
+*[link]
+*[text]
+*[vlink]
+*[align]
+*[valign]
+*[hspace],*[vspace]
+*[height]:not(img),*[width]:not(img)
+ul[type]
+ol[type]
+li[type]
+  outline 5px solid red !important
+
+// Proposed Deprecated Attributes
+*[border]
+// a[target] // @note Is no longer deprecated in html5 @link http://w3c.github.io/html-reference/a.html
+table[cellpadding]
+table[cellspacing]
+*[name]
+  outline 5px solid #33FF00 !important
+
+// Inline frames without title attribute
+iframe:not([title])
+  outline 5px solid red !important
+
+
+// @subsection Image-related checks
+// -----------------------------------------------------------------------------
+
+// server-side image map. Yes these are sometimes still seen, if rarely
+img[ismap]
+  outline 5px solid red
+
+// Images without alt attribute
+img:not([alt])
+  outline 5px solid red
+
+// something that has a role of image but no alternative
+div[role="img"]:not([aria-label])
+  outline 5px solid red
+
+// images without a source
+img:not([src])
+img[src=""]
+img[src="#"]
+  outline 5px solid red !important
+
+
+// @subsection Link-related checks
+// -----------------------------------------------------------------------------
+
+// Bad links, possibly relying on javascript to do something
+a[href=""]
+a[href="#"]
+a:not([href])
+a[href*=javascript\:]
+a[onclick]
+  outline 5px solid red !important
+
+// @note Empty link
+// @reference Technique for WCAG 2.0 G91: Providing link text that describes the purpose of a link - http://www.w3.org/TR/WCAG-TECHS/G91.html
+// @reference Technique for WCAG 2.0 H30: Providing link text that describes the purpose of a link for anchor elements - http://www.w3.org/TR/WCAG-TECHS/H30.html
+
+a:empty
+  outline 5px solid red !important
+
+
+// @subsection Form-related checks
+// -----------------------------------------------------------------------------
+
+// Legends
+fieldset > :not(legend):first-child, // no other element than a legend can be first child of a fieldset element
+fieldset > legend:not(:first-child) // and a legend can't be anything else than first child of a fieldset element
+  outline 5px dashed red !important
+
+// so this is the only correct case
+fieldset > legend:first-child
+  outline 3px solid green !important
+
+// Input of type submit or button with the non-descriptive text "OK|Ok|ok" and no title
+// @reference Technique for WCAG 2.0 H91: Using HTML form controls and links - http://www.w3.org/TR/WCAG-TECHS/H91.html
+// @todo Case of empty button element
+// @todo Case of input with type button
+
+//	input[type="submit"][value="OK"]:not[title])
+//	input[type="submit"][value="Ok"]:not[title])
+//	input[type="submit"][value="ok"]:not[title]), 
+//	input[type="image"][value="OK"]:not[title])
+//	input[type="image"][value="Ok"]:not[title])
+//	input[type="image"][value="ok"]:not[title])
+//	  display block
+//	  background-color orange !important
+//	  width 100px !important
+//	  height 2em !important
+
+// Input[type="image"] and their alt attribute
+// @note Adding ::before or ::after on this type of element won't work as expected. Maybe background-image encoded in base64?
+// @reference Technique for WCAG 2.0 H36: Using alt attributes on images used as submit buttons - http://www.w3.org/TR/WCAG-TECHS/H36.html
+// @reference Technique for WCAG 2.0 F65: Failure (...) due to omitting the alt attribute on (...) input elements of type "image" - http://www.w3.org/TR/WCAG-TECHS/F65.html
+input[type="image"][alt=""]
+input[type="image"]:not([alt])
+  display block
+  background-color red !important
+  width 200px !important
+  height 3em !important
+
+// Missing 'for' attribute on a label
+label:not([for])
+  outline 5px solid red !important
+
+// Missing 'id' attribute on a form field
+// @todo HTML5 new types of form fields
+// @todo Case of lacking an id AND a title would be better (see H65)
+input[type="text"]:not([id])
+input[type="password"]:not([id])
+input[type="checkbox"]:not([id])
+input[type="radio"]:not([id])
+input[type="file"]:not([id])
+select:not([id])
+textarea:not([id])
+  outline 5px solid red !important
+
+// More obvious styling because border-widh is ignored for "file" type at least on Firefox
+input[type="file"]:not([id])
+  background-color red !important
+
+// Different styling because border is ignored on radio and checkbox at least on Firefox
+input[type="checkbox"]:not([id])
+input[type="radio"]:not([id])
+	outline 5px solid red !important
+
+// Dir attribute
+// If used, dir attribute only accepts 2 possible values
+[dir]:not([dir="rtl"]):not([dir="ltr"])
+	background-color hotpink !important
+
+[dir="rtl"]::before
+[dir="ltr"]::before
+  content "dir: " attr(dir)
+  display block
+  color darkgreen !important
+  background-color lightyellow !important
+
+// Title element: not empty, unique and in head
+head
+title
+  display block
+
+title::before
+  content 'TITLE'
+  margin 0 0.4em
+  padding 0 0.4em
+  color black
+  background-color #d0d0d0
+  border-radius 3px
+
+head > title
+	margin 0
+	padding 0.2em 0
+	border-bottom 1px solid #ccc
+	color #444
+	background-color white
+
+// empty ?
+title:empty::after
+  content "ERROR: title element is empty and it shouldn't"
+  color #C22
+  background-color white
+
+title:empty::before
+title ~ title::before // not unique?
+  color white
+  background-color #c22
+
+title ~ title::after
+	content ' (ERROR: why more than one title element?)'
+
+title ~ title
+  color #c22
+  background-color white
+
+// @note Meta refresh?
+//@source CSS selector from Opquast Checklist Accessibility First step https://checklists.opquast.com/en/accessibilityfirststep/
+// @reference Technique for WCAG 2.0 F40: Failure (...) due to using meta redirect with a time limit - http://www.w3.org/TR/WCAG-TECHS/F40.html
+meta[http-equiv=refresh]::before
+  content 'meta refresh detected'
+
+meta[http-equiv=refresh]
+  display block
+  padding .4em
+  font-weight bold
+  color white
+  background-color darkred
+
+// @note Lang attribute on html element
+// @reference Technique for WCAG 2.0 H57: Using language attributes on the html element  - http://www.w3.org/TR/WCAG-TECHS/H57.html
+html[lang]
+  display block
+  margin-top 0.4em
+
+html:not([lang])::before
+  content: 'no lang attribute detected'
+  margin .4em
+  padding 0 .4em
+  color white
+  background-color darkred
+  border-radius 3px
+
+html[lang]::before
+  content 'Default language of the page: ' attr(lang)
+  margin .4em
+  color #444
+  background-color white
+
+// @note Accesskey is a bad idea. 
+// @reference Old discussion but still hits on salient points http://www.cs.tut.fi/~jkorpela/forms/accesskey.html
+*[accesskey]
+  border 5px solid red
+
+
+// @subsection Table-related checks
+// -----------------------------------------------------------------------------
+
+// Empty Header Cells
+
+// td:empty
+th:empty
+  padding 20px
+  border 5px solid yellow !important
+
+// Only one TR in the table. Is that a layout table?
+table > tr:only-child, 
+table > tbody > tr:only-child
+  border: 5px solid red
+
+// Deprecated attributes on table
+table[align]
+table[bgcolor]
+table[border]
+table[cellpadding]
+table[cellspacing]
+table[width]
+td[width]
+td[valign]
+  border 5px solid red
+
+// Scope in tables
+// Using scope on td is strange, though not forbidden by H63 http://www.w3.org/TR/WCAG-TECHS/H63.html
+td[scope]
+  border 2px solid orange !important
+
+td[scope]::before
+  content 'Better use th! '
+  color white
+  background-color orange
+
+// Using scope on header for multiple columns or row @todo Is it inaccessible?
+th[colspan][scope]
+th[rowspan][scope]
+  border 3px solid red !important
+

@@ -1,0 +1,3331 @@
+// @note Les classes sont utilisées dans la logique OSCSS, à la manière des espaces de nom, seule la classe '.active' a une utilisation transversale
+
+// *.styl
+// selector
+//   property value
+//  =>
+// *.css
+// selector {
+//   property: value;
+// };
+
+
+// -----------------------------------------------------------------------------
+// @section     Grid
+// @description Grille css flexible
+// @affected    All Browers and IE10+
+// @note        Utilisation de flexbox et calc()
+// -----------------------------------------------------------------------------
+if $bundleGrid
+  // @note La grille est configurée en 12 colonnes. En sizeXS la grille comporte 6 colonnes max (bug sur certains navigateurs en dessous de cette valeur), mais la dénomination reste dans la logique des 12 colonnes pour garder une unité de nommage avec les définitions plus élevées.
+
+  .wrap // @note Englobe tous les contenus
+    max-width $wrap // @note Contrôle la largeur maximale des contenus
+    margin 0 auto
+
+  [class^="grid"]
+    display flex
+    flex-wrap wrap
+    width 'calc(100% + %s)' % $gutter // @note = .grid12
+    margin-left - $gutter
+
+  [class^="grid"] > *
+    box-sizing border-box
+    width 'calc(%s - %s - %s)' % (floor(100% / $columns * $columns, 2) $gutter $bugfixGrid)
+    margin-left $gutter
+    margin-bottom $gutter
+
+  @media (max-width: $sizeXS)
+
+    [class^="grid"] [class^="grid"] // @note Grilles imbriquées
+      width 100%
+      margin 0
+
+    for $arg in ($columns - 1)...0 // 10 8 6 4 3 2
+      .sizeXS-m{$arg}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+        margin-left $gutter
+
+  @media (min-width: $sizeXS)
+
+    [class^="grid"] [class^="grid"] // @note Grilles imbriquées
+      margin 0
+
+    [class^="grid"] .grid
+    [class^="grid"] .grid12
+      width 100%
+
+    for $arg in ($columns - 1)...0
+      .grid{$arg}
+        width 'calc(%s - %s)' % (floor(100% / $columns * $arg, 2) $bugfixGrid)
+
+    for $arg in ($columns - 1)...0 // .m12 déjà inclus dans valeur par défaut
+      .m{$arg}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+    for $arg in ($columns - 1)...0
+      .o{$arg}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+  @media (min-width: $sizeXS) and (max-width: $sizeS)
+
+    .sizeS-grid12
+      width 100% // @note Pas de retrait de gouttière
+
+    for $arg in ($columns - 1)...0
+      .sizeS-grid{$arg}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+    for $arg in $columns...0
+      .sizeS-m{$arg}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+    for $arg in ($columns - 1)...0
+      .sizeS-o{$arg}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+    .sizeS-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
+      margin-left $gutter
+
+  @media (min-width: $sizeS) and (max-width: $sizeL)
+
+    for $arg in $columns...0
+      .sizeL-m{$arg}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+    for $arg in ($columns - 1)...0
+      .sizeL-o{$arg}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+    .sizeL-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
+      margin-left $gutter
+
+  @media (min-width: $sizeL)
+
+    for $arg in ($columns - 1)...0
+      .sizeXL-o{$arg}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+
+    .sizeXL-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
+      margin-left $gutter
+
+// -----------------------------------------------------------------------------
+// @section     Columns
+// @description Colonnes fluides
+// -----------------------------------------------------------------------------
+if $bundleColumns
+  // @note Pas de possibilité de passage à la ligne avec cette classe
+
+  @media (min-width: $sizeXS)
+
+    [class^="columns"]
+      display table // @note Important pour le comportement des éléments enfants en display:block
+      table-layout fixed
+      width 100% // @note Idem
+
+    [class^="columns"] > * // @note Disposition des éléments enfants en colonnes
+      display table-cell
+      vertical-align top // @note Permet l'alignement si différence de contenu
+      width 100% // @note Cette règle permet le bon fonctionnement des classes .c2 à .c5
+      padding 0 ($gutter / 2) .75rem ($gutter / 2)
+
+    [class^="columns"] > :first-child
+      padding-left 0
+
+    [class^="columns"] > :last-child
+      padding-right 0
+
+    [class^="columns"] + p
+      margin-top 0
+
+    [class*="-smallspace"] > *
+      padding-left ($gutter / 4)
+      padding-right ($gutter / 4)
+
+    [class*="-largespace"] > *
+      padding-left $gutter
+      padding-right $gutter
+
+    // @note Pour une colonne équivalant à plusieurs colonnes de large :
+    for $arg in 2...6 // 2-5 colonnes
+      [class^="columns"] > .c{$arg}
+        width $arg * 100%
+
+
+// @subsection  Hidden
+// @description Éléments cachés/dévoilés selon taille écran
+// -----------------------------------------------------------------------------
+if $bundleHidden
+
+  .hidden
+  [class*="unhidden"]
+  .touch .touch-hidden // @note Éléments voilés
+    display none
+
+  @media (min-width: $sizeXS)
+
+    .sizeXS-hidden // @note Éléments voilés
+      display none
+
+    .sizeXS-unhidden // @note Éléments dévoilés
+      display inline
+
+  @media (min-width: $sizeS)
+
+    .sizeS-hidden // @note Éléments voilés
+      display none
+
+    .sizeS-unhidden // @note Éléments dévoilés
+      display inline
+
+  @media (min-width: $sizeL)
+
+    .sizeL-hidden // @note Éléments voilés
+      display none
+
+    .sizeL-unhidden // @note Éléments dévoilés
+      display inline
+
+  @media (min-width: $sizeNav)
+
+    .sizeNav-hidden // @note Éléments voilés
+      display none
+
+
+// -----------------------------------------------------------------------------
+// @section Blocks
+// -----------------------------------------------------------------------------
+
+
+// @subsection Positions
+// -----------------------------------------------------------------------------
+if $bundlePositions
+
+  .center
+    display block
+    margin-left auto
+    margin-right auto
+
+  @media (max-width: $sizeXS)
+
+    .sizeXS-center
+      display block
+      margin 0 auto
+
+  .vertical // @note Classe à appliquer sur l'élément parent
+    display flex // @todo En test.
+    justify-content center // @note Centrage horizontal
+    align-items center // @note Centrage vertical
+
+  .text-center
+    text-align center
+
+  .text-right
+    text-align right
+
+  .text-justify
+    text-align justify
+
+
+// @subsection Sizes blocks
+// -----------------------------------------------------------------------------
+if $bundleSizesBlocks
+  // @note Les règles max-width et max-height permettent de définir la taille en respectant les contraintes du conteneur parent. Bref, c'est responsive...
+
+  [class*="width"]
+    width 100%
+
+  .width // @note Si élément à 100% de largeur, alors pas de marges
+    margin-left 0 !important
+    margin-right 0 !important
+
+  [class*="height"]
+    height 100%
+
+  for $arg in 2 3 4 5 6 8 10 12 14 16 18 20 22 24 26 28 30 32
+    .width{$arg}
+      max-width $arg * 1rem // @note Pas d'unité em sur ces éléments car changement du comportement block
+
+  for $arg in 80 85 90 100
+    .vh{$arg}
+      min-height $arg * 1vh
+
+
+// -----------------------------------------------------------------------------
+// @section Ratios
+// -----------------------------------------------------------------------------
+if $bundleRatios
+
+  :root [class^="ratio"]
+    width 100%
+    height 0
+    margin 0
+    padding-bottom 100% // @note Ratio 1:1 par défaut
+
+  :root .ratio-4-3 // @note Widescreen ~ 1.33:1
+    padding-bottom 75%
+
+  :root .ratio-3-2
+    padding-bottom 66.66%
+
+  :root .ratio-8-5
+  :root .ratio-16-10 // @note Widescreen ~ 1.66:1
+    padding-bottom 62.5%
+
+  :root .ratio-16-9 // @note Widescreen ~ 1.78:1
+    padding-bottom 56.25%
+
+  :root .ratio-1-2
+    padding-bottom 50%
+
+  :root .ratio-16-7
+    padding-bottom 43.75%
+
+  :root .ratio-7-3
+    padding-bottom 42.85%
+
+  :root .ratio-5-2
+    padding-bottom 40%
+
+  :root .ratio-1-3
+    padding-bottom 33.33%
+
+  :root .ratio-1-4
+    padding-bottom 25%
+
+  :root .ratio-1-8
+    padding-bottom 12.5%
+
+  :root .ratio-1-12
+    padding-bottom 6.25%
+
+  @media (max-width: $sizeXS)
+
+    :root .sizeXS-ratio
+      padding-bottom 100%
+      
+    :root .sizeXS-ratio-1-2
+      padding-bottom 50%
+
+  @media (min-width: $sizeXS) and (max-width: $sizeS)
+
+    :root .sizeS-ratio
+      padding-bottom 100%
+
+
+// -----------------------------------------------------------------------------
+// @section Base
+// -----------------------------------------------------------------------------
+
+*
+  box-sizing border-box
+
+html
+  height 100% // @bugfix @affected IE @note Pour les hauteur de page à 100%
+  width 100%
+
+body
+  display flex
+  flex-direction column
+  min-height 100vh // @note Gabarit sur la totalité de la hauteur de la page, même si le contenu ne l'atteint pas.
+  margin 0
+
+.section
+  margin 0
+  padding 1rem
+
+.section::after
+  content ''
+  display block
+  clear both // @note Pour contenir les images en float
+
+//.section:not(.footer)
+main
+  flex 1 0 auto
+  // @note 'flex-grow 1' Permet d'appliquer le footer en bas de page si le contenu ne l'atteint pas.
+  // @bugfix @affected IE 10-11 @note Valeurs par défaut de flex différentes pour IE si non précisées. @see https://github.com/philipwalton/flexbugs
+
+article
+aside
+details
+figcaption
+figure
+footer
+header
+main
+nav
+section
+summary
+menu // @note <main> et <menu> sont en développement ; <hgroup> est retiré de la spécification HTML5 (W3C), mais est resté dans la version HTML du WHATWG, son avenir est incertain.
+  display block // @affected IE 8-9
+  margin 0
+
+menu
+  padding 0 // @bugfix @affected Chrome, au minimum
+
+[hidden]
+  display none // @affected IE 8-9
+
+iframe
+  overflow hidden
+  width 100%
+  height 100%
+  border none
+
+
+// -----------------------------------------------------------------------------
+// @section Typography
+// -----------------------------------------------------------------------------
+
+html
+  height 100% // @note Pour les templates One Page
+  // @note Pour des raisons de saut au chargement ou dans certaines conditions de resize (pour Chrome) il est déconseillé d'utiliser le font-size pour obtenir un zoom général sur l'élément html.
+  // font-size 62.5% // @note 62.5% pour 1rem = 10px
+  // font-size calc(1em * .625) // @bugfix @affected IE 9-IE11 @note Correctif de la règle précédente
+  text-size-adjust 100% // @bugfix @affected iOS Safari @note Améliore le zoom sur le text pour petits écrans. Propriété en cour de standardisation.
+  font $fontWeight 1em $fontFamily // @bugfix @affected IE 9-10 @note Pas d'unités rem en raccourcis
+  line-height 1.5
+  color $colorCL001
+
+body
+  ifBackgroundColor($colorBG002)
+
+::selection
+  ifBackgroundColor($colorBG003)
+
+a
+a:link
+a:visited
+  color $colorCL004
+  text-decoration none
+
+a:focus
+a:hover
+a:active
+  text-decoration underline
+
+p
+  margin-top .75em
+  margin-bottom .75em
+
+ul
+ol
+  margin-bottom 2em
+  padding-left 3em
+
+ul
+  list-style-type square
+
+ol > li > ol
+  list-style-type lower-latin
+
+ol > li > ol > li > ol
+  list-style-type lower-greek
+
+h1, .h1
+h2, .h2
+h3, .h3
+h4, .h4
+h5, .h5
+h6, .h6
+  color $colorCL005
+  ifFontFamily($fontFamily2)
+  font-weight $fontWeight2
+
+h1, .h1
+  margin-top 1.3rem
+  margin-bottom .8rem
+  font-size 3.2em
+
+h2, .h2
+  margin-top 1.4rem
+  margin-bottom .7rem
+  font-size 2.8em
+
+h3, .h3
+  margin-top 1.2rem
+  margin-bottom .6rem
+  font-size 2.4em
+
+h4, .h4
+  margin-top 1rem
+  margin-bottom .5rem
+  font-size 2em
+
+h5, .h5
+  margin-top .8rem
+  margin-bottom .4rem
+  font-size 1.6em
+
+h6, .h6
+  margin-top .6rem
+  margin-bottom .3rem
+  font-size 1.2em
+
+@media (max-width: $sizeXS)
+
+  h1, .h1
+    font-size 9.6vmin // @note Not work on Safari 5.1, Android 4.3, Opera 12.1, IE 9
+
+  h2, .h2
+    font-size 7.6vmin
+
+  h3, .h3
+    font-size 7.2vmin
+
+  h4, .h4
+    font-size 6vmin
+
+  h5, .h5
+    font-size 4.2vmin
+
+  h6, .h6
+    font-size 3.6vmin
+
+b
+strong
+  font-weight bold // @affected Firefox 4+, Safari 5, and Chrome
+
+i
+em
+  font-style italic
+
+.underline // @note Classe de soulignement
+  text-decoration underline
+
+abbr
+  border-bottom none
+
+dfn // @note 'dfn' représente la définition d'un terme
+  font-style italic // @affected Safari 5 and Chrome
+
+hr
+  padding 1.6em 0 1em
+  text-align center
+  border none
+
+hr::after
+  content '\ea0a'
+  font-family GlyphIcons
+  font-size 2em
+
+//mark // @note 'mark' représente un surlignage
+//  color #000 // @affected IE 8-9
+//  background-color #ff0 // @note Idem
+
+// @note 'kbd' représente les entrées effectuées par l'utilisateur
+// @note 'samp' représente des informations produites par un programme informatique
+pre
+code
+kbd
+samp
+  margin 0
+  padding 0
+  font-family monospace, serif // @affected Safari 5 and Chrome
+  font-size 1em // @affected Safari 5 and Chrome
+
+code
+kbd
+samp
+  word-break break-all
+  background-color $colorBG007
+  border 1px solid $colorBD007
+  border-radius .2em
+
+pre code
+  position relative
+  display block
+  margin-top 3em
+  padding-left .5em
+  white-space pre-wrap // @affected All browsers
+  background $colorBG008a linear-gradient(to top, $colorBG008b, transparent .1em)
+  background-size 100% 1.5em
+  border none // @affected All browsers @note Ecrase le style par défaut
+  border-left .5em solid $colorBD008
+  border-radius 0 // @note Compense la règle par défaut
+  ifBoxShadow($colorBS008)
+
+pre code::before
+  position absolute
+  content '# Code'attr(data-code)
+  top -1.9em
+  left -.5em
+  float left
+  padding .2em .5em
+  font-family monospace, serif
+  color $colorCL009
+  background-color $colorBG009
+  ifBorderRadius($r3 $r3 $r3 0)
+  ifBoxShadow($colorBS009)
+
+pre code button
+  width inherit !important // @note Contrebalance une règle css par défaut
+  font-size 50%
+
+blockquote
+  margin-left 0
+  padding-left 1.5em
+  border-left .5em solid $colorBD010
+
+blockquote footer::before
+  content '\2014 \00A0'
+
+q
+  quotes "\201C" "\201D" "\2018" "\2019" // Harmonisation des citations
+
+small // Représente les annotations et les petits caractères
+  font-size 80% // @affected All browsers
+
+sub
+sup
+  line-height 0
+  font-size 75%
+  position relative
+  vertical-align baseline
+
+sup
+  top -.5em
+
+sub
+  bottom -.25em
+
+
+// @subsection Links
+// -----------------------------------------------------------------------------
+if $bundleLinks
+
+  .links a::after
+    font-family GlyphIcons
+    font-size .7em
+    margin-left .2em
+    transition all .5s
+
+  .links a:not([href="#"])::after
+    content '\ea61' // @note Afficher une icône
+
+  .links a[href="#"]::after
+      content '\ea81'
+
+  .links a:focus::after
+  .links a:hover::after
+  .links a:active::after
+    //transform translate(0, -1em)
+    //transform rotate(360deg)
+    animation animJump .5s ease-in-out
+
+
+// @subsection Langages
+// -----------------------------------------------------------------------------
+if $bundleLangages
+
+  :lang(grc) // @note Grec ancien (grec moderne : 'el')
+    ifFontFamily($fontFamily5)
+    font-size 1.02rem
+
+  :lang(he) // @note Hébreu
+    direction rtl
+    ifFontFamily($fontFamily6)
+    font-size 1.2rem
+
+  //:lang() // @note Arabe @todo À voir...
+  //  direction rtl
+  //  font-size 1.2rem
+
+
+// @subsection Zoom
+// -----------------------------------------------------------------------------
+if $bundleZoom
+  // @note Ces classes permettent de d'augmenter ou réduire la taille de toutes les polices ou éléments enfants
+  // @note Cette technique est incompatible avec les unités vmin placés sur les titres
+  // @todo Pas de possibilité de zoom avec cette technique au-dessous de 50%
+
+  .zoom1000
+    font-size 1000%
+    font-size calc(1em * 10) // @bugfix @affected IE 9-IE11
+
+  .zoom900
+    font-size 900%
+    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
+
+  .zoom800
+    font-size 800%
+    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
+
+  .zoom700
+    font-size 700%
+    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
+
+  .zoom600
+    font-size 600%
+    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
+
+  .zoom500
+    font-size 500%
+    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
+
+  .zoom400
+    font-size 400%
+    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
+
+  .zoom300
+    font-size 300%
+    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
+
+  .zoom250
+    font-size 250%
+    font-size calc(1em * 2.5) // @bugfix @affected IE 9-IE11
+
+  .zoom200
+    font-size 200%
+    font-size calc(1em * 2) // @bugfix @affected IE 9-IE11
+
+  .zoom150
+    font-size 150%
+    font-size calc(1em * 1.5) // @bugfix @affected IE 9-IE11
+
+  .zoom140
+    font-size 140%
+    font-size calc(1em * 1.4) // @bugfix @affected IE 9-IE11
+
+  .zoom130
+    font-size 130%
+    font-size calc(1em * 1.3) // @bugfix @affected IE 9-IE11
+
+  .zoom120
+    font-size 120%
+    font-size calc(1em * 1.2) // @bugfix @affected IE 9-IE11
+
+  .zoom115
+    font-size 115%
+    font-size calc(1em * 1.15) // @bugfix @affected IE 9-IE11
+
+  .zoom110
+    font-size 110%
+    font-size calc(1em * 1.1) // @bugfix @affected IE 9-IE11
+
+  .zoom105
+    font-size 105%
+    font-size calc(1em * 1.05) // @bugfix @affected IE 9-IE11
+
+  // @note Pas de .zoom100 : aucun intérêt...
+
+  .zoom95
+    font-size 95%
+    font-size calc(1em * .95) // @bugfix @affected IE 9-IE11
+
+  .zoom90
+    font-size 90%
+    font-size calc(1em * .90) // @bugfix @affected IE 9-IE11
+
+  .zoom85
+    font-size 85%
+    font-size calc(1em * .85) // @bugfix @affected IE 9-IE11
+
+  .zoom80
+    font-size 80%
+    font-size calc(1em * .80) // @bugfix @affected IE 9-IE11
+
+  .zoom75
+    font-size 75%
+    font-size calc(1em * .75) // @bugfix @affected IE 9-IE11
+
+  .zoom70
+    font-size 70%
+    font-size calc(1em * .70) // @bugfix @affected IE 9-IE11
+
+  .zoom60
+    font-size 60%
+    font-size calc(1em * .60) // @bugfix @affected IE 9-IE11
+
+  .zoom50
+    font-size 50%
+    font-size calc(1em * .50) // @bugfix @affected IE 9-IE11
+
+  // @todo Pas de possibilité de zoom au-dessous de 50%
+
+  .zoom-reset // @note Réinitialisation d'un élément enfant si élément parent zoomé
+    font-size 1rem // @note Valeur égale à la taille d'origine
+
+
+// @subsection Verses
+// -----------------------------------------------------------------------------
+if $bundleVerses
+
+  .verse
+    color $colorCL011
+    ifFontFamily($fontFamily) // @note Définition obligatoire
+    font-size .7rem !important
+
+
+// @subsection  Drop Caps
+// @description Ajout d'une lettrine
+// -----------------------------------------------------------------------------
+if $bundleDropCaps
+  // @note Le pseudo-élément ::first-letter ne se comporte pas de la même manière selon tous les navigateurs, cette solution css/js corrige ce problème.
+  // @note Ajout d'une class .dropcap sur le p:first d'un élément parent comportant .adddropcap
+  // @see Main.js
+
+  .dropcap
+    display block
+    float left
+    margin-right .2em
+    line-height 1
+    padding .2em
+    ifFontFamily($fontFamily3)
+    font-weight 600
+    font-size 3em
+    color $colorCL012
+    background-color $colorBG012
+
+
+// @subsection  Letters
+// @description Amélioration du visuel de certaines lettres
+// -----------------------------------------------------------------------------
+if $bundleLetters
+  // @note Cette police concerne les caractères sélectionnés via une regex javascript et mappés d'un 'span.letter'
+  // @see Main.js
+  // @note Les règles css de taille et de graisse sont à proscrire ici afin d'éviter un conflit sur le line-height avec la police d'origine si non chargement de la police de remplacement. Les correctifs de taille et de graisse doivent directement être travaillés au moment de la création de la police
+  // @see fonts.scss
+
+  .letter
+    // @note Ne pas déclarer ici de font-family afin d'éviter un effet de rechargement de la police après le chargement de la page.
+    ifColor($colorCL0121)
+    
+
+// @subsection  Headbands
+// @description Bandeau de bord de page
+// -----------------------------------------------------------------------------
+if $bundleHeadbands
+
+  .headband
+    position absolute
+    z-index 10
+    top 0
+    right 0
+    margin 0 // @note Si balise p
+    width 15rem
+    height 15rem
+    overflow hidden
+
+  .headband > *
+    display block
+    padding 6rem 11rem .5rem 11rem
+    width 30rem
+    text-align center
+    background-color $colorBG013
+    transform rotate(45deg)
+    transform-origin 18rem 1.5rem
+
+  @media (max-width: $sizeXS)
+
+    .headband > *
+      font-size .75rem
+
+  .headband > :focus
+  .headband > :hover
+  .headband > :active // @note Si balise a
+    text-decoration none
+    background-color $colorBG014
+
+
+// @subsection  Ribbons
+// @description Bandeau en bord de boite
+// -----------------------------------------------------------------------------
+if $bundleRibbons
+
+  [class*="ribbon-container"]
+    position relative
+    min-height 7em // @note Minimum de hauteur nécessaire pour contenir un ribbon
+    background-image linear-gradient(45deg, $colorBG015a 80%, $colorBG015b)
+
+  .ribbon
+    overflow hidden
+    position absolute
+    top -.5em
+    right -.5em
+    width 8em
+    height 8em
+
+  .ribbon *
+    position absolute
+    z-index 10
+    top 1.8em
+    left .2em
+    width 10em
+    height 2em
+    line-height 2
+    text-align center
+    ifColor($colorCL016)
+    background $colorBG016a linear-gradient(to top, $colorBG016b, $colorBG016c)
+    ifBoxShadow($colorBS016)
+    transform rotate(45deg)
+
+  .ribbon :hover
+  .ribbon :focus
+  .ribbon :active
+    ifColor($colorCL017)
+    text-decoration none
+
+  .ribbon ::before
+  .ribbon ::after
+    content ''
+    position absolute
+    z-index -1
+    top 100%
+    border .4em solid $colorBD018
+
+  [class*="ribbon-container"] > .ribbon ::before
+    left 0
+
+  [class*="ribbon-container"] > .ribbon ::after
+    right 0
+
+  .ribbon-container > .ribbon ::before // @note La première classe sert de namespace afin de ne pas interférer avec les autres ribbons éventuellement posés sur la boite.
+    border-right-color transparent
+    border-bottom-color transparent
+
+  .ribbon-container > .ribbon ::after
+    border-left-color transparent
+    border-bottom-color transparent
+
+  .ribbon-container-bottom
+    background-image linear-gradient(135deg, $colorBG019a 80%, $colorBG019b)
+
+  .ribbon-container-bottom > .ribbon
+  .ribbon-container-dual > .ribbon:last-of-type
+    top inherit
+    bottom -.5em
+
+  .ribbon-container-bottom > .ribbon *
+  .ribbon-container-dual > .ribbon:last-of-type *
+    top 4.2em
+    right -2em
+    transform rotate(-45deg)
+
+  .ribbon-container-bottom > .ribbon ::before
+  .ribbon-container-dual > .ribbon:last-of-type ::before
+    top -.7em
+    border .4em solid $colorBD020
+    border-top-color transparent
+    border-right-color transparent
+
+  .ribbon-container-bottom > .ribbon ::after
+  .ribbon-container-dual > .ribbon:last-of-type ::after
+    top -.7em
+    border .4em solid $colorBD020
+    border-top-color transparent
+    border-left-color transparent
+
+  @media (max-width: $sizeXS)
+
+    .sizeXS-ribbon-container-bottom
+      background-image linear-gradient(135deg, $colorBG021a 80%, $colorBG021b)
+
+    .sizeXS-ribbon-container-bottom > .ribbon
+      top inherit
+      bottom -.4em
+
+    .sizeXS-ribbon-container-bottom > .ribbon *
+      top 4.2em
+      right -2.2em
+      transform rotate(-45deg)
+
+    .sizeXS-ribbon-container-bottom > .ribbon ::before
+      top -.7em
+      left 0
+      border .4em solid $colorBD020
+      border-top-color transparent
+      border-right-color transparent
+
+    .sizeXS-ribbon-container-bottom > .ribbon ::after
+      top -.7em
+      right 0
+      border .4em solid $colorBD020
+      border-top-color transparent
+      border-left-color transparent
+
+  .ribbon-container-dual
+    min-height 15em // @note Minimum de hauteur nécessaire pour contenir deux ribbons
+    background-image linear-gradient(45deg, $colorBG022a 80%, $colorBG022b), linear-gradient(135deg, $colorBG022a 80%, $colorBG022b)
+
+  .ribbon-container-dual > .ribbon ::before
+    border-right-color transparent
+    border-bottom-color transparent
+
+  .ribbon-container-dual > .ribbon ::after
+    border-left-color transparent
+    border-bottom-color transparent
+
+
+// @subsection Special Lists
+// -----------------------------------------------------------------------------
+if $bundleLists
+
+  [class*="list"]
+  [class*="list"] *
+    padding-left 0
+
+  [class*="list"] li
+    display block
+
+  [class*="list-"] a // Ne cible que les listes améliorées
+    display block
+    text-decoration none
+
+  [class*="list-"][class*="-stripe"]
+    margin 0 // @note Si éléments <ul> ou <ol>
+
+  [class*="list-"][class*="-stripe"] > *
+    margin .5em 0 // @bugfix affected Chrome @note Problème d'interprétation avec unité rem
+    padding .3em 1em
+
+  [class*="list-"][class*="-stripe"]:not([class*="-link"]) > *
+  [class*="list-"][class*="-stripe"] a
+    ifBackgroundColor($colorBG024)
+    ifBoxShadow($colorBS024)
+
+  [class*="list-"][class*="-stripe"] a
+    position relative
+
+  [class*="list-"] a:focus
+  [class*="list-"] a:hover
+  [class*="list-"] a:active
+    ifBackgroundColor($colorBG023)
+    ifBoxShadow($colorBS023)
+    animation animList .1s ease-in-out
+
+  @keyframes animList
+    50%
+      transform scale(1.03) translateZ(0)
+
+  [class*="list-"][class*="-link"] > * // Amélioration du rendu si liens inclus dans la liste
+    padding 0
+
+  [class*="list-"][class*="-link"] a // Si un lien est placé à l'intérieur des enfants
+    padding .3em 1em
+
+  [class*="list-"][class*="-large"] > *
+  [class*="list-"][class*="-large"][class*="-link"] a
+    padding .5em 1em
+
+  [class*="list-"][class*="-large"][class*="-link"] > *
+    padding 0
+
+
+// @subsection Summary
+// -----------------------------------------------------------------------------
+if $bundleSummary
+  //:root .list-layout a
+  //  margin 0
+
+  .summary
+    display flex
+    flex-wrap wrap
+    width 'calc(100% + %s - %s)' % $gutter $bugfixGrid
+    margin-left - $gutter !important
+
+  .summary > *
+    width 100%
+    margin-left $gutter !important
+    padding 0 // @note Si liste ul>li
+
+  @media (min-width: $sizeXS)
+
+    .summary > *
+      width 'calc(%s - %s - %s)' % ((100% / 12 * 6) $gutter $bugfixGrid)
+
+  @media (min-width: $sizeS)
+
+    .summary > *
+      width 'calc(%s - %s - %s)' % ((100% / 12 * 4) $gutter $bugfixGrid)
+
+  @media (min-width: $sizeL)
+
+    .summary > *
+      width 'calc(%s - %s - %s)' % ((100% / 12 * 3) $gutter $bugfixGrid)
+
+
+// @subsection Number Lists
+// -----------------------------------------------------------------------------
+if $bundleNumberlists
+
+  [class^="list-number"]
+    padding-left 2.5em
+    counter-reset li
+
+  [class^="list-number"] *
+    padding 0
+
+  [class^="list-number"] li
+    padding .2em 0
+
+  [class^="list-number"] a
+    position relative
+    display block
+    padding .3em 1em
+    background-color $colorBG025
+    ifBoxShadow($colorBS025)
+
+  [class^="list-number"] a::before
+    position absolute
+    top 1em
+    left -2.5em
+    margin-top -1em
+    content counter(li)
+    counter-increment li
+    height 100%
+    line-height 2
+    width 2em
+    text-align center
+    font-weight bold
+    color $colorCL026
+    background-color $colorBG026
+
+  .list-number a::before // @note À dissocier de .list-number-rounded
+    ifBoxShadow($colorBS0261)
+
+  .list-number a::after
+    content ''
+    position absolute
+    left -1rem
+    top 50%
+    margin-top -.5rem
+    border .5rem solid transparent
+    transition all .1s ease-out
+
+  .list-number a:focus::after
+  .list-number a:hover::after
+  .list-number a:active::after
+    left -.5rem
+    border-left-color $colorBD027
+
+  .list-number-rounded a
+    border-radius 1em // @note Non définie par une variable car indépendante des autres valeurs.
+
+  .list-number-rounded a::before
+  .list-number-rounded a::after
+    top 50% // @note Contrebalance valeur '.list-number' par défaut
+    height 2.1em
+    width 2.1em
+    border-radius 50%
+    transition all .3s ease-out
+
+  if($colorBS0271) // @note Si box-shadow, alors tout le code suivant pour la mise en place de cette règle (création d'un ::after, position relative, etc) :
+
+    .list-number-rounded a::after
+      content ''
+      display block
+      position absolute
+      height 2.1em
+      width 2.1em
+      left -2.5em
+      top calc(50% - 1em)
+      z-index -1
+      ifBoxShadow($colorBS0271)
+
+  .list-number-rounded a:focus::before
+  .list-number-rounded a:hover::before
+  .list-number-rounded a:active::before
+    transform rotate(360deg)
+
+
+// @subsection Separator
+// -----------------------------------------------------------------------------
+if $bundleSeparators
+
+  .separator::after // @note Alternative au style de la balise hr par défaut
+    content ''
+    display block
+    margin 0 0 1rem
+
+  .separator::after
+  .sizeXS-separator::after
+    border-bottom .4rem solid $colorBD028
+
+  @media (max-width: $sizeXS)
+
+    .sizeXS-hr::after // @note Sur un conteneur, pour marquer visuellement la séparation avec le contenu suivant
+      content '\e630'
+      display block
+      margin 1.6em auto 1em
+      font-family GlyphIcons
+      font-size 2em
+      text-align center
+
+    .sizeXS-separator::after // @note Sur un conteneur, pour marquer visuellement la séparation avec le contenu suivant
+      content ''
+      display block
+      margin-bottom 2rem
+      padding-top 2em
+
+
+// @subsection Highlighted Titles
+// -----------------------------------------------------------------------------
+if $bundleHighlight
+
+  .highlight
+    text-align center
+
+
+// @subsection Emphasized Titles
+// -----------------------------------------------------------------------------
+if $bundleEmphasized
+
+  .emphasized
+    overflow hidden
+    position relative
+    text-align center
+
+  .emphasized::before
+  .emphasized::after
+    content ''
+    display inline-block
+    width 100%
+    vertical-align middle
+    margin-top .3em
+    border-bottom .15em solid $colorBD029
+
+  .emphasized::before
+    margin-left -100%
+    margin-right 1%
+
+  .emphasized::after
+    margin-right -100%
+    margin-left 1%
+
+
+// @subsection Surround
+// -----------------------------------------------------------------------------
+if $bundleSurround
+
+  .surround
+    padding .3em
+    ifColor($colorCL0291)
+    background-color $colorBG0291
+    border-radius 50%
+    ifBoxShadow($colorBS0291)
+
+
+// -----------------------------------------------------------------------------
+// @section Messages Box
+// -----------------------------------------------------------------------------
+if $bundleMessagesBox
+
+  .author
+    font-variant small-caps
+
+  [class^="message"]
+    position relative
+    margin-top 1.5em
+    margin-bottom 1.25em
+    padding 1.4em 2em 1em
+    background-color $colorBG030
+    border .1em solid $colorBD030
+    ifBorderRadius($r3)
+    ifBoxShadow($colorBS030)
+
+  div[class^="message"] // @todo Valeurs de padding à revoir
+    padding-top .5em
+    padding-bottom .5em
+
+  [class^="message"]::before
+    content ''
+    position absolute
+    top -.8em
+    left -.8em
+    height 2.8em
+    width 2.8em
+    background-color $colorBG031
+    border .1em solid $colorBD031
+    border-radius 50%
+    ifBoxShadow($colorBS031)
+
+  [class^="message"]::after
+    content '\ea61'
+    position absolute
+    top -.3em
+    left -.1em
+    font-family GlyphIcons
+    font-size 1.5em
+    text-align center
+
+  .message-api::after
+    content '\ea07'
+
+  .message-source::after
+    content '\ea70'
+
+  .message-location::after
+    content '\ea54'
+
+  .message-info
+  .message-info::before
+    background-color $colorBG032
+
+  .message-info::after
+    content '\ea49'
+
+  .message-success
+  .message-success::before
+    background-color $colorBG033
+
+  .message-success::after
+    content '\ea18'
+
+  .message-error
+  .message-error::before
+    background-color $colorBG034
+
+  .message-error::after
+    content '\ea5a'
+
+  .message-warning
+  .message-warning::before
+    background-color $colorBG035a
+    background-image linear-gradient(to top right, transparent 25%, $colorBG035b 25%, $colorBG035b 50%, transparent 50%, transparent 75%, $colorBG035b 75%, $colorBG035b)
+    background-size 5em 5em
+
+  .message-warning::after
+    content '\eabd'
+
+  @media (min-width: $sizeXS)
+
+    .message-api::after
+      animation animRotate 5s linear infinite
+
+    .message-warning::after
+      animation animBlink 2s infinite
+
+  .message-date::after
+    content '\ea15'
+
+  .message-keyword::after
+    content '\ea5f'
+
+  @keyframes animRotate
+    100%
+      transform rotate(360deg)
+
+  @keyframes animBlink
+    0%
+      opacity 1
+    50%
+      opacity .2
+
+
+// -----------------------------------------------------------------------------
+// @section Images
+// -----------------------------------------------------------------------------
+if $bundleImages
+
+  //svg:not(:root)
+  //  overflow hidden // @bugfix @affected IE 9
+
+  .svg-color
+    ifFill($colorFI0351)
+
+  img
+    vertical-align middle // @Note Évite un décalage possible de l'élément suivant
+    height auto
+    max-width 100%
+  //border 0 // @bugfix @affected IE 8-9
+
+  figure
+    margin 0 // @bugfix @affected IE 8-9 and Safari 5
+
+  [class*="thumbnail"]
+    width 100% // @note Important à appliquer pour le responsive si le width n'est pas définit préalablement
+
+  @media (min-width: $sizeXS)
+
+    [class*="thumbnail"]
+      max-width ($wrap / 4)
+
+
+  // @subsection Figures
+  // -----------------------------------------------------------------------------
+
+  [class^="figure"]
+  //vertical-align middle
+    width 100%
+    padding .5em
+    ifColor($colorCL036)
+    background-color $colorBG036
+    ifBoxShadow($colorBS036)
+
+  [class^="figure"] figcaption
+    padding-top .5em
+    text-align center
+
+
+  // @subsection .align
+  // -----------------------------------------------------------------------------
+
+  @media (min-width: $sizeS)
+
+    [class*="-alignleft"]
+      float left
+      margin-right 1em
+
+    [class*="-alignright"]
+      float right
+      margin-left 1em
+
+    [class*="-align"] ~ h2
+    [class*="-align"] ~ h3
+    [class*="-align"] ~ hr
+    [class*="-align"] ~ aside
+      clear both // @Note Ciblage de certains éléments faisants suite à une image flotante @todo Le margin-top de ces éléments n'est pas pris en compte sous l'image...
+
+  // @note Pour le comportement des listes le long d'un flotant @todo En test...
+  // BEGIN test
+  //  [class*="-align"] ~ ul
+  //    padding-left 0
+  //    list-style-position inside // @params inside, outside, inherit
+  //  [class*="-align"] ~ ul li
+  //    text-indent 2.2em
+  // END test
+
+
+// @subsection Caption Slides
+// -----------------------------------------------------------------------------
+if $bundleCaptionSlides
+
+  [class*="-captionslide"]
+    position relative
+    overflow hidden
+
+  [class*="-captionslide"]::before
+    content '?'
+    position absolute
+    bottom 1em
+    left 1em
+    z-index 300
+    width 2.5em
+    height 2.5em
+    line-height 2.5
+    font-weight 600
+    color $colorCL037
+    text-align center
+    text-shadow 0 0 .5em colorTS037
+    background-color $colorBG037
+    opacity .75
+    border-radius 50%
+
+  [class*="-captionslide"]:hover::before
+    opacity 0
+
+  [class*="-captionslide"] figcaption
+    position absolute
+    bottom -30%
+    left 0
+    margin 0 .5em .5em
+    padding .5em
+    color $colorCL038
+    background-color $colorBG038
+    opacity 0
+    transition all .6s ease
+
+  [class*="-captionslide"]:hover figcaption
+    opacity 1
+    bottom 0
+
+
+// @subsection Focus
+// -----------------------------------------------------------------------------
+if $bundleFocus
+
+  .js [class*="-focus"] // @note Si jQuery activé
+    position relative
+    cursor zoom-in
+    transition .15s box-shadow, transform
+
+  .js [class*="-focus"]:focus
+  .js [class*="-focus"]:hover
+  .js [class*="-focus"]:active
+    z-index 30
+    ifBoxShadow($colorBS039)
+    transform scale(1.01)
+
+  [class*="-focus"] [class*="icon"]
+  .focus-off [class*="icon"]
+    position absolute
+    z-index 31
+    right $gutter
+
+  [class*="-focus"] [class*="icon"]
+    top $gutter
+
+  .focus-off [class*="icon"]
+    bottom $gutter
+
+  .focus-off
+    position fixed
+    display flex // @todo En test
+    z-index 4001 // @note Doit passer au dessus de tout autre élément, notamment le scroll top
+    top 0
+    left 0
+    bottom 0
+    right 0
+    color $colorCL040
+    //background-color $colorBG040 // @bugfix @affected Chrome mobile @note box-shadox sur l'image plutôt qu'un background sur le conteneur afin d'éviter un décalage d'environ 1px en bottom.
+    cursor zoom-out
+
+  .focus-off div // @bugfix @affected All browsers @note Image en flex item n'a pas son ratio préservé si resize ; une div intermédiaire entre le conteneur .focus-off et l'image corrige ce problème
+    max-width 100% // @bugfix @affected Firefox
+    margin auto // @note Pour flexitem
+
+  .focus-off img
+    max-height 100vh
+    //padding $gutter
+    box-shadow 0 0 0 1000rem $colorBS040
+
+
+// -----------------------------------------------------------------------------
+// @section Medias
+// Audio, vidéo et Caneva
+// -----------------------------------------------------------------------------
+if $bundleMedias
+
+  audio
+  video
+  canvas
+  //display inline-block // @bugfix @affected IE 9
+    width 100%
+    ifBoxShadow($colorBS0401)
+
+  audio
+  video
+  .video
+    background-color $colorBG041 // @bugfix @affected Google Maps, tag 'canvas' @note Pas de background prédéfinit sur tag 'canvas', afin d'éviter les conflits
+    ifBoxShadow($colorBS041)
+
+  audio
+  video
+    outline none // @affected Firefox
+
+  audio
+    height 2rem // @bugfix @affected All browsers @note Nécessaire au positionnement
+  //padding 0 0 .5rem // @bugfix @affected Chrome
+
+  audio:not([controls])
+    display none // @affected All browsers @note Affichage de l'audio sans contrôle
+    height 0 // @bugfix @affected iOS 5
+
+  video[poster]
+    width 100% !important
+
+  .video // @note Classe '.video' prévue pour les sources vidéos extérieures au site
+    position relative
+    padding-bottom 56.25% // @note Ratio 16:9 par défaut
+
+  .video iframe
+  .video embed
+  .video object
+    position absolute
+
+
+// @subsection Players
+// -----------------------------------------------------------------------------
+if $bundlePlayers
+  // @note Styles secondés par le script MediaElement.js
+  // @see Scripts/Vendors/MediaElementJS
+
+  .mejs-container
+    position relative // @bugfix @affected Firefox (+ Safari ?)
+    width 100% !important
+    ifBoxShadow($colorBS0411)
+
+  .mejs-container *
+    outline none // @affected Firefox
+
+  .mejs-video
+    overflow hidden // @bugfix @affected Firefox @note Cache une barre de progression horrizontale mal positionnée ('.mejs-time-loaded') sur les pages au calcul lourd.
+
+  .mejs-inner
+  .mejs-mediaelement
+  .mejs-layer
+    overflow hidden
+    height 100% !important
+
+  .mejs-poster // @note Image de présentation de la vidéo si existante
+    width 100% !important
+
+  .mejs-mediaelement video
+    width 100% !important
+    height 100% !important
+
+  .mejs-container
+    background-color transparent !important
+
+  .mejs-video:not(.mejs-container-fullscreen)
+    height 0 !important
+    padding-bottom 56.25%
+
+  .mejs-container-fullscreen
+  .mejs-container-fullscreen .mejs-inner
+  .mejs-container-fullscreen .mejs-mediaelement
+    padding-bottom 0
+
+  .mejs-overlay-play
+    width 100% !important
+    height 100% !important
+
+  .svg .mejs-overlay-button
+    background-image $image001 !important
+    background-repeat repeat !important // @note Compense la disparition de l'image en hover
+    background-size 100px 100px
+
+  .svg .mejs-overlay-button:focus
+  .svg .mejs-overlay-button:hover
+    background-color rgba(255, 255, 255, .5)
+    border-radius 50%
+
+  .mejs-audio .mejs-controls
+    background $colorBG042 none !important
+
+  .mejs-video .mejs-controls
+    background $colorBG043 none !important
+
+  .mejs-time-total
+    background $colorBG044 none !important
+
+  .mejs-time-loaded
+    background $colorBG045 none !important
+
+  .mejs-time-current
+    background $colorBG046 none !important
+
+
+// -----------------------------------------------------------------------------
+// @section Maps
+// -----------------------------------------------------------------------------
+if $bundleMaps
+
+  .map
+    background-color $colorBG047
+
+  //.map[id*="google"] img
+  //  max-width none // @bugfix Le 'max-width100%' appliqué par défaut à toutes les images du site provoque des bugs d'affichage sur la carte
+
+
+// -----------------------------------------------------------------------------
+// @section Gradients
+// -----------------------------------------------------------------------------
+if $bundleGradients
+
+  // @note Backgrounds en transparence pour une meilleure exportabilité
+  // @note Ces classes ne fonctionnent pas avec un "@extend" Sass placés dans un "@media"
+
+  .gradient
+  .gradient-top
+    background-image linear-gradient(to top, $colorBG048a, $colorBG048b)
+
+  .gradient-bottom
+    background-image linear-gradient(to bottom, $colorBG048a, $colorBG048b)
+
+  .gradient-left
+    background-image linear-gradient(to left, $colorBG048a, $colorBG048b)
+
+  .gradient-right
+    background-image linear-gradient(to right, $colorBG048a, $colorBG048b)
+
+
+// -----------------------------------------------------------------------------
+// @section Forms
+// -----------------------------------------------------------------------------
+if $bundleForms
+
+  fieldset
+    border none // @affected All browsers
+    margin 0
+    padding 0
+
+  legend
+    @extend h3
+    padding 0 // @bugfix Remove padding so people aren't caught out if they zero out fieldsets
+    max-width 100% // @affected IE
+    border 0 // @affected IE 8-11
+
+  label:focus
+  label:hover
+  label:active
+  label:checked
+    cursor pointer
+
+  input[type="color"]
+    height 3em
+
+  input:not([type="button"]):not([type="submit"]):not([type="range"])
+  select
+    max-height 2.2em // @note Permet de contrôler la hauteur des champs invalides + les imput type date, color, etc...
+
+  select
+    padding 1em // @affected Firefox
+    white-space nowrap
+    text-overflow ellipsis
+
+  select:not([multiple])
+    -webkit-appearance none // @affected Chrome
+    -moz-appearance none // @affected Firefox
+    background-image $image004
+    background-repeat no-repeat
+    background-position right .5em center // calc(100% - .5em) 50%
+    background-size 1em 1em
+    border-radius 0 // @affected Chrome
+
+  select[multiple]
+    min-height 5.6em
+
+  textarea
+    min-height 10em // @note Propriété en lien avec 'resize'
+    max-height 50vh // @note Idem
+    resize vertical // @note Redimensionnement par l'utilisateur limité à la verticale
+    padding 1em
+    line-height 2
+
+  button
+  input
+  select
+  textarea
+    font-family inherit // @affected All browsers
+    font-size 100% // @affected All browsers
+    margin 0 // @affected Firefox 4+, Safari 5, and Chrome
+
+  button
+  input
+    line-height normal // @affected Firefox 4+
+
+  button
+  select
+    text-transform none
+
+  button
+  html input[type="button"], // @affected Android 4.0
+  input[type="reset"]
+  input[type="submit"]
+    -webkit-appearance button // @affected iOS
+    cursor pointer
+
+  button::-moz-focus-inner
+  input::-moz-focus-inner // @affected Firefox 4+
+    border 0
+    padding 0
+
+  input[type="search"]
+    -webkit-appearance textfield // @affected Safari 5+
+
+  input[type="search"]::-webkit-search-cancel-button
+  input[type="search"]::-webkit-search-decoration
+    -webkit-appearance none // @affected Safari 5+
+
+  textarea
+    overflow auto // @affected IE 8-9
+    vertical-align top
+
+  button[disabled]
+  html input[disabled]
+    cursor not-allowed
+
+  ::placeholder
+    color $colorCL121
+
+
+// @subsection Inputs
+// -----------------------------------------------------------------------------
+if $bundleInputs
+  // @note En raison de leurs éventails d'utilisations les inputs ne sont pas stylés par défaut, utilisation d'une class .field sur un élément parent
+
+  form > div,
+  form fieldset > div,
+  form [class^="columns"] > div
+    width 100%
+    margin 1em 0
+
+  @media (min-width: $sizeXS)
+
+    form [class^="columns"] > div
+      padding-bottom 0
+
+  //[class*="input"] input
+  //  ifColor($colorCL049)
+  //  ifBackgroundColor($colorBG049)
+
+  [class*="input"] input:not([type="button"])
+  [class*="input"] select
+  [class*="input"] textarea
+    width 100%
+    padding .5em 1em
+    background-color $colorBG050
+    border none
+
+  .input input
+  [class*="input"] select
+  [class*="input"] textarea // @note La déclaration '.input input' évite l'application de la règle sur '.input-group'
+    ifBorderRadius($r2)
+
+  [class*="input"].disabled label
+    color $colorCL051
+
+  [class*="input"].disabled input
+    background $colorBG052a repeating-linear-gradient(-45deg, $colorBG052b, $colorBG052b 1px, transparent 1px, transparent 6px) repeat
+    background-size 8px 8px
+    cursor not-allowed
+
+  [class*="input"].invalid input
+    padding-left .7em // @note Rattrapage de la bordure
+    background-color $colorBG053
+    border .3em solid $colorBD053
+    background-position right .7em center // @note Révision de l'emplacement de l'astérisque si champ obligatoire
+
+  .invalid p
+    font-style italic
+    color $colorCL054
+
+  [class*="input"] :required
+  [class*="input"] .required // @note '.required' pour éléments select, et fallback all browsers
+    background-image $image002
+    background-repeat no-repeat
+    background-position right .5em center
+    background-size 1em 1em
+
+  [class*="input"] :required:focus
+  [class*="input"] .required:focus
+    background-image none
+
+  [class*="input-group"] > div
+    display flex
+    white-space nowrap // @note Si légende avec espace
+    ifColor($colorCL055)
+    ifBackgroundColor($colorBG055)
+    ifBorderRadius($r2)
+
+  [class*="input-group"] input
+    min-width 1em // @bugfix @affected Firefox @note Corrige le min-width par défaut de Firefox quand passage de l'input en flex item
+
+  [class*="input-group"] > div div
+    line-height 2
+    padding-left .5em
+    padding-right .5em
+
+  @media (max-width: 400px)
+  // @note Pour les très petites définitions @todo En test...
+
+    [class*="input-group"] > div div
+      overflow hidden
+      max-width 2em // @note Fallback @bugfix @affected Chrome Android (au minimum)
+      max-width 25vw
+
+  [class*="input-group"] > div div:first-child
+    ifBorderRadius($r2 0 0 $r2)
+
+  [class*="input-group"] > div div:last-child
+    ifBorderRadius(0 $r2 $r2 0)
+
+  .input-group-right input
+    text-align right
+
+  // @note Code intéresant si couplé à des regex :
+  //[class*="input"] :invalid:focus
+  //  background-color #f2dede !important
+  //[class*="input"] :valid:focus
+  //  background-color #dff0d8
+
+
+// @subsection Buttons
+// -----------------------------------------------------------------------------
+if $bundleButtons
+  // @note Toujours privilégier l'élément <button> sur l'élément <input type="button"> car il permet de réaliser des rendu plus complexe en acceptant d'autre balises html en son sein. De même, l'élément <button> remplace avantageusement un lien pour les actions en javascript.
+  // @link https://developer.mozilla.org/fr/docs/Web/HTML/Element/Button
+
+  .button
+    overflow hidden
+    margin-bottom 1em
+    padding 0 1em
+    line-height 2
+    font-weight 300
+    white-space nowrap
+    text-overflow ellipsis
+    color $colorCL056
+    background-color $colorBG056
+    outline 0
+    border .5em solid $colorBD056
+    ifBoxShadow($colorBS056)
+    cursor pointer
+    @extend .gradient
+    ifBorderRadius($r4)
+    transition translateZ .1s linear
+    transform translateZ(0)
+
+  .button:hover
+  .button:focus
+    ifBoxShadow($colorBS057)
+    transform translate(0, -.1em)
+
+  .button:active
+    ifBoxShadow($colorBS058)
+    transform translate(.1em, .4em)
+
+  .button.second
+    align-self center
+    line-height 1.6
+
+  .button:disabled
+  .button.disabled
+    color $colorCL059
+    background-color $colorBG059a
+    background-image repeating-linear-gradient(-45deg, $colorBG059b, $colorBG059b 1px, transparent 1px, transparent 6px)
+    background-size 8px 8px
+    border-color $colorBD059
+    ifBoxShadow($colorBS059) // @note Remplace 'pointer-events:none' sur un plan visuel pour permetre en contrepartie 'cursor:not-allowed'
+    cursor not-allowed
+    transform translateZ(0) // @note Idem
+
+  .button-group
+    display flex
+    flex-wrap wrap
+    margin-bottom 0 // @note Corrige la règle 'form > div'
+
+  .button-group > *
+    margin-right 1em // @note Espacement entre deux boutons
+
+  //@media (max-width: $sizeXS)
+  //
+  //  .button-group > *
+  //    width 100%
+  //
+  //@media (min-width: $sizeXS)
+  //  .button-group > *
+  //    margin-right: 1em // @note Espacement entre deux boutons
+
+
+// @subsection  .search form
+// -----------------------------------------------------------------------------
+if $bundleSearch
+
+  .search
+    position relative
+    overflow hidden // @note Pour contenir le bouton de validation
+
+  .search label
+    position absolute
+    left -9999em
+
+  .search input
+    display block
+    width 100%
+    padding .5em 3em .5em 1em
+    background-color $colorBG060
+    border none
+    ifBorderRadius($r4)
+
+  .search button
+    vertical-align middle
+    position absolute
+    top 0
+    right 0
+    display block
+    width 3em
+    height 2.2em // @note Plus grand que l'input, afin de prendre en compte le mouvement induit par la transition
+    background-color transparent // @affected All browsers
+    border none // @affected All browsers
+    transition translateZ .1s linear
+    transform translateZ(0)
+
+  .search button::before
+    content ''
+    display block
+    width 1em
+    height 1em
+    margin 0 auto
+    background-image $image003
+    background-size contain
+    background-repeat no-repeat
+
+  .search span // @note Supprime le contenu du boutton au profit de l'icône
+    display none
+
+  .search button:focus
+  .search button:hover
+    transform translate(0, -.1em)
+
+  .search button:active
+    transform translate(0, .3em)
+
+
+// @subsection Checkbox & Radio avec .checkbox
+// -----------------------------------------------------------------------------
+if $bundleCheckbox
+
+  .checkbox
+    position absolute // @note Label des éléments frères décalés si déclaration en relatif.
+    left -9999rem
+
+  // @bugfix
+  // @affected Firefox
+  // @note Les pseudos éléments doivent impérativement partir du label et non des éléments checkbox et radio
+
+  .checkbox + label
+    position relative
+    display inline-block // @note Évite un clique involontaire de l'utilisateur sur un label doté d'un 'width100%' si définition 'block'.
+    margin 0 0 0 2.5em
+    cursor pointer
+
+  .checkbox + label::before
+    content ''
+    display block
+    position absolute
+    top -.1em
+    left -2.5em
+    width 1.5em
+    height 1.5em
+    box-sizing border-box // @note Nécessité de spécifier cette règle malgré sa déclaration en globale
+    background-color $colorBG061
+    border .1em solid $colorBD061
+    outline 0 // @todo Règle à vérifier
+    ifBoxShadow($colorBS061)
+    border-radius .4em
+    cursor pointer
+    transition all .2s
+
+  .checkbox:focus + label::before
+    border .1rem solid $colorBD062
+
+  .checkbox + label::after
+    content '\ea19'
+    position absolute
+    top 0 // @note Fixe le pseudo-élément si label sur plusieurs lignes.
+    left -2.2em
+    font-family GlyphIcons
+    color $colorCL063
+    transform scale(0)
+    transition all .2s
+
+  .checkbox:checked + label::after
+    transform scale(1)
+
+  [type="radio"].checkbox + label::before
+  [type="radio"].checkbox:checked + label::after
+    border-radius 50%
+
+  .checkbox:disabled + label
+    color $colorCL064
+    cursor not-allowed
+
+  .checkbox:disabled + label::before
+    background-image repeating-linear-gradient(-45deg, $colorBG065, $colorBG065 1px,transparent 1px,transparent 6px)
+
+
+// @subsection Switchs
+// -----------------------------------------------------------------------------
+if $bundleSwitchs
+  // @note Adaptation d'un tutoriel
+  // @see  http://www.creativejuiz.fr/
+
+  .switch
+    position absolute // @note Label des éléments frères décalés si déclaration en relatif.
+    left -9999rem
+
+  .switch + label
+    position relative
+    display inline-block // @note Évite un clique involontaire par l'utilisateur si label doté automatiquement d'un 'width100%' en définition 'block'.
+    margin-top 1em
+    padding-left 6em
+
+  .switch + label::before
+    content ''
+    position absolute
+    top -.5em
+    left 0
+    height 2.6em
+    width 5.5em
+    background-color $colorBG066
+    border-radius .4em
+    ifBoxShadow($colorBS066)
+    transition background-color .2s
+
+  .switch[type="radio"] + label::before
+    border-radius 2em
+
+  .switch:checked + label::before
+    background-color $colorBG067
+
+  .switch + label::after
+    content ''
+    position absolute
+    top -.4em
+    left .1em
+    width 2.4em
+    height 2.4em
+    background-color $colorBG068
+    border-radius .2em
+    ifBoxShadow($colorBS068)
+    transition left .2s
+
+  .switch[type="radio"] + label::after
+    border-radius 50%
+
+  .switch:checked + label::after
+    left 3em
+
+  .switch:focus + label::before
+    ifBoxShadow($colorBS069)
+
+  .switch:disabled + label
+    position relative
+    color $colorCL119
+    cursor not-allowed
+
+  .switch:disabled + label::before
+  .switch:disabled + label::after
+    background-image repeating-linear-gradient(-45deg, $colorBG070, $colorBG070 1px,transparent 1px,transparent 6px)
+
+  .switch:disabled + label::after
+    background-color $colorBG071
+
+  .switch:checked + label span
+  .switch:not(:checked) + label span::before
+  .switch:checked + label span::after
+    color $colorCL072
+
+  .switch:not(:checked) + label span::before
+    content attr(data-off)
+    position absolute
+    top 0 // @note Fixe le pseudo-élément si label sur plusieurs lignes.
+    left 3.5em
+
+  .switch:checked + label span::after
+    content attr(data-on)
+    position absolute
+    top 0 // @note Fixe le pseudo-élément si label sur plusieurs lignes.
+    left .8em
+    ifColor($colorCL0721)
+
+
+// @subsection Ranges
+// -----------------------------------------------------------------------------
+if $bundleRanges
+  // @see https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+  // @link http://codepen.io/chriscoyier/pen/FtnAa
+  // @bugfix @affected All Browsers @note Les sélecteurs ne peuvent pas être séparés par une virgule, chacun d'entre eux doit être déclaré à part.
+
+  [type="range"]
+    width 100%
+    cursor pointer
+    -webkit-appearance none
+
+  [type="range"]:focus
+    outline none
+
+  [type="range"]::-webkit-slider-runnable-track // @note Barre
+    background-color $colorBG073
+
+  [type="range"]::-webkit-slider-thumb // @note Curseur
+    -webkit-appearance none
+    width 2em
+    height 2em
+    background $colorBG074a linear-gradient(to top, $colorBG074b, $colorBG074c)
+    border .2em solid $colorBD074
+    border-radius .5em
+
+  [type="range"]::-moz-range-track // @note Barre
+    position relative
+    z-index 2
+    height 2em
+    background-color $colorBG075
+    width calc(100% + 1px) // @bugfix @affected Firefox @note Permet de couvrir la totalité de l'élément sans créer un décalage avec le bg de '.range'
+
+  [type="range"]::-moz-range-thumb // @note Curseur
+    box-sizing border-box // @note Nécessité de spécifier cette règle malgré sa déclaration en globale
+    width 2em
+    height 2em
+    background $colorBG076a linear-gradient(to top, $colorBG076b, $colorBG076c)
+    border .2em solid $colorBD076
+    border-radius .5em
+
+  [type="range"]::-ms-track // @note Barre
+    width 100%
+    height 2em
+    background-color transparent
+    border-color transparent
+    border-width 2em 0
+    color transparent
+
+  //[type="range"]::-ms-fill-lower // @note Barre, côté gauche
+  //  background #efefef
+
+  //[type="range"]::-ms-fill-upper // @note Barre, côté droit
+  //  background #efefef
+
+  [type="range"]::-ms-thumb // @note Curseur
+    height 2em
+    width 2em
+    border-radius .5em
+    background $colorBG077
+  //cursor pointer
+
+  [type="range"] + output
+    order -1
+    height 2em
+    min-width 4em // @note La largeur s'adapte au résultat affiché
+    margin-left auto
+    line-height 2
+    text-align right
+    color $colorCL078
+    background-color $colorBG078
+    @extend .gradient
+    border-radius .5em .5em 0 0
+
+  [type="range"] + output
+    padding 0 1em
+
+  [class*="range"]
+    display flex
+
+  .range
+    flex-wrap wrap
+    flex-direction columns
+
+  .range-vertical-group
+    overflow hidden
+    display flex
+    flex-wrap wrap
+    justify-content space-between
+
+  .range-vertical
+    width 20em
+    margin-bottom 17em
+    margin-right -16em
+    transform rotate(-90deg)
+    transform-origin 10em 10em
+
+  .range-vertical [type="range"]
+    flex 1 0 1
+    // @bugfix @affected IE 10-11 @note Valeur flex-basis à préciser obligatoirement pour ce navigateur car valeur par défaut à 0. Passer la valeur à 'auto'.
+    height 2em
+
+  .range-vertical output
+    order 1
+    width 4em
+    height 4em
+    line-height 4
+    text-align center
+    border-radius 50%
+    transform rotate(90deg)
+
+  .range-vertical input
+    margin-top 1em
+
+
+// @subsection Progress
+// -----------------------------------------------------------------------------
+if $bundleProgress
+  // @note Balise progress difficilement exploitable en production, pas d'harmonisation du style entre les navigateurs
+  // @link http://caniuse.com/#feat=progressmeter
+
+  /*
+  progress[value]
+    appearance none
+    vertical-align middle
+    width 100%
+    height 2rem
+    margin 0 // @bugfix @affected Chrome @note Alignement vertical décalé
+    color $color1 // @affected IE10
+    border 0 // @affected Firefox
+    background green // @affected Opera
+
+  progress::-webkit-progress-bar
+    background green
+
+  progress::-webkit-progress-value
+    background green
+  */
+
+  .progress
+    height 2em
+    position relative
+    margin 2em 0
+    background-color $colorBG079
+    border-radius 1em
+
+  .progress div
+  .progress div::after
+    position absolute
+    border-radius 1em
+
+  .progress div
+    height 100%
+    min-width 2em
+    max-width 100%
+    background-color $colorBG080
+    ifBoxShadow($colorBS080)
+
+  .progress div::after
+    content ''
+    z-index 1
+    top 0
+    left 0
+    bottom 0
+    right 0
+    background-image linear-gradient(-45deg, $colorBG081 25%, transparent 25%, transparent 50%, $colorBG081 50%, $colorBG081 75%, transparent 75%, transparent)
+    background-size 3em 3em
+    animation animProgress 1.5s linear infinite
+
+  @keyframes animProgress
+    0%
+      background-position 0 0
+    100%
+      background-position 3em 3em
+
+
+// -----------------------------------------------------------------------------
+// @section     Scroll top
+// @description Défilement vers le haut
+// -----------------------------------------------------------------------------
+if $bundleScrollTop
+
+  .scroll-top
+    display none // @note apparition de l'élément au scrool de la page via jQuery
+    position fixed
+    bottom 0
+    right 0
+    z-index 4000
+    height 3rem
+    width 3rem
+
+  .scroll-top svg
+    height 2rem
+    width 2rem
+    fill $colorFI082
+    opacity .5
+
+
+// -----------------------------------------------------------------------------
+// @section     Accordions
+// @description Menus accordéons
+// -----------------------------------------------------------------------------
+if $bundleAccordions
+  // @see Main.js
+  // @note Menus accordéons sur liste simple : profondeur autorisée de un niveau
+
+
+  // @subsection Initial Accordion
+  // -----------------------------------------------------------------------------
+
+  // @note Répétition du js pour éviter un saut d'affichage au chargement de la page
+  //       Uniquement si javascript activé
+
+  .js [class*="accordion"] > :nth-child(even)
+    display none // @note Répétition du js
+
+  .js [class*="accordion"] > .active
+    display block // @note Répétition du js
+
+
+  // @subsection Simple Accordion
+  // -----------------------------------------------------------------------------
+
+  .accordion > a
+    position relative
+    display block
+    padding-left 1.5em
+
+  .accordion > a::before
+    content '\ea29'
+    position absolute
+    left 0
+    font-family GlyphIcons
+    transition .2s ease-out
+
+  .accordion > a:active::before
+  .accordion > .active::before
+    transform rotate(90deg) translateZ(0)
+
+  .accordion > :nth-child(even)
+    margin-left 1.5em
+
+
+  // @subsection Evolved Accordion
+  // -----------------------------------------------------------------------------
+
+  .accordion-link > :nth-child(even)
+    margin 0 // @note Si élément de liste
+    padding 0 // @note Idem
+    list-style none // @note Idem
+
+  .accordion-link
+    ifBoxShadow($colorBS0821)
+
+  .accordion-link > a:nth-child(odd) *
+    display inline
+
+  .accordion-link > a
+    position relative
+    display block
+    padding .5em 1em .5em 2em
+    text-decoration none
+    color $colorCL083
+    background-color $colorBG083
+    @extend .gradient
+
+  .accordion-link > a:focus
+  .accordion-link > a:hover
+  .accordion-link > a:active
+  .accordion-link > a.active
+    background-color $colorBG084
+
+  .accordion-link ul a
+    display block
+    margin-bottom 1px // @bugfix @affected All browsers @note Les unités rem posent un problème de rendu pour les petites valeurs, notamment si zoom
+    padding .5em 1em .5em .5em
+    text-decoration none
+    background-color $colorBG085
+    transition border .2s
+
+  .accordion-link > :nth-child(even) a:focus
+  .accordion-link > :nth-child(even) a:hover
+  .accordion-link > :nth-child(even) a:active
+    padding-right .5em // @note Compensation du contenu poussé par la bordure en :hover
+    background-color $colorBG086
+    border-left .5em solid $colorBD086
+
+  .accordion-link > :nth-child(odd)::before
+    content '\ea1c'
+    position absolute
+    left .5em
+    font-family GlyphIcons
+
+  .accordion-link > :nth-child(odd):focus::before
+  .accordion-link > :nth-child(odd):hover::before
+  .accordion-link > :nth-child(odd):active::before
+    transform rotate(360deg) translateZ(0)
+    transition .5s ease-out
+
+  .accordion-link > :nth-child(odd).active::before
+    transform rotate(450deg) translateZ(0)
+    transition .2s ease-out
+
+
+// -----------------------------------------------------------------------------
+// @section     Tabs
+// @description Onglets
+// -----------------------------------------------------------------------------
+if $bundleTabs
+
+  .cmd-tabs // @note Cette classe peut aussi servir à styler/commander des onglets en html pur
+    position relative // @note Si .tabs-js-united
+    display flex
+    flex-wrap wrap // @note Onglets sur plusieurs niveaux si besoin
+    z-index 2 // @note Idem
+    margin-bottom 0
+    padding 0
+    list-style none // @bugfix @affected Firefox @note Ce navigateur laisse les items de liste en 'display:block' et 'display:flex'
+
+  .cmd-tabs a
+    overflow hidden // @note Pour couper les textes longs
+    display block
+    max-width 12em
+    height 2.5em
+    padding .5em
+    white-space nowrap
+    text-overflow ellipsis
+    text-decoration none
+    background-color $colorBG006
+    border 1px solid $colorBD006
+
+  .cmd-tabs a:focus
+  .cmd-tabs a:hover
+  .cmd-tabs a:active
+  .cmd-tabs .active
+    background-color $colorBG087
+
+  .cmd-tabs .active
+    border-bottom-color transparent
+    pointer-events none
+
+  .tabs > *
+    padding-top .5em
+
+  .tabs-united > *
+    position relative
+    z-index 1 // @note Passe sous les onglets
+    top -1px // @note Idem
+    padding calc(.5em + 1px) 1em .5em
+    border 1px solid $colorBD089
+    ifBoxShadow($colorBS089)
+
+
+// -----------------------------------------------------------------------------
+// @section     Tables
+// @description Tableaux
+// -----------------------------------------------------------------------------
+if $bundleTables
+  // @note La mise en place de .table sur l'élément html <table> suffit pour styler un tableau
+
+  [class^="table"]
+    width 100%
+    margin 1em 0
+    border-collapse separate
+    border-spacing .2em
+    word-wrap break-word
+    text-align left
+    ifBackgroundColor($colorBD0891)
+    ifBoxShadow($colorBS0891)
+
+  [class^="table"] th
+  [class^="table"] td
+    vertical-align top
+    padding .5em 1em // @note Toujours définir le padding sur les éléments <th> et <td>
+    font-weight 300
+
+  [class^="table"] thead
+    color $colorCL090
+    background-color $colorBG090
+    @extend .gradient
+
+  [class^="table"] tfoot
+    color $colorCL091
+    background-color $colorBG091
+
+  @media (min-width: $sizeXS) // Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
+
+    [class^="table"][class*="fixed"]
+      table-layout fixed
+
+    [class^="table"][class*="firstcolumn"] tbody td:first-child
+      color $colorCL092
+      background-color $colorBG092
+
+    [class^="table"] tbody td
+      border 1px solid $colorBD093
+
+    [class^="table"] tbody :empty
+      background-image repeating-linear-gradient(-45deg, $colorBG094, $colorBG095 1px, transparent 1px, transparent 6px)
+      background-size 8px 8px
+
+  @media (max-width: $sizeXS)
+
+    [class^="table"]
+      border-collapse collapse
+
+    [class^="table"] thead
+      display none
+
+    [class^="table"] td
+      display block
+
+    [class^="table"] tbody td:first-child
+      color $colorCL096
+      background-color $colorBG096
+
+    [class^="table"] tfoot :empty
+      display none
+
+    [class^="table"] tbody td::before
+      content attr(data-thead) '\00a0: '
+      display inline
+
+    [class^="table"] tbody td:empty::before
+      content attr(data-thead) '\00a0: --'
+
+    [class^="table"] tbody td
+      border-left .2em solid $colorBD097
+      border-right .2em solid $colorBD097
+
+
+// -----------------------------------------------------------------------------
+// @section     Popins
+// @description Fenêtre Popin
+// -----------------------------------------------------------------------------
+if $bundlePopins
+
+  [id^="popin"]
+    position fixed
+    z-index 1000
+    top 3rem
+    width 80%
+    left 10%
+    padding 0 1.5rem
+    word-wrap break-word
+    background $colorBG098
+    ifBoxShadow($colorBS098)
+
+// @todo Solution en conflit avec animPopinError :
+//.popin-begin
+//  animation animPopinBegin .2s ease-in-out
+//@keyframes animPopinBegin
+//  0%
+//    transform scale(0)
+//  100%
+//    transform scale(1)
+
+  .popin-end
+    animation animPopinEnd .2s ease-in-out
+
+  @keyframes animPopinEnd
+    0%
+      transform scale(1)
+    100%
+      transform scale(0)
+
+  .popin-error
+    animation animPopinError .3s
+
+  @keyframes animPopinError
+    50%
+      transform scale(1.03)
+
+  .ajax-window *
+    animation animAjaxContent .2s ease-in-out
+
+  @keyframes animAjaxContent
+    0%
+      transform scale(0)
+    100%
+      transform scale(1)
+
+  @media (min-width: $sizeS)
+
+    [id^="popin"]
+      left 25%
+      width 50%
+
+  #cmd-popin
+    position absolute
+    display block
+    z-index 1001
+    top -1.5rem
+    right -1.5rem
+    width 3rem
+    height 3rem
+    line-height 3
+    text-align center
+    ifColor($colorCL099)
+    ifBackgroundColor($colorBG099)
+    border none
+    border-radius 50%
+    cursor pointer
+    ifBoxShadow($colorBS099)
+
+  #cmd-popin::after
+    content '\ea5a'
+    position absolute
+    top -.5em // @bugfix @affected IE11 @note Pas de margin pour positionner en absolute
+    left .5em
+    font-family GlyphIcons
+    font-size 1.5rem
+
+  #cmd-popin:focus
+  #cmd-popin:hover
+  #cmd-popin:active
+    background-color $colorBG100
+
+
+// -----------------------------------------------------------------------------
+// @section     Tooltips
+// @description Gestion des infobules
+// -----------------------------------------------------------------------------
+if $bundleTooltips
+  // @note Ajout d'une class '.tooltip' sur le premier élément enfant d'un élément parent comportant '.addtooltip'
+  // @see Main.js
+
+  .tooltip
+    top 2.5rem
+    left 0
+    z-index 20
+    min-width 10rem
+    max-width 15rem
+    padding .5rem
+    text-align center
+    word-wrap break-word
+    ifColor($colorCL101)
+    background $colorBG101
+    border-radius .5rem
+
+  .tooltip::before
+    content ''
+    position absolute
+    top -1.5rem
+    left 2rem
+    z-index 19
+    border 1rem solid transparent
+    border-bottom-color $colorBD102
+
+
+// -----------------------------------------------------------------------------
+// @section     Main Nav
+// @description Menu de navigation principale
+// -----------------------------------------------------------------------------
+if $bundleMainNav
+
+
+  // @subsection  Cmd Main Nav
+  // @description Bouton de commande du menu
+  // @note        Pour les petites définitions d'écran
+  // -----------------------------------------------------------------------------
+
+  .main-nav input
+    position absolute
+    top -9999rem // @note Cacher l'élément
+
+  @media (max-width: $sizeNav)
+
+    .main-nav label
+      position absolute
+      z-index 1000
+      top .3em
+      right 1em
+      width 1.8em
+      height 1.8em
+      background-color $colorBG109
+
+    .main-nav :focus + label
+    .main-nav :hover + label
+      background-color $colorBG1090
+
+    .main-nav label span
+    .main-nav label span::before
+    .main-nav label span::after
+      position relative
+      top .8em
+      display block
+      width 1.4em
+      height 3px
+      background-color $colorBG110
+      transition all .2s
+
+    .main-nav label span
+      position relative
+      left .2em // @bugfix @affected iPad, iPhone @note Pas de possibilité de centrage de l'élément avec 'margin:auto'
+
+    .main-nav label span::before
+    .main-nav label span::after
+      content ''
+      position absolute
+
+    .main-nav label span::before
+      top -8px // @bugfix @affected Chrome @note Décalage si utilisation des unités rem
+
+    .main-nav label span::after
+      top 8px // @bugfix @affected Chrome @note Décalage si utilisation des unités rem
+
+    .no-touch .main-nav label:hover span
+      transform rotate(-90deg)
+
+    .no-touch .main-nav label:hover span::before
+    .no-touch .main-nav label:hover span::after
+      top 0
+      transform rotate(90deg)
+
+    .main-nav :checked + label span
+      transform rotate(45deg)
+
+    .main-nav :checked + label span::before
+    .main-nav :checked + label span::after
+      top 0
+      transform rotate(90deg)
+
+
+  // @subsection Brand
+  // -----------------------------------------------------------------------------
+
+  .brand
+    line-height 2.5
+    height 2.5em
+    padding-left 1em
+    background-color $colorBG1101
+
+  .brand a
+    color $colorCL120
+
+  @media (max-width: $sizeNav)
+
+    .main-nav :checked ~ .brand
+      border-bottom .1em solid $colorBD1081
+
+  @media (min-width: $sizeNav)
+
+    .brand
+      display none
+
+
+  // @subsection Items Main Nav
+  // -----------------------------------------------------------------------------
+
+  .main-nav
+    position absolute // @note Le fait de sortir l'élément du flux permet la possibilité de l'élément frère suivant en 100vh sans décalage
+    z-index 30
+    width 100%
+    ifBoxShadow($colorBS1082)
+
+  .main-nav ul
+    display flex
+    margin 0
+    padding 0
+
+  .main-nav li
+    list-style none
+
+  .main-nav
+  .main-nav li
+    background-color $colorBG103
+
+  .main-nav li > *
+    display block
+    padding 0 1em
+    line-height 2.5
+
+  .main-nav li a
+    color $colorCL104
+    text-decoration none
+
+  .main-nav li .active
+    ifColor($colorCL105)
+    ifBackgroundColor($colorBG105)
+
+  .main-nav li a:focus
+  .main-nav li a:hover
+  .main-nav li a:active
+    ifColor($colorCL106)
+    ifBackgroundColor($colorBG106)
+
+  @media (min-width: $sizeNav)
+
+    .main-nav li .active
+      ifColor($colorCL1051)
+      ifBackgroundColor($colorBG1051)
+
+    if($colorBS1052) // @note Si box-shadow, alors tout le code suivant pour la mise en place de cette règle (création d'un ::after, position relative, etc) :  
+
+      .main-nav li
+        position relative
+        z-index 2
+
+      //.main-nav .active::before // @note Permet une ombre sous l'intégralité de l'élément sans la supperposer sur le marqueur triangulaire.
+      //  content ''
+      //  display block
+      //  position absolute
+      //  z-index -1
+      //  left 0
+      //  width 100%
+      //  height 100%
+      //  background-color #000
+      //  box-shadow .5rem .5rem 2rem rgba(0, 0, 0, .2)
+
+      .main-nav .active::after
+        content ''
+        display block
+        position absolute
+        z-index -1
+        top 1rem
+        left calc(50% - 1em)
+        height 2rem
+        width 2rem
+        background-color transparent
+        ifBoxShadow($colorBS1052)
+        transform rotate(45deg)
+
+    .main-nav li a:focus
+    .main-nav li a:hover
+    .main-nav li a:active
+      ifColor($colorCL1061)
+      ifBackgroundColor($colorBG1061)
+
+  .main-nav [class^="icon"]
+    display inline-block
+    width 2em
+    text-align center
+  //transition max-height .5s linear
+
+  .main-nav a:hover [class^="icon"]
+  .main-nav a:focus [class^="icon"]
+  .main-nav a:active [class^="icon"]
+    animation animJump .5s ease-in-out
+
+  @media (min-width: $sizeNav)
+
+    .item-push // @note '.item-push' est l'inverse de '.item-pull' (margin-right: auto), cette dernière classe étant non-utilisée.
+      margin-left auto
+
+    @keyframes animJump
+      30%
+        transform translateY(-.3rem)
+
+  @media (max-width: $sizeNav)
+
+    .main-nav
+      height 2.5em
+
+    .main-nav ul
+      position absolute
+      z-index 800
+      left -100vw // @bugfix @affected Safari @note Pas de possibilité d'effet de droite à gauche : dépassement des conteneurs, même avec body overflow hidden-x
+      width 100% // @note Nescessité de définir une largeur
+      flex-direction column
+      background-color $colorBG107
+      transform translateZ(0) // @note Accélération matérielle
+      transition left .2s ease-in-out
+      will-change left // @note Précalcul sur les valeurs déclarées
+      ifBoxShadow($colorBS1062)
+
+    .main-nav :checked ~ ul
+      left 0
+
+    .main-nav li
+      border-top .1em solid $colorBD108a
+      border-bottom .1em solid $colorBD108b
+
+  .main-nav + *
+    padding-top 3.5em !important // @note Décalage sur le conteneur suivant afin de laisser une place pour le menu de navigation en position absolute.
+
+
+// -----------------------------------------------------------------------------
+// @section     Breadcrumb
+// @description Fil d'Ariane
+// -----------------------------------------------------------------------------
+if $bundleBreadcrumb
+
+  .breadcrumb
+    background-color #333
+    padding 0 1rem
+
+  .breadcrumb ul
+    margin -.5rem 0 .5rem !important
+    padding-left 0 !important
+    
+    overflow hidden // @note Pour couper les textes longs
+    white-space nowrap
+    text-overflow ellipsis
+
+  .breadcrumb li
+    display inline
+
+  .breadcrumb li:not(:first-child):before
+    box-sizing border-box
+    content ''
+    display inline-block
+    border .3rem solid transparent
+    border-left-color #777
+    margin 0 .3rem 0 .4rem
+
+  :root .breadcrumb a
+    color #777
+    transition color .5s
+
+  .breadcrumb li:last-child a
+    pointer-events none
+
+  :root .breadcrumb a:focus
+  :root .breadcrumb a:hover
+  :root .breadcrumb a:active
+    color #efefef
+
+
+// -----------------------------------------------------------------------------
+// @section     Anchor
+// @description Ancres
+// -----------------------------------------------------------------------------
+if $bundleAnchors
+
+  .anchor
+    position absolute
+    display inline-block
+    margin-top 1em
+    margin-left .5em
+    font-size .5em
+    text-decoration none !important
+    opacity 0
+    transition 1s opacity
+
+  .anchor::after
+    content '\ea81'
+    font-family GlyphIcons
+
+  :focus > .anchor
+  :hover > .anchor
+  :active > .anchor
+    opacity 1
+
+
+// -----------------------------------------------------------------------------
+// @section     Download Links
+// @description Liens de téléchargement
+// -----------------------------------------------------------------------------
+if $bundleDownloadLinks
+
+  //[href$=".pdf"]
+  //[href$=".zip"]
+  .download-link
+    padding .5em
+    border .2em solid $colorBD111
+    border-radius .5em
+
+  .download-link:focus
+  .download-link:hover
+  .download-link:active
+    color $colorCL112
+    background-color $colorBG112
+    text-decoration none
+
+
+// -----------------------------------------------------------------------------
+// @section     Loaders
+// @description Icônes d'attente
+// -----------------------------------------------------------------------------
+if $bundleLoaders
+
+  [class^="loader"]
+    transform translateZ(0)
+
+  .loader
+  .loader2
+    margin 0 auto
+    width 2em
+    height 2em
+    border .2em solid $colorBD113a
+    border-left-color $colorBD113b
+    border-radius 50%
+    animation animLoader 1s infinite linear
+
+  .loader2
+    border 1em solid $colorBD114a
+    border-right-color $colorBD114b
+    border-left-color $colorBD114b
+    animation-duration .8s
+
+  @keyframes animLoader
+    0%
+      transform rotate(0deg)
+    100%
+      transform rotate(360deg)
+
+  .loader3
+  .loader3::before
+  .loader3::after
+    position relative
+    width 1em
+    height 1em
+    border-radius 50%
+    animation-fill-mode both
+    animation animLoader3 1.2s infinite ease-in-out
+
+  .loader3
+    top -3.5em // @note Les margins et top servent à donner une hauteur au visuel
+    margin 0 auto 2.7em // @note Idem
+    animation-delay .3s
+
+  .loader3::before
+  .loader3::after
+    content ''
+    position absolute
+
+  .loader3::before
+    left -1em
+
+  .loader3::after
+    left 1em
+    animation-delay .6s
+
+  @keyframes animLoader3
+    40%
+      ifBoxShadow($colorBS115a)
+    0%
+    60%
+    100%
+      ifBoxShadow($colorBS115b)
+
+
+// -----------------------------------------------------------------------------
+// @section     Alert Messages
+// -----------------------------------------------------------------------------
+
+// @subsection  Terms of use
+// @description Mentions légales informatique et liberté
+// -----------------------------------------------------------------------------
+
+.terms-use
+  position fixed
+  display none // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
+  z-index 4000
+  bottom -1.5rem
+  right 0
+  padding 1rem
+
+.terms-use > *
+  display flex
+
+.terms-use button
+  align-self center
+  margin 0 0 0 1em
+
+
+// @subsection No Script
+// -----------------------------------------------------------------------------
+
+.noscript
+  position fixed
+  z-index 4000
+  bottom -1.5rem
+  right 0
+  padding 1rem
+
+
+// @subsection Old Browers
+// -----------------------------------------------------------------------------
+
+.old-browers
+  position fixed
+  z-index 4000
+  top 0
+  left 0 // @note Fallback à destination des anciens navigateurs parmis lesquels IE9-
+  left calc(-9999rem) // @note Si reconnaissance de l'unité rem + fonction calc()
+  width 100%
+  height 100%
+  padding 20px
+  color $colorCL117 !important
+  background $colorBG117
+
+.old-browers p
+  font 20px Monospace
+
+.old-browers *
+  text-align center
+  color $colorCL118 !important
+
+
+// -----------------------------------------------------------------------------
+// @section     Footer
+// @description Pied de page d'une page web
+// -----------------------------------------------------------------------------
+if $bundleFooter
+
+  .footer
+    ifColor($colorCL0001)
+    ifBackgroundColor($colorBG0001)
+
+  .footer a
+    ifColor($colorCL0002)
+
+  .footer [class*="message"]
+    ifColor($colorCL0003)
+
+
+// -----------------------------------------------------------------------------
+// @section     Articles
+// @description Template pour les articles d'une page web
+// -----------------------------------------------------------------------------
+if $bundleArticles
+
+  .article header
+    background-color #333
+
+  .article header div
+    height 20vh
+    background-repeat no-repeat
+    background-position 50% 50%
+    //ifBoxShadow($colorBS036)
+
+  .article header img
+    position absolute
+    left -9999rem
+
+  @media (min-width $sizeNav)
+    .article header
+      padding 0 1rem 2.5rem
+
+    .article header div
+      height 30vh
+
+  @media (min-width $sizeS)
+
+    .article header div
+      height 40vh
+
+  .article > div
+    margin 1rem 1rem 0
+
+  .article h1
+    margin-bottom 0
+
+  @media (max-width $sizeXS)
+    .article .button-group
+      margin-bottom 0
+
+  .article aside .message
+    margin-bottom 0
+
+
+// -----------------------------------------------------------------------------
+// @section     Aside
+// @description Section annexe au contenu de la page
+// -----------------------------------------------------------------------------
+if $bundleAside
+
+  .aside
+    padding 1.5rem $gutter .5rem
+    background-color #333
+
+//.aside + .aside // @bugfix @note Pas de prise en compte de la règle avec Ajax
+//  border-top .1em dashed #555
+
+  .aside .input input
+  .aside textarea
+    color $colorCL036
+    background-color #444
+    border-radius 0
+
+  .aside .emphasized::before
+  .aside .emphasized::after
+  .aside .separator::after
+    border-color $color1
+
+
+// -----------------------------------------------------------------------------
+// @section     Comments
+// @description Commentaires d'un article
+// -----------------------------------------------------------------------------
+if $bundleComments
+
+  .comment
+    padding 1rem
+    @extend .gradient-right
+    ifBoxShadow($colorBS036)
+
+  .comment [href^="#index"]
+    transition color .3s
+
+  @media (max-width: $sizeXS)
+
+    .comment [href^="#index"]
+      padding-left 1em
+
+  @media (min-width: $sizeXS)
+
+    .comment
+      position relative
+
+    .comment [href^="#index"]
+      position absolute
+      top .5rem
+      right 1rem
+
+  .comment [href^="#index"]:focus
+  .comment [href^="#index"]:hover
+  .comment [href^="#index"]:active
+    color #efefef
+    text-decoration none
+
+  .author-comment
+    display table
+
+  .author-comment .avatar
+    display table-cell
+    width 4rem
+    height 4rem
+    background-size cover
+
+  .author-comment p
+    margin 0 0 0 1em
+
+  .author-comment .author
+    color $color1
+
+  .comment + form
+    margin-top 1rem
+
+
+// -----------------------------------------------------------------------------
+// @section     Relationship
+// @description Articles en relation avec l'article consulté
+// -----------------------------------------------------------------------------
+if $bundleRelationship
+
+  .relationship
+    display flex
+    flex-wrap wrap
+    width 'calc(100% + %s - %s)' % $gutter $bugfixGrid
+    margin-left - $gutter !important
+
+  .relationship a
+    position relative // @todo For .ribbon
+    margin 0 0 $gutter $gutter
+    padding .5rem
+    background-color $colorBG036
+    ifBoxShadow($colorBS036)
+    transition .15s box-shadow, transform
+
+  @media (min-width: $sizeXS)
+
+    .relationship a
+      width 'calc(%s - %s - %s)' % ((100% / 12 * 6) $gutter $bugfixGrid)
+
+  @media (min-width: $sizeS)
+
+    .relationship a
+      width 'calc(%s - %s - %s)' % ((100% / 12 * 3) $gutter $bugfixGrid)
+
+  .relationship [class*="ratio"]
+    background-size cover
+
+  .relationship a:focus
+  .relationship a:hover
+  .relationship a:active
+    //z-index 30
+    ifBoxShadow($colorBS039)
+    transform scale(1.01)
+    text-decoration none
+
+  .relationship h2
+    font-size 1em
+    ifColor($colorCL036)
+
+
+// -----------------------------------------------------------------------------
+// @section     Profil
+// @description Profil de l'utilisateur
+// -----------------------------------------------------------------------------
+
+  .profil .avatar
+    background-size cover
+
+
+// -----------------------------------------------------------------------------
+// @section     Demo
+// @description Styles de démonstration
+// -----------------------------------------------------------------------------
+if $bundleDemos
+
+  .demo-item
+    overflow hidden
+    min-height 4rem
+    width 100%
+    text-align center
+    background-color $colorBGd001
+
+  .demo-layout [class^="m"]
+  .demo-layout aside
+    min-height 4rem
+    padding .5rem 0
+    text-align center
+    background-color $colorBGd001
+
+  .demo-layout2 [class^="m"]
+    padding .5rem
+    background $colorBGd001 url('/Images/Demo/ponton_b&w.jpg')
+    background-size cover
+    background-position center center
+
+  .demo-layout2 > :nth-child(5n+2)
+    background-image url('/Images/Demo/phare.jpg')
+
+  .demo-layout2 > :nth-child(5n+3)
+    background-image url('/Images/Demo/tunel.jpg')
+
+  .demo-layout2 > :nth-child(5n+4)
+    background-image url('/Images/Demo/rose_b&w.jpg')
+
+  .demo-layout2 > :nth-child(5n+5)
+    background-image url('/Images/Demo/boat.jpg')
+
+  .demo-ratio [class^="ratio"]
+    background-color $colorBGd001

@@ -1,0 +1,12 @@
+// -----------------------------------------------------------------------------
+// @section     Icons
+// @description Déclaration des icônes avec leur caractère unicode associé
+// -----------------------------------------------------------------------------
+
+<%
+// @note Génération automatique des déclarations en Stylus
+
+_.each(glyphs, function(glyph) { %>.<%= className %><%= glyph.name %>::before
+  content '\<%= glyph.codepoint.toString(16).toUpperCase() %>'
+
+<% }); %>

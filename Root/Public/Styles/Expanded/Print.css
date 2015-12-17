@@ -1,0 +1,99 @@
+
+/* line 286 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+
+/* line 1 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/node_modules/gulp-stylus/node_modules/stylus/lib/functions/index.styl */
+
+/* line 6 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+body > :not(main),
+article header,
+.button-group,
+.scroll-top,
+.no-print {
+  display: none !important;
+}
+
+/* line 13 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+* {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* line 18 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+body {
+  margin: 2cm;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: 300;
+  line-height: 20px;
+  font-size: 14px;
+  color: #666;
+  text-align: justify;
+}
+
+/* line 27 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+h1 {
+  font-size: 30px;
+  line-height: 40px;
+  text-align: left;
+}
+
+/* line 32 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+/* line 36 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+a[href]::after {
+  content: ' (' attr(href) ')';
+}
+
+/* line 39 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+a[href^="#"]::after {
+  content: '';
+}
+
+/* line 42 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+p,
+h2,
+h3,
+blockquote {
+  orphans: 3;
+  widows: 3;
+}
+
+/* line 49 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+blockquote,
+ul,
+ol {
+  page-break-inside: avoid;
+}
+
+/* line 54 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  page-break-after: avoid;
+}
+
+/* line 61 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+blockquote {
+  margin: 0 0 20px;
+  padding: 0 0 0 15px;
+  border-left: 5px solid #aaa;
+}
+
+/* line 66 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+[class*="message"] {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: 1px dashed #aaa;
+  border-radius: 5px;
+}

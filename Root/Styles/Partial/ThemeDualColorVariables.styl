@@ -1,0 +1,103 @@
+// -----------------------------------------------------------------------------
+// @section	    DUALCOLOR VALUES
+// @description Variables globales pour le thème
+// -----------------------------------------------------------------------------
+
+
+// @subsection  Colors
+// @description Propagation des couleurs pour le thème
+// -----------------------------------------------------------------------------
+
+	// @documentation :
+	// [1] Correctif pour les gris foncés, afin que l'impression de profondeur du gris soit visuellement équivalente entre les deux couleurs :
+  $color0 = #cd5c5c //IndianRed                  // onpage
+  $color0b = #4d626d                             // onpage section impaire
+  $color1 = lighten($color0, 70%)                // couleur dominante 1
+  $color1b = lighten($color0b, 30%)              // couleur dominante 1 sec. imp.
+//$color2 = #b9515d                              // couleur dominante 2
+  $color4 = #dff0d8                              // couleur secondaire
+  $color5 = #f2dede                              // couleur secondaire
+  $color6 = #d9edf7                              // couleur secondaire
+  $color7 = #fcf8e3                              // couleur secondaire
+  $darkenGrayscaleA = darken(desaturate($color0, 100%), 60%) // [1]
+  $darkenGrayscaleB = darken(desaturate($color0b, 100%), 40%) // [1]
+
+
+  $colorCL001 = $color1									          // html
+  $colorBG002 = $color0									          // body
+  $colorBG003 = darken(rgba(205, 92, 92, .7), 25%) // #cd5c5c // ::selection
+  $colorCL004 = $color1									          // Links
+  $colorCL005 = $color1									          // Titles
+  $colorBG007 = $color1
+  $colorBD007 = $color1
+  $colorCL011 = $color1                            // Verses
+  $colorCL012 = $color1									           // Dropcaps
+  $colorBG012 = none
+  $colorCL016 = false
+  $colorCL017 = #fff !important
+  $colorBG024 = false
+  $colorCL0291 = false								             // Surround
+  $colorBG0291 = rgba(255, 255, 255, .1)
+  $colorBG045 = #aaa										           // Players
+  $colorBG049 = $color0									           // Inputs
+  $colorCL054 = $color1
+  $colorBS061 = false
+  $colorCL064 = $darkenGrayscaleA
+  $colorBS066 = false
+  $colorCL119 = $colorCL064
+  $colorCL104 = $color1								           	// Items Main Nav
+  $colorCL105 = #fff
+  $colorBG105 = $color0
+  $colorCL106 = #fff
+  $colorBG106 = darken($color0, 10%)
+  $colorCL1051 = false
+  $colorBG1051 = false
+  $colorCL1061 = false
+  $colorBG1061 = $colorBG106
+  $colorBG110 = lighten($color0b, 20%)				  	// Cmd Main Nav
+  $colorBG008b = rgba(255, 255, 255, .2)					// pre code
+  $colorBG013 = #222					                    // Headbands
+  $colorBG015a = transparent   			              // Ribbons
+  $colorBG015b = rgba(255, 255, 255, .05)
+  $colorBG019a = $colorBG015a
+  $colorBG019b = $colorBG015b
+  $colorBG021a = $colorBG015a
+  $colorBG021b = $colorBG015b
+  $colorBG022a = $colorBG021a
+  $colorBG022b = $colorBG021b
+  $colorBS036 = false								          	  // Figures
+//colorBS039 = false								          	  // Focus
+  $colorBG055 = darken($color0, 5%)			    			// Inputs
+  $colorCL056 = $color0							          		// Buttons
+  $colorBG056 = $color1
+  $colorBD056 = $color1
+  $colorBG079 = rgba(255, 255, 255, .1)					  // Progress
+  $colorBD111 = $color1							          		// Download Links
+  $colorCL112 = $color0
+  $colorBG112 = $color1
+  $colorBD113a = rgba(255, 255, 255, .2)					// Loaders
+  $colorBD114a = $colorBD113a
+  $colorBD113b = rgba(255, 255, 255, .5)
+  $colorBD114b = $colorBD113b
+  $colorBS115a = 0 4em 0 0 rgba(255, 255, 255, .5)
+  $colorCL120 = $colorCL104       								// Brand
+
+  $colorBGd001 = rgba(255, 255, 255, .1)					// Styles de démonstration
+
+
+// @subsection Images
+// -----------------------------------------------------------------------------
+
+  $image001 = url(../../Images/play.svg)
+  $image002 = url(../../Images/asterisk2.000.2.svg)
+  $image003 = url(../../Images/search.000.2.svg)
+  $image004 = url(../../Images/select-column.000.2.svg)
+
+
+// @subsection Rounds
+// -----------------------------------------------------------------------------
+
+  $r1 = false											             // Boites
+  $r2 = false											             // Éléments internes
+  $r3 = false											             // Éléments d'informations
+  $r4 = false											             // Bouttons

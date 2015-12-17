@@ -1,0 +1,417 @@
+// -----------------------------------------------------------------------------
+// @section	    VALUES
+// @description Variables globales par défaut
+// -----------------------------------------------------------------------------
+
+// @bugfix @note Constat de téléscopages possible entre les variables stylus certaines valeurs. Par convention le framework utilise donc $ pour ses variables. Cela permet aussi un meilleur repérage des variables dans le code.
+
+// @subsection  $bundles
+// @description Choix des $bundles
+// -----------------------------------------------------------------------------
+
+// @note Les couleurs de certains de ces $bundles peuvent être répercutées dans onegage-colors.scss, ce qui pourra nécessiter la désactivation de ce dernier ou un correctif
+
+  $bundleGrid =          true
+  $bundleColumns =       true
+  $bundleHidden =        true
+  $bundlePositions =     true
+  $bundleSizesBlocks =   true
+  $bundleRatios =        true
+  $bundleLangages =      true
+  $bundleZoom =          true
+  $bundleVerses =        true
+  $bundleDropCaps =      true
+  $bundleLetters =       false
+  $bundleHeadbands =     true
+  $bundleRibbons =       true
+  $bundleLists =         true
+  $bundleSummary =       true
+  $bundleNumberlists =   true
+  $bundleSeparators =    true
+  $bundleHighlight =     true
+  $bundleEmphasized =    true
+  $bundleSurround =      true
+  $bundleMessagesBox =   true
+  $bundleImages =        true
+  $bundleCaptionSlides = true
+  $bundleFocus =         true
+  $bundleMedias =        true
+  $bundlePlayers =       true
+  $bundleMaps =          true
+  $bundleGradients =     true
+  $bundleForms =         true
+  $bundleInputs =        true
+  $bundleButtons =       true
+  $bundleSearch =        true
+  $bundleCheckbox =      true
+  $bundleSwitchs =       true
+  $bundleRanges =        true
+  $bundleProgress =      true
+  $bundleScrollTop =     true
+  $bundleAccordions =    true
+  $bundleTabs =          true
+  $bundleTables =        true
+  $bundlePopins =        true
+  $bundleTooltips =      true
+  $bundleMainNav =       true
+  $bundleBreadcrumb =    true
+  $bundleAnchors =       true
+  $bundleLoaders =       true
+  $bundleDownloadLinks = true
+  $bundleFooter =        true
+  $bundleArticles =      true
+  $bundleAside =         true
+  $bundleComments =      true
+  $bundleRelationship =  true
+
+  $bundleDemos =         true
+
+
+// @subsection  Grid
+// @description Configuration de la grille
+// -----------------------------------------------------------------------------
+
+  $columns = 12                             // @note Nombre de colonnes
+  $gutter = 1rem                            // @note Gouttière, largeur entre deux modules (en unité em/rem)
+  $wrap = 90rem                             // @note Largeur maximale du contenu
+  $bugfixGrid = .01px                       // @bugfix @affected IE10+, Firefox @todo En test...
+
+
+// @subsection  Breakpoints
+// @description Définition des points de rupture
+// -----------------------------------------------------------------------------
+// @see http://fr.wikipedia.org/wiki/Définition_d'écran
+// @bugfix Nécessité de préciser deux chiffres après la virgule pour éviter un décalage entre 'max-width' et 'min-width' (avec une unité pour éviter les arrondissements par les navigateurs).
+
+  $sizeXS =   36.01rem
+  $sizeS =    65.01rem
+  $sizeL =    90.01rem
+  $sizeXL =  120.01rem
+  $sizeXXL = 140.01rem
+  $sizeNav =  45.01rem // @note À caler sur la taille de '.nav-main ul'. Prévoir de la marge en raison des différences d'interprétation des fonts selon les navigateurs
+
+
+// @subsection Maintenance pour les points de rupture
+// -----------------------------------------------------------------------------
+
+//  .section::before
+//    content 'sizeXS'
+//    position fixed
+//    z-index 4000
+//    bottom 10px
+//    left 10px
+//    padding 10px
+//    $color #fff
+//    background-color red
+//    border 2px solid #fff
+//  @media (min-width: sizeXS) and (max-width: sizeS)
+//    .section::before
+//      content 'sizeS'
+//      background-color black
+//  @media (min-width: sizeS) and (max-width: sizeL)
+//    .section::before
+//      content 'sizeL'
+//      background-color red
+//  @media (min-width: sizeL) and (max-width: sizeXL)
+//    .section::before
+//      content 'sizeXL'
+//      background-color black
+//  @media (min-width: sizeXL)
+//    .section::before
+//      content 'sizeXXL'
+//      background-color red
+
+
+// @subsection  Fonts
+// @description Choix des polices de caractères à charger via @font-face
+// -----------------------------------------------------------------------------
+
+// @note Le nom de la police doit être le même que ne nom du fichier de la police. Pour raison de simplification...
+
+  $fontName = 'Libre Baskerville'
+  $fontFile = librebaskerville
+
+  $fontName2 = LibreBaskTang
+  $fontFile2 = LibreBaskTang
+
+
+// @subsection Typography
+// -----------------------------------------------------------------------------
+
+//fontFamily =	'Open Sans', 'Helvetica Light', Helvetica, 'Droid Sans', Arial, sans-serif
+  $fontFamily =	$fontName, 'Palatino Linotype', Palatino, sans-serif // fonts par défaut
+  $fontFamily2 = $fontName2                 // hx
+  $fontFamily3 = false                      // .dropcap
+  $fontFamily4 = false                      // .title
+  $fontFamily5 = 'GFS Didot', 'Palatino Linotype', Palatino, sans-serif // :lang(grc)
+  $fontFamily6 = 'Libre Baskerville', 'Palatino Linotype', Palatino, sans-serif // :lang(he)
+  $fontWeight = 300                         // épaisseur par défaut
+  $fontWeight2 = 400                        // hx font
+
+
+// @subsection  Colors
+// @description Propagation des couleurs prédéfinies
+// -----------------------------------------------------------------------------
+
+// Palette de référence pour les couleurs du thème
+  $color0 = #fff                            // couleur de fond
+  $color1 = #ff6f7d                         // couleur dominante 1
+  $color2 = #b9515d                         // couleur dominante 2
+  $color4 = #dff0d8                         // couleur secondaire (vert)
+  $color5 = #f2dede                         // couleur secondaire (rouge)
+  $color6 = #d9edf7                         // couleur secondaire (bleu)
+  $color7 = #fcf8e3                         // couleur secondaire (jaune)
+  $colorG = desaturate($color1, 100%)       // gris de référence
+
+
+// Application des couleurs
+
+// Memo variables :
+// colorCL000 = color
+// colorBG000 = background-color
+// colorBD000 = border-color
+// colorBS000 = box-shadow
+// colorTS000 = text-shadow
+// colorFI080 = fill
+
+  $colorCL0001 = false                      // Footer
+  $colorBG0001 = false
+  $colorCL0002 = false
+  $colorCL0003 = false
+  $colorCL001 = #777                        // html
+  $colorBG002 = $color0                     // body
+  $colorBG003 = rgba(255, 111, 125, .5)     // ::selection
+  $colorCL004 = $color1                     // Links
+  $colorCL005 = $color1                     // Titles
+  $colorBG007 = rgba(255, 255, 255, .6)
+  $colorBD007 = rgba(0, 0, 0, .1)
+  $colorBG008a = $color0
+  $colorBG008b = rgba(0, 0, 0, .2)
+  $colorBD008 = $color1
+  $colorBS008 = false
+  $colorCL009 = $color0
+  $colorBG009 = $color1
+  $colorBS009 = $colorBS008
+  $colorBD010 = #ebebeb                     // blockquote
+  $colorCL011 = $color1                     // Verses
+  $colorCL012 = #777                        // Dropcaps
+  $colorBG012 = #ebebeb
+  $colorBG013 = #eee                        // Headbands
+  $colorBG014 = #000
+  $colorBG015a = rgba(0, 0, 0, 0)           // Ribbons
+  $colorBG015b = rgba(0, 0, 0, .05)
+  $colorCL016 = $colorG !important
+  $colorBG016a = #333
+  $colorBG016b = rgba(0, 0, 0, .1)
+  $colorBG016c = rgba(255, 255, 255, .05)
+  $colorBS016 = 0 .3em 1em -.5em rgba(0, 0, 0, 1)
+  $colorCL017 = #fff !important
+  $colorBD018 = #333
+  $colorBG019a = rgba(0, 0, 0, 0)
+  $colorBG019b = rgba(0, 0, 0, .1)
+  $colorBD020 = #333
+  $colorBG021a = rgba(0, 0, 0, 0)
+  $colorBG021b = rgba(0, 0, 0, .1)
+  $colorBG022a = $colorBG021a
+  $colorBG022b = $colorBG021b
+  $colorBG023 = #ddd                        // Special Lists
+  $colorBS023 = false
+  $colorBG024 = #ebebeb
+  $colorBS024 = false
+  $colorBG025 = $colorBG024                 // Number Lists
+  $colorBS025 = false
+  $colorCL026 = $color0
+  $colorBG026 = $color1
+  $colorBS0261 = false
+  $colorBD027 = $color1
+  $colorBS0271 = false
+  $colorBD028 = #ebebeb                     // Separators
+  $colorBD029 = #ebebeb                     // Emphasized Titles
+  $colorCL0291 = $color0                    // Surround
+  $colorBG0291 = $color1
+  $colorBS0291 = false
+  $colorBG030 = #ebebeb                     // Messages Box
+  $colorBD030 = $color0
+  $colorBS030 = false
+  $colorBG031 = #ebebeb
+  $colorBD031 = $colorBD030
+  $colorBS031 = $colorBS030
+  $colorBG032 = $color6
+  $colorBG033 = $color4
+  $colorBG034 = $color5
+  $colorBG035a = color7
+  $colorBG035b = rgba(0, 0, 0, .05)
+  $colorFI0351 = $color1                    // Svg
+  $colorCL036 = false                       // Figures
+  $colorBG036 = #fefefe
+  $colorBS036 = .5rem .5rem 2rem rgba(0, 0, 0, .2)
+  $colorCL037 = $color0                     // Caption Slides
+  $colorTS037 = rgba(0, 0, 0, .5)
+  $colorBG037 = rgba(0, 0, 0, .5)
+  $colorCL038 = $color0
+  $colorBG038 = rgba(0, 0, 0, .5)
+  $colorBS039 = .5rem .5rem 2rem rgba(0, 0, 0, .3) // Focus
+  $colorCL040 = #aaa
+  $colorBS040 = #333
+  $colorBS0401 = false                      // Medias
+  $colorBS041 = $colorBS0401
+  $colorBG041 = #000
+  $colorBS0411 = $colorBS0401               // Players
+  $colorBG042 = #333
+  $colorBG043 = rgba(0, 0, 0, .2)
+  $colorBG044 = black
+  $colorBG045 = #444
+  $colorBG046 = red
+  $colorBG047 = #222                        // Maps
+  $colorBG048a = rgba(0, 0, 0, .1)          // Gradients
+  $colorBG048b = rgba(255, 255, 255, .05)
+  $colorCL121 = #aaa                        // ::placeholder
+//$colorCL049 = colorCL121                  // Inputs
+//$colorBG049 = #eee
+  $colorBG050 = #eee
+  $colorCL051 = #b8b8b8
+  $colorBG052a = #efefef
+  $colorBG052b = rgba(0, 0, 0, .3)
+  $colorBG053 = #f2dede
+  $colorBD053 = $color1
+  $colorCL054 = $color1
+  $colorCL055 = #efefef                     // Input Groups
+  $colorBG055 = $color1
+  $colorCL056 = $color0                     // Buttons
+  $colorBG056 = $color1
+  $colorBD056 = $color1
+  $colorBS056 = 0 .5rem 2rem rgba(0, 0, 0, .3)
+  $colorBS057 = $colorBS056
+  $colorBS058 = 0 0 0 #000
+  $colorBS059 = $colorBS056
+  $colorCL059 = #b8b8b8
+  $colorBG059a = #858585
+  $colorBG059b = rgba(255, 255, 255, .2)
+  $colorBD059 = #858585
+  $colorBG060 = #eee										     // Search
+  $colorBG061 = #fefefe									     // Checkbox & Radio
+  $colorBD061 = #ccc
+  $colorBS061 = inset 0 .1em .3em rgba(0, 0, 0, .3)
+  $colorBD062 = #888
+  $colorCL063 = $color1
+  $colorCL064 = #b8b8b8
+  $colorBG065 = rgba(255, 255, 255, .2)
+  $colorBG066 = #ebebeb									     // Switchs
+  $colorBS066 = inset 0 .2em .5em rgba(0, 0, 0, .2)
+  $colorBG067 = #dff0d8
+  $colorBG068 = #fefefe
+  $colorBS068 = 0 .2em .5em rgba(0, 0, 0, .3)
+  $colorBS069 = inset 0 .1em .3em rgba(0, 0, 0, .5)
+  $colorCL0721 = false
+  $colorCL119 = $colorCL064
+  $colorBG070 = rgba(255, 255, 255, .2)
+  $colorBG071 = #ebebeb
+  $colorCL072 = #777
+  $colorBG073 = #eee
+  $colorBG074a = $color1
+  $colorBG074b = rgba(0, 0, 0, .1)
+  $colorBG074c = rgba(255, 255, 255, .05)
+  $colorBD074 = $color1
+  $colorBG075 = $colorBG073
+  $colorBG076a = $color1
+  $colorBG076b = rgba(0, 0, 0, .1)
+  $colorBG076c = rgba(255, 255, 255, .05)
+  $colorBD076 = $color1
+  $colorBG077 = $color1
+  $colorCL078 = #fefefe
+  $colorBG078 = $color1
+  $colorBG079 = rgba(0, 0, 0, .1)						   // Progress
+  $colorBG080 = $color1
+  $colorBS080 = inset 0 2px 9px rgba(255, 255, 255, .3), inset 0 -2px 6px rgba(0, 0, 0, .4)
+  $colorBG081 = rgba(255, 255, 255, .2)
+  $colorFI082 = #000									         // Scroll top
+  $colorBS0821 = false									       // Accordions
+  $colorCL083 = #fefefe
+  $colorBG083 = $color1
+  $colorBG084 = $color2
+  $colorBG085 = #eee
+  $colorBG086 = #ddd
+  $colorBD086 = $colorBG084
+  $colorBG006 = false									         // Tabs
+  $colorBD006 = #eee
+  $colorBG087 = $color0
+  $colorCL099 = false
+  $colorBD089 = $colorBD006
+  $colorBS089 = false
+  $colorBD0891 = false									       // Tables
+  $colorBS0891 = false
+  $colorCL090 = #fefefe
+  $colorCL091 = $colorCL090
+  $colorBG090 = $color1
+  $colorBG091 = #444
+  $colorCL092 = #fefefe
+  $colorBG092 = $color1
+  $colorBD093 = #eee
+  $colorBG094 = rgba(0, 0, 0, .1)
+  $colorBG095 = rgba(0, 0, 0, .2)
+  $colorCL096 = #fefefe
+  $colorBG096 = #444
+  $colorBD097 = #444
+  $colorBG098 = $color0									       // Popins
+  $colorBS098 = 0 0 0 10000rem rgba(0, 0, 0, .8)
+  $colorBG099 = #efefef
+  $colorBS099 = false
+  $colorBG100 = #ddd
+  $colorCL101 = false									         // Tooltips
+  $colorBG101 = #222
+  $colorBD102 = $colorBG101
+  $colorBG103 = #333									         // Items Main Nav
+  $colorCL104 = #ddd
+  $colorCL105 = #333
+  $colorBG105 = $color0
+  $colorCL106 = $color0
+  $colorBG106 = $color2
+  $colorCL1051 = false
+  $colorBG1051 = false
+  $colorBS1052 = false
+  $colorCL1061 = false
+  $colorBG1061 = false
+  $colorBS1062 = false
+  $colorBG107 = #333
+  $colorBD108a = rgba(255, 255, 255, .2)
+  $colorBD108b = rgba(0, 0, 0, .2)
+  $colorBD1081 = $colorBD108b
+  $colorBS1082 = false									       // Main Nav
+  $colorBG109 = #222									         // Cmd Main Nav
+  $colorBG1090 = #000
+  $colorBG110 = $color0
+  $colorBG1101 = #333									         // Brand
+  $colorCL120 = $colorCL104
+  $colorCL0121 = false                         // .letter
+  $colorBD111 = $color1									       // Download Links
+  $colorCL112 = $color0
+  $colorBG112 = $color1
+  $colorBD113a = #ddd									         // Loaders
+  $colorBD113b = $color1
+  $colorBD114a = #ddd
+  $colorBD114b = $color1
+  $colorBS115a = 0 4em 0 0 $color1
+  $colorBS115b = 0 4em 0 -.5em transparent
+  $colorCL117 = $color0									       // Old Browers
+  $colorBG117 = #000
+  $colorCL118 = $color0
+
+  $colorBGd001 = #eee									         // Styles de démonstration
+
+
+// @subsection Images
+// -----------------------------------------------------------------------------
+
+  $image001 = url(../../Images/play.svg)
+  $image002 = url(../../Images/asterisk2.000.3.svg)
+  $image003 = url(../../Images/search.000.3.svg)
+  $image004 = url(../../Images/select-column.000.3.svg)
+
+
+// @subsection Rounds
+// -----------------------------------------------------------------------------
+
+  $r1 = false											// Boites
+  $r2 = false											// Éléments internes
+  $r3 = false											// Éléments d'informations
+  $r4 = false											// Bouttons

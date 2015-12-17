@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>Scriptura Framework</title>
+    <meta name="description" content="Interface for web apps">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="geo.placename" content="Saint-Médard-en-Forez, Loire, France">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="stylesheet" href="./Public/Styles/MainRatatouille.css" media="screen" id="stylesheet">
+  </head>
+  <body itemscope itemtype="//schema.org/WebPage">
+    <nav role="navigation" class="main-nav">
+      <div class="wrap">
+        <input type="checkbox" id="cmd-main-nav">
+        <label for="cmd-main-nav"><span></span></label>
+        <div class="brand"><a href="https://scriptura.github.io/"><span class="letter">S</span><span>criptura</span></a></div>
+        <ul>
+          <li><span class="active"><span class="icon-home"></span><span class="sizeNav-hidden">Home</span></span></li>
+          <li><a href="https://scriptura.github.io/Pages/StyleGuide.html"><span class="icon-list2"></span>Style Guide</a></li>
+          <li><a href="https://scriptura.github.io/Pages/Layouts.html"><span class="icon-frame"></span>Layout Examples</a></li>
+          <li><a href="https://scriptura.github.io/Pages/Themes.html"><span class="icon-rocket"></span>Themes</a></li>
+          <li class="item-push"><a href="https://github.com/Scriptura/Scriptura"><span class="icon-github"></span>Repository</a></li>
+        </ul>
+      </div>
+    </nav>
+    <header role="banner" class="section vh100">
+      <div class="wrap ribbon-container">
+        <div class="ribbon"><a href="#index-about">About</a></div>
+        <div class="vertical vh85">
+          <div class="text-center">
+            <h1 itemprop="name">Scriptura</h1>
+            <svg xmlns="//www.w3.org/2000/svg" viewbox="0 0 200 200" fill="#ff6f7d" class="svg-color width10">
+              <path d="M200 24.758c-355.807-105.878 130.682 161.232-200 175.242 286.814-75.173-174.292-221.127 200-175.242z"></path>
+            </svg>
+            <h2 itemprop="alternativeHeadline">Interface for web apps</h2><br class="sizeXS-unhidden"><br class="sizeXS-unhidden"><a href="https://github.com/Scriptura/Scriptura/archive/master.zip" class="download-link sizeXS-unhidden center width16"><span class="icon-github"> </span>Download Scriptura</a>
+            <p class="zoom70">Currently 0.0.0</p>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="index-about" class="section">
+      <div class="wrap box ribbon-container">
+        <div class="ribbon"><a href="https://github.com/Scriptura/Scriptura/blob/master/Readme.md#about">More details</a></div>
+        <h2 class="highlight">About<a href="#index-about" class="anchor"></a></h2>
+        <div class="grid">
+          <div class="m6 sizeS-m8 accordion">
+            <h3>Eng</h3>
+            <div class="active links">
+              <p>Scriptura is a framework html/js/css light that aims to simplify the layout. Here, no supperflu adding html tags or index in the flow of web pages in order to support a script or a visual effect, priority is given to content, the HTML code is clean and respects the logic of the flow Datas.</p>
+              <p>The idea is to start from a properly structured text and to surround it with a parent element with a class. The part of the target document will be transformed as tabs or accordion menu, or anything else as appropriate. For examples see our <a href="https://scriptura.github.io/Pages/StyleGuide.html">StyleGuide</a>.</p>
+              <p>The framework allows for <a href="https://scriptura.github.io/Pages/Layouts.html">complex layouts</a> through a grid system based on the modules css FlexBox and calc() function.</p>
+              <p>Their scripts sides are based on the Web Storage rather than cookies.</p>
+              <p>These technologies imply a limitation of backward compatibility with older browsers, bias on our part that allows us the use of the latest technologies without compromise web.</p>
+            </div>
+            <h3>Fr</h3>
+            <div lang="fr" class="links">
+              <p>Scriptura est un framework html/js/css léger dont le but est de simplifier la mise en page. Ici, pas d'ajout supperflu de balises html ou d'index dans le flux des pages web dans le but de soutenir un script ou un effet visuel, la priorité est donnée au contenu, le code html reste propre et respecte la logique du flux des données.</p>
+              <p>L'idée est de partir d'un texte correctement structuré et de l'entourer d'un élément parent comportant une classe. La partie du document ainsi ciblée sera transformée en menu onglets ou accordéon, ou encore autre chose selon les besoins. Pour voir des exemples consultez notre <a href="https://scriptura.github.io/Pages/StyleGuide.html">StyleGuide</a>.</p>
+              <p>Le framework permet des <a href="https://scriptura.github.io/Pages/Layouts.html">mises en page complexes</a> grâce à un système de grille basé sur les modules css flexbox et la fonction calc().</p>
+              <p>De leurs côtés les scripts s'appuient sur le Web Storage plutôt que sur les cookies.</p>
+              <p>Ces technologies impliquent une limitation de la rétrocompatibilité aux navigateurs récents, un parti pris de notre part qui nous permet l'utilisation des dernières technologies du web sans compromis.</p>
+            </div>
+          </div>
+          <div class="m6 sizeS-m4 vertical">
+            <div class="icon-info surround zoom700"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="index-get-started" class="section">
+      <div class="wrap box ribbon-container">
+        <div class="ribbon"><a href="https://github.com/Scriptura/Scriptura/blob/master/Readme.md#get-started">More details</a></div>
+        <h2 class="highlight">Get Started<a href="#index-get-started" class="anchor"></a></h2>
+        <div class="grid">
+          <div class="m6 sizeS-m8">
+            <h3 class="h5">First stage</h3>
+            <div class="active">
+              <p>Work with the workflow by running this command with your terminal to the file in the root: <code>$ gulp</code></p>
+            </div>
+            <h3 class="h5">Second stage</h3>
+            <div>
+              <p>Create an <code>.html.jade</code> or an <code>.php.jade</code> file in the folder.</p>
+              <p>With in the file's header: <code>link(rel='stylesheet', href='./Public/Styles/Main.css', media='screen')</code></p>
+              <p>And in the file's footer: <code>script(src='./Scripts/Vendors/JQuery.js')</code> and <code>script(src='./Public/Scripts/Main.js')</code></p>
+            </div>
+            <h3 class="h5">Third stage</h3>
+            <div>
+              <p>That's all! You can start creating with jade syntaxe.</p>
+            </div>
+          </div>
+          <div class="m6 sizeS-m4 vertical">
+            <div class="icon-rocket surround zoom700"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="index-footer" role="contentinfo" class="section footer vertical vh100">
+      <div class="wrap text-center">
+        <p><em>A framework created by</em></p>
+        <p><span class="icon-quill"></span></p>
+        <p><a href="//github.com/Scriptura" itemprop="author" itemscope itemtype="https://schema.org/Person" class="author"><span itemprop="name"><span itemprop="givenName">Olivier</span> <span itemprop="familyName">Chavarin</span></span></a></p>
+      </div>
+      <div class="terms-use">
+        <div class="message-info">
+          <p>En parcourant ce site vous acceptez nos conditions générales d'utilisation...</p>
+          <button id="terms-use" class="button">oui</button>
+        </div>
+      </div>
+      <div class="old-browers">
+        <div class="icon-spaceinvader zoom700"></div><br>
+        <p>Old browser!</p><br>
+        <p>This site has been developed for modern browsers. In order to benefit from its full functionality, upgrade your browser to date.</p>
+      </div>
+      <noscript class="noscript">
+        <p class="message-warning">Javascript is disabled on your browser, enable it to benefit from all the site's features.</p>
+      </noscript>
+      <div class="ajax-window-popin"></div>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="./Scripts/Vendors/JQuery.js"><\/script>')</script>
+    <script src="./Public/Scripts/Main.js"></script>
+    <script src="./Public/Scripts/Themes.js"></script>
+  </body>
+</html>

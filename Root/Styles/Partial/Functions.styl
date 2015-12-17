@@ -1,0 +1,58 @@
+// -----------------------------------------------------------------------------
+// @section     Functions
+// @description Fonctions Sass
+// -----------------------------------------------------------------------------
+
+// @note Le préfixage n'est pas géré par les mixins, celui-ci est laissé à la charge d'Autoprefixer
+// @link https://github.com/postcss/autoprefixer
+// @link https://www.npmjs.com/package/gulp-autoprefixer
+
+// @note Ces fonctions ne renvoient une règle que si un argument est présent :
+
+ifFontFamily($arguments)
+  if $arguments != false
+    font-family $arguments
+
+ifColor($arguments)
+  if $arguments != false
+    color $arguments
+
+ifBorderColor($arguments)
+  if $arguments != false
+    border-color $arguments
+
+ifBorderRadius($arguments)
+  if $arguments != false
+    border-radius $arguments
+
+ifBackground($arguments)
+  if $arguments != false
+    background $arguments
+
+ifBackgroundColor($arguments)
+  if $arguments != false
+    background-color $arguments
+
+ifBackgroundImage($arguments)
+  if $arguments != false
+    background-image $arguments
+
+ifBackgroundSize($arguments)
+  if $arguments != false
+    background-size $arguments
+
+ifTextShadow($arguments)
+  if $arguments != false
+    text-shadow $arguments
+
+ifFill($arguments)
+  if $arguments != false
+    fill $arguments
+
+ifTransform($arguments)
+  if $arguments != false
+    transform $arguments
+
+ifBoxShadow($arguments)
+  if $arguments != false
+    box-shadow $arguments
