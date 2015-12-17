@@ -55,7 +55,7 @@ Ces technologies impliquent une limitation de la rétrocompatibilité aux naviga
     ├── node_modules
     └── Readme.md
 
-## Template engine with Jade lang and Sass
+## Template engine with Jade lang, Sass and jQuery
 
 The framework uses the syntax [Jade](http://jade-lang.com/) and [Stylus](https://learnboost.github.io/stylus/).
 
