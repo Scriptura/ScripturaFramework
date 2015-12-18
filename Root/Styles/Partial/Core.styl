@@ -3120,10 +3120,11 @@ if $bundleArticles
     background-color #333
 
   .article header div
+    max-width $wrap
     height 20vh
-    background-repeat no-repeat
+    margin 0 auto
+    background-size cover
     background-position 50% 50%
-    //ifBoxShadow($colorBS036)
 
   .article header img
     position absolute
@@ -3135,6 +3136,7 @@ if $bundleArticles
 
     .article header div
       height 30vh
+      ifBoxShadow($colorBS036)
 
   @media (min-width $sizeS)
 
