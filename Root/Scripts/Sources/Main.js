@@ -405,7 +405,8 @@ jQuery(document).on('click', '#cmd-popin', function(e) { // Supprimer ou cacher 
 	popin
 		.fadeOut(300);
 		setTimeout(function() {
-			popin.remove();
+			$('.ajax-window-popin').remove(); // Suppression de la fenêtre Ajax et donc de la popin qu'elle contient
+			// popin.remove();
 		},300);
 	popinUser
 		.fadeOut(300);
@@ -608,65 +609,48 @@ jQuery('pre code').each(function() { // Création du bouton de commande
 // @section Ajax
 // -----------------------------------------------------------------------------
 
-// @note L'id de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
+// @note Renseignement du script via des attributs data-* plutôt que des IDs : solution bien plus souple, permettant d'utliser les même fichiers cibles sur une même page web, à divers endroits de cette page.
 
-// Commande pour une ouverture du contenu dans une fenêtre ajax généraliste
-jQuery(document).on('click', '.ajax', function() {
-	param = $(this).attr('id');
-	$('.ajax-window').load('../Ajax/' + param + '.php');
+// @documentation :
+// - L'attribut 'data-display' détermine la prise en charge du contenu Ajax par le script
+//      [1] 'global' : ouverture du contenu Ajax dans une fenêtre globale
+//      [2] 'popin' : ouverture dans une popin
+//      [3] 'affected' : ouverture dans une fenêtre dédiée
+// - L'attribut 'data-url' de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
+
+jQuery(document).on('click', '[data-display][data-url]', function() {
+	obj = $(this);
+	type = obj.data('display');
+	url = obj.data('url');
+	if (type === 'global') { // [1]
+		$('.ajax-window').remove(); // Si déjà une fenêtre créée précédement
+		$('<div class="ajax-window"/>').appendTo('main'); // Création d'une fenêtre Ajax
+		$('.ajax-window').load('../Ajax/' + url + '.php');
+	} else if (type === 'popin') { // [2]
+		$('body').css('overflow', 'hidden'); // Pas de scroll sur la page si popin ouverte
+		$('<div class="ajax-window-popin"/>').appendTo('body'); // Création d'une fenêtre Ajax
+		$('.ajax-window-popin').load('../Ajax/' + url + '.php', function() {
+			$(this)
+				.append('<a href="" id="cmd-popin"/>')
+				.wrapInner('<section id="popin" class="popin"/>');
+		});
+	} else { // [3]
+		$('.ajax-window-' + url).load('../Ajax/' + url + '.php');
+	}
 });
 
-// Commande pour une ouverture du contenu dans une fenêtre ajax spécifique
-jQuery(document).on('click', '.ajax-affected', function() {
-	param = $(this).attr('id');
-	paramClass = param.replace('ajax-', '');
-	$('.ajax-window-' + paramClass).load('../Ajax/' + param + '.php');
-});
 
-jQuery(document).on('click', '.ajax-popin', function() {
-	$('body').css('overflow', 'hidden'); // Pas de scroll sur la page si popin ouverte
-	// Ouverture dans une fenêtre ajax dédiée aux popins
-	$('.ajax-window-popin').load('../Ajax/' + $(this).attr('id') + '.php', function() {
-		$(this)
-			.append('<a href="" id="cmd-popin"/>')
-			.wrapInner('<section id="popin" class="popin"/>');
-	});
-});
+// -----------------------------------------------------------------------------
+// @section Auto Scroll
+// -----------------------------------------------------------------------------
 
-// Scrool vers la fenêtre ajax qui vient d'être appelée
-jQuery(document).on('click', '#ajax-comments', function() {
+// Scrool vers un élément ajax qui vient d'être appelé
+jQuery(document).on('click', '#comments', function() {
 		setTimeout(function() {
 			$('html, body').animate({
 				scrollTop: $("#index-comments").offset().top
 			}, 600);
 	}, 300);
-});
-
-
-// -----------------------------------------------------------------------------
-// @section Maintenance
-// -----------------------------------------------------------------------------
-
-// @subsection Styles de maintenance
-// -----------------------------------------------------------------------------
-
-jQuery('.maintenance1').click(function(e){
-	$('head').append(
-		$(document.createElement("link")).attr({rel:"stylesheet", type:"text/css", id:"maintenance1", href: './Styles/Public/maintenance1.css'})
-	);
-	e.preventDefault();
-});
-
-jQuery('.maintenance2').click(function(e){
-	$('head').append(
-		$(document.createElement("link")).attr({rel:"stylesheet", type:"text/css", id:"maintenance2", href: './Styles/Public//maintenance2.css'})
-	);
-	e.preventDefault();
-});
-
-jQuery('.maintenance-reset').click(function(e){
-	$('#maintenance1, #maintenance2').remove();
-	e.preventDefault();
 });
 
 
@@ -684,7 +668,7 @@ jQuery(document).on('click', '#terms-use', function() {
 	$('.terms-use').remove();
 });
 
-if (localStorage.getItem('termsuse') == 'true') {
+if (localStorage.getItem('termsuse') === 'true') {
 	$('.terms-use').remove();
 }
 
