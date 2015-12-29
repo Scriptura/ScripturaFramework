@@ -135,24 +135,24 @@ gulp.task('jade', function() {
     .pipe(rename(function(path) {
       path.extname = '' // Enlève l'extention '.jade' sur le fichier créé
     }))
-    .pipe(replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
+    //.pipe(replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
     // BEGIN traitement des balises php sélectionnées
-    .pipe(replace(/<_php>/g, '<?php ')) // Balises d'ouverture
-    .pipe(replace(/<\/_php>/g, '; ?>')) // Balises de fermeture
-    .pipe(replace(/<_var>/g, '<?php echo ')) // Traitement des variables php ($ ou $$)
-    .pipe(replace(/<\/_var>/g, '; ?>'))
-    .pipe(replace(/<_if>/g, '<?php if (')) // _if => if(string):
-    .pipe(replace(/<\/_if>/g, '): ?>'))
-    .pipe(replace(/<_else>/g, '<?php else: ?>')) // _else => else:
-    .pipe(replace(/<\/_else>/g, ''))
-    .pipe(replace(/<_elseif>/g, '<?php elseif (')) // _elseif => elseif(string):
-    .pipe(replace(/<\/_elseif>/g, '): ?>'))
-    .pipe(replace(/<_endif>/g, '<?php endif; ?>')) // _endif => endif;
-    .pipe(replace(/<\/_endif>/g, ''))
-    .pipe(replace(/<_require>/g, '<?php require \'')) // _require => require 'string.php';
-    .pipe(replace(/<\/_require>/g, '.php\'; ?>'))
-    .pipe(replace(/(\?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres.
+    .pipe(replace(/(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
+    .pipe(replace(/(<_php>)(.*)(<\/_php>)/g, '<?php $2; ?>')) // _php => <?php (balises php d'ouverture et de fermeture)
+    .pipe(replace(/(<_if>)(.*)(<\/_if>)/g, '<?php if ($2): ?>')) // _if => if(string):
+    .pipe(replace(/<_else><\/_else>/g, '<?php else: ?>')) // _else => else:
+    .pipe(replace(/(<_elseif>)(.*)(<\/_elseif>)/g, '<?php elseif ($2): ?>')) // _elseif => elseif(string):
+    .pipe(replace(/<_endif><\/_endif>/g, '<?php endif; ?>')) // _endif => endif;
+    .pipe(replace(/(<_require>)(.*)(<\/_require>)/g, '<?php require \'$2.php\'; ?>')) // _require => require 'string.php';
+    .pipe(replace(/<_require_wp>/g, '<?php require locate_template(\'')) // require de WordPress
+    .pipe(replace(/<\/_require_wp>/g, '.php\'); ?>'))
+    .pipe(replace(/(\?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
+    .pipe(replace(/({% )(\$\S*)( %})/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : {% $name %} => <?php echo $name; ?>
+    .pipe(replace(/({% )(.*)( %})/g, '<?php $2; ?>')) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne
+    .pipe(replace(/;; ?>/g, '; ?>')) // Suppression guillemets doubles (les guillemets de fermeture optionnels)
+    //.pipe(replace(/>.*<?php(.*)?>.*</g, '><?php$1?><'))// Si balises php entre des balises html, alors pas d'espaces
     // END traitement des balises php
+    .pipe(replace(/(\n)(<)/, '$2')) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
     .pipe(gulp.dest(source))
     .pipe(browserSync.stream({match: '**/*.html'}));
 });
@@ -417,7 +417,7 @@ gulp.task('imagesfont', function() {
 // @link https://www.npmjs.com/package/gulp-consolidate
 // @link https://www.npmjs.com/package/lodash
 
-// @note gulp-consolidate permet de soutenir un moteur de template, lodash est un moteur de template
+// @note 'gulp-consolidate' permet de soutenir un moteur de template, 'lodash' est un moteur de template
 // @documentation https://lodash.com/docs
 
 gulp.task('glyphicons', function() {
@@ -428,8 +428,8 @@ gulp.task('glyphicons', function() {
       appendUnicode: true, // recommended option
       formats: ['ttf', 'eot', 'woff', 'woff2', 'svg'], // default : .ttf, .eot, .woff
       fontHeight: 1024, // Retaille des icônes en 1024X1024
-      round: 10e3, // Default value: 10e12
-      timestamp: Math.round(Date.now()/1024), // recommended to get consistent builds when watching files
+      round: 10e3, // Trois décimales (default value: 10e12)
+      timestamp: Math.round(Date.now()/1024), // Recommandé pour obtenir une construction cohérente
     }))
       .on('glyphs', function(glyphs) {
         var options = {

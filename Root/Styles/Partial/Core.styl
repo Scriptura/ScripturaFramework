@@ -2534,6 +2534,15 @@ if $bundleTables
 
 
 // -----------------------------------------------------------------------------
+// @section     Ajax
+// @description Animation pour les fenêtres Ajax
+// -----------------------------------------------------------------------------
+
+[class^="ajax-window"]:not([class*="popin"]) *
+  animation animAjaxContent .2s ease-in-out
+
+
+// -----------------------------------------------------------------------------
 // @section     Popins
 // @description Fenêtre Popin
 // -----------------------------------------------------------------------------
@@ -2574,9 +2583,6 @@ if $bundlePopins
   @keyframes animPopinError
     50%
       transform scale(1.03)
-
-  .ajax-window *
-    animation animAjaxContent .2s ease-in-out
 
   @keyframes animAjaxContent
     0%
@@ -3283,11 +3289,11 @@ if $bundleRelationship
 
 
 // -----------------------------------------------------------------------------
-// @section     Profil
-// @description Profil de l'utilisateur
+// @section     Avatar
+// @description Image avatar de l'utilisateur
 // -----------------------------------------------------------------------------
 
-  .profil .avatar
+  .avatar
     background-size cover
 
 

@@ -2,7 +2,7 @@
 // @-name         Main Js
 // @-description  Scripts du framework
 // @-version      0.0.0
-// @-lastmodified 2015-03-09 16:52:32
+// @-lastmodified 2015-12-24 09:07:00
 // @-author       Olivier Chavarin
 // @-link         https://github.com/Scriptura/Scriptura
 // @-license      ISC
@@ -608,25 +608,24 @@ jQuery('pre code').each(function() { // Création du bouton de commande
 // @section Ajax
 // -----------------------------------------------------------------------------
 
-// L'id de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
+// @note L'id de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
 
-// Affichage dans une div spécifique
+// Commande pour une ouverture du contenu dans une fenêtre ajax généraliste
 jQuery(document).on('click', '.ajax', function() {
-	var param = $(this).attr('id');
-	// Ouverture dans une fenêtre ajax dédiée :
-	$('.ajax-window-' + param).load('../Ajax/' + param + '.php');
-});
-
-// Affichage dans une div généraliste
-jQuery(document).on('click', '.ajax-global', function() {
-	var param = $(this).attr('id');
-	// Ouverture dans une fenêtre ajax généraliste :
+	param = $(this).attr('id');
 	$('.ajax-window').load('../Ajax/' + param + '.php');
 });
 
+// Commande pour une ouverture du contenu dans une fenêtre ajax spécifique
+jQuery(document).on('click', '.ajax-affected', function() {
+	param = $(this).attr('id');
+	paramClass = param.replace('ajax-', '');
+	$('.ajax-window-' + paramClass).load('../Ajax/' + param + '.php');
+});
+
 jQuery(document).on('click', '.ajax-popin', function() {
-	$('body').css('overflow', 'hidden'); // @note Pas de scroll sur la page si photo en focus
-	// Ouverture dans une fenêtre ajax globale pour toutes les popins
+	$('body').css('overflow', 'hidden'); // Pas de scroll sur la page si popin ouverte
+	// Ouverture dans une fenêtre ajax dédiée aux popins
 	$('.ajax-window-popin').load('../Ajax/' + $(this).attr('id') + '.php', function() {
 		$(this)
 			.append('<a href="" id="cmd-popin"/>')
