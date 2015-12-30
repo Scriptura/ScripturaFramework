@@ -135,7 +135,7 @@ gulp.task('jade', function() {
     .pipe(rename(function(path) {
       path.extname = '' // Enlève l'extention '.jade' sur le fichier créé
     }))
-    //.pipe(replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
+    .pipe(replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
     // BEGIN traitement des balises php sélectionnées
     .pipe(replace(/(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
     .pipe(replace(/(<_php>)(.*)(<\/_php>)/g, '<?php $2; ?>')) // _php => <?php (balises php d'ouverture et de fermeture)

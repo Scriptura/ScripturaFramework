@@ -2,7 +2,7 @@
 // @-name         Main Js
 // @-description  Scripts du framework
 // @-version      0.0.0
-// @-lastmodified 2015-12-24 09:07:00
+// @-lastmodified 2015-12-30 08:07:00
 // @-author       Olivier Chavarin
 // @-link         https://github.com/Scriptura/Scriptura
 // @-license      ISC
@@ -609,13 +609,13 @@ jQuery('pre code').each(function() { // Création du bouton de commande
 // @section Ajax
 // -----------------------------------------------------------------------------
 
-// @note Renseignement du script via des attributs data-* plutôt que des IDs : solution bien plus souple, permettant d'utliser les même fichiers cibles sur une même page web, à divers endroits de cette page.
+// @note Renseignement du script via des attributs data-* plutôt que via les IDs : solution bien plus souple permettant d'utliser les même fichiers cibles sur une même page web, à divers endroits de cette page.
 
 // @documentation :
 // - L'attribut 'data-display' détermine la prise en charge du contenu Ajax par le script
-//      [1] 'global' : ouverture du contenu Ajax dans une fenêtre globale
-//      [2] 'popin' : ouverture dans une popin
-//      [3] 'affected' : ouverture dans une fenêtre dédiée
+//      @param 'global' : ouverture du contenu Ajax dans une fenêtre globale [1]
+//      @param 'popin' : ouverture dans une popin [2]
+//      @param '***' : ouverture dans une fenêtre dédiée [3]
 // - L'attribut 'data-url' de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
 
 jQuery(document).on('click', '[data-display][data-url]', function() {
@@ -624,18 +624,18 @@ jQuery(document).on('click', '[data-display][data-url]', function() {
 	url = obj.data('url');
 	if (type === 'global') { // [1]
 		$('.ajax-window').remove(); // Si déjà une fenêtre créée précédement
-		$('<div class="ajax-window"/>').appendTo('main'); // Création d'une fenêtre Ajax
-		$('.ajax-window').load('../Ajax/' + url + '.php');
+		$('<div class="wrap"><div class="ajax-window"></div></div>').appendTo('main'); // Création d'une fenêtre Ajax
+		$('.ajax-window').load(url + '.php');
 	} else if (type === 'popin') { // [2]
 		$('body').css('overflow', 'hidden'); // Pas de scroll sur la page si popin ouverte
 		$('<div class="ajax-window-popin"/>').appendTo('body'); // Création d'une fenêtre Ajax
-		$('.ajax-window-popin').load('../Ajax/' + url + '.php', function() {
+		$('.ajax-window-popin').load(url + '.php', function() {
 			$(this)
 				.append('<a href="" id="cmd-popin"/>')
 				.wrapInner('<section id="popin" class="popin"/>');
 		});
 	} else { // [3]
-		$('.ajax-window-' + url).load('../Ajax/' + url + '.php');
+		$('.ajax-window-' + type).load(url + '.php');
 	}
 });
 
