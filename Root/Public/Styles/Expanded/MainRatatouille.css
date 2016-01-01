@@ -6067,7 +6067,7 @@ form [class^="columns"] > div {
   }
 }
 
-/* line 130 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/Core.styl */
+/* line 152 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/Core.styl */
 
 /* line 6 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
 
@@ -6146,9 +6146,8 @@ form [class^="columns"] > div {
 }
 
 /* line 87 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
-.box {
+[class*="box"] {
   position: relative;
-  padding: 1em;
   background: #ddd;
   background-image: -webkit-linear-gradient(45deg, transparent, rgba(255,255,255,0.5));
   background-image: linear-gradient(45deg, transparent, rgba(255,255,255,0.5));
@@ -6156,9 +6155,14 @@ form [class^="columns"] > div {
   box-shadow: 0 0 2em rgba(0,0,0,0.1);
 }
 
-/* line 95 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
-.box::before,
-.box::after {
+/* line 94 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+.box {
+  padding: 1em;
+}
+
+/* line 97 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+[class*="box"]::before,
+[class*="box"]::after {
   content: '';
   z-index: -1;
   position: absolute;
@@ -6172,35 +6176,61 @@ form [class^="columns"] > div {
           transform: rotate(-3deg) translateZ(0);
 }
 
-/* line 108 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
-.box::after {
+/* line 110 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+[class*="box"]::after {
   right: 1em;
   left: auto;
   -webkit-transform: rotate(3deg);
           transform: rotate(3deg);
 }
 
-/* line 117 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
-[class*="ribbon-container"].box {
+/* line 119 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+[class*="ribbon-container"][class*="box"] {
   background-image: none;
 }
 
-/* line 120 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+/* line 122 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+.box0 h2,
+.box0 p {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+/* line 128 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+.box0 .magimg {
+  width: 100%;
+  padding-bottom: 50%;
+  background-color: #333;
+  background-size: cover;
+  background-position: 50% 50%;
+  border-radius: 0.3rem 0.3rem 0 0;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+/* line 137 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+a:focus .magimg,
+a:hover .magimg,
+a:active .magimg {
+  background-position: 0% 0%;
+}
+
+/* line 142 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
 .progress:nth-child(4n+1) div {
   background-color: #5a728a;
 }
 
-/* line 123 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+/* line 145 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
 .progress:nth-child(4n+2) div {
   background-color: #b03c57;
 }
 
-/* line 126 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+/* line 148 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
 .progress:nth-child(4n+3) div {
   background-color: #bb7c3c;
 }
 
-/* line 129 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
+/* line 151 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
 .progress:nth-child(4n+4) div {
   background-color: #7ca166;
 }

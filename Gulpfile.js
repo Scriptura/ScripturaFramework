@@ -327,14 +327,10 @@ gulp.task('stylesexp', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section Header CSS
+// @section Banner Replace
 // -----------------------------------------------------------------------------
 
-
-// @subsection Replace
-// -----------------------------------------------------------------------------
-
-// @note Modification de l'entête CSS pour chaque modification des Styles
+// @description Modification des entêtes JS et CSS pour chaque modification des Styles
 
 var dateY = new Date().getFullYear(),
     dateM = new Date().getMonth(),
@@ -342,21 +338,35 @@ var dateY = new Date().getFullYear(),
     dateH = new Date().toLocaleTimeString(),
     versionDate = dateY + '-' + dateM + '-' + dateD + ' ' + dateH;
 
-gulp.task('templates', function() {
+gulp.task('metastyles', function() {
   return gulp
     .src(source + '/Styles/Partial/Header.styl')
-    .pipe(replace(/@name .*\n/g, '@name         ' + pkg.name + '\n'))
-    .pipe(replace(/@description .*\n/g, '@description  ' + pkg.description + '\n'))
-    .pipe(replace(/@version .*\n/g, '@version      ' + pkg.version + '\n'))
-    .pipe(replace(/@lastmodified .*\n/g, '@lastmodified ' + versionDate + '\n'))
-    .pipe(replace(/@author .*\n/g, '@author       ' + pkg.author + '\n'))
-    .pipe(replace(/@homepage .*\n/g, '@homepage     ' + pkg.homepage + '\n'))
-    .pipe(replace(/@license .*\n/g, '@license      ' + pkg.license + '\n'))
+    .pipe(replace(/@name .*\n/, '@name         ' + pkg.name + '\n'))
+    .pipe(replace(/@description .*\n/, '@description  ' + pkg.description + '\n'))
+    .pipe(replace(/@version .*\n/, '@version      ' + pkg.version + '\n'))
+    .pipe(replace(/@lastmodified .*\n/, '@lastmodified ' + versionDate + '\n'))
+    .pipe(replace(/@author .*\n/, '@author       ' + pkg.author + '\n'))
+    .pipe(replace(/@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n'))
+    .pipe(replace(/@license .*\n/, '@license      ' + pkg.license + '\n'))
     .pipe(gulp.dest(source + '/Styles/Partial'));
 });
 
+gulp.task('metascripts', function() {
+  return gulp
+    .src(source + '/Scripts/Sources/Main.js')
+    .pipe(replace(/@name .*\n/, '@name         ' + pkg.name + '\n'))
+    .pipe(replace(/@description .*\n/, '@description  ' + pkg.description + '\n'))
+    .pipe(replace(/@version .*\n/, '@version      ' + pkg.version + '\n'))
+    .pipe(replace(/@lastmodified .*\n/, '@lastmodified ' + versionDate + '\n'))
+    .pipe(replace(/@author .*\n/, '@author       ' + pkg.author + '\n'))
+    .pipe(replace(/@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n'))
+    .pipe(replace(/@license .*\n/, '@license      ' + pkg.license + '\n'))
+    .pipe(gulp.dest(source + '/Scripts/Sources'));
+});
 
-// @subsection Banner
+
+// -----------------------------------------------------------------------------
+// @section Banner
 // -----------------------------------------------------------------------------
 
 // @note Ce plugin ne modifie que le fichier compilé, préférence donné au plugin 'gulp-replace'.
@@ -478,7 +488,7 @@ gulp.task('watchjade', function() {
 gulp.task('watchscripts', function() {
   return gulp.watch(
         inputScripts,
-        ['scripts']
+        gulpsync.sync(['metascripts', 'scripts'])
     )
     .on('change', consoleLog);
 });
@@ -486,7 +496,7 @@ gulp.task('watchscripts', function() {
 gulp.task('watchstyles', function() {
   return gulp.watch(
         source + '/Styles/**/*.styl',
-        gulpsync.sync(['templates', ['styles', 'stylesexp']])
+        gulpsync.sync(['metastyles', ['styles', 'stylesexp']])
     )
     .on('change', consoleLog);
 });

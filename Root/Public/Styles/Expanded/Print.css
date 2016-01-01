@@ -44,12 +44,12 @@ a {
 }
 
 /* line 36 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
-a[href]::after {
+.links a[href]::after {
   content: ' (' attr(href) ')';
 }
 
 /* line 39 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
-a[href^="#"]::after {
+.links a[href^="#"]::after {
   content: '';
 }
 
