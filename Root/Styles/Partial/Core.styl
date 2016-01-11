@@ -2839,9 +2839,12 @@ if $bundleMainNav
 
   .main-nav [class^="icon"]
     display inline-block
-    width 2em
+    margin-right .5em
     text-align center
-  //transition max-height .5s linear
+
+  @media (min-width: $sizeNav)
+    .only-icon // @note Icône sans texte
+      margin-left .5em
 
   .main-nav a:hover [class^="icon"]
   .main-nav a:focus [class^="icon"]
