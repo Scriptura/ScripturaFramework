@@ -13,9 +13,14 @@ function initMap() {
     ['Château de Montrond les Bains', 45.641507, 4.230653, marker1],
     ['Château de la Bâtie d\'Urfé', 45.727812, 4.078731, marker1],
     ['Château de Chalmazel', 45.702396, 3.8511, marker2],
-    ['Château de Couzan', 45.728146, 3.969063, marker2],
+    ['Château de Couzan', 45.728146, 3.969063, marker1],
+    ['Château de Bouthéon', 45.544066, 4.263822, marker1],
+    ['Ruines du Donzy', 45.747927, 4.282442, marker2],
     ['Prieuré de Montverdun', 45.717916, 4.066487, marker3],
-    ['Prieuré de Saint-Romain-le-Puy', 45.557543, 4.125911, marker3]
+    ['Prieuré de Champdieu', 45.644482, 4.045586, marker3],
+    ['Prieuré de Saint-Romain-le-Puy', 45.557543, 4.125911, marker3],
+    ['Collégiale de Montbrison', 45.605652, 4.066235, marker3],
+    ['Collégiale de Saint-Bonnet-le-Château', 45.423614, 4.067601, marker3]
   ];
 
   // @link https://developers.google.com/maps/documentation/javascript/styling#stylers
