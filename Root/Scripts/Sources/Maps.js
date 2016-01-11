@@ -10,8 +10,8 @@ function initMap() {
   var marker3 = '../Images/Marker3.svg';
 
   var locations = [
-    ['La Maison du Bonheur', 45.594042, 4.3699, marker1],
-    ['Château de la Bâtie d\'Urfé', 45.727812, 4.078731, marker2],
+    ['Château de Montrond les Bains', 45.641507, 4.230653, marker1],
+    ['Château de la Bâtie d\'Urfé', 45.727812, 4.078731, marker1],
     ['Château de Chalmazel', 45.702396, 3.8511, marker2],
     ['Château de Couzan', 45.728146, 3.969063, marker2],
     ['Prieuré de Montverdun', 45.717916, 4.066487, marker3],
