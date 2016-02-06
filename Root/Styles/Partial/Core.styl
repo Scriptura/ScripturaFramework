@@ -19,9 +19,31 @@
 if $bundleGrid
   // @note La grille est configurée en 12 colonnes. En sizeXS la grille comporte 6 colonnes max (bug sur certains navigateurs en dessous de cette valeur), mais la dénomination reste dans la logique des 12 colonnes pour garder une unité de nommage avec les définitions plus élevées.
 
-  .wrap // @note Englobe tous les contenus
-    max-width $wrap // @note Contrôle la largeur maximale des contenus
+  [class^="wrap"] // @note Englobe tous les contenus
     margin 0 auto
+  
+  .wrap
+    max-width $wrap
+
+  // @note '.wrap-limited' contrôle la largeur maximale du conteneur
+  @media (max-width: $sizeXS)
+    .wrap-limited
+      max-width ($wrap / 3.5)
+
+  @media (min-width: $sizeXS)
+
+    .wrap-limited
+      max-width ($wrap / 2.5)
+
+  @media (min-width: $sizeS)
+
+    .wrap-limited
+      max-width ($wrap / 1.5)
+
+  @media (min-width: $sizeL)
+
+    .wrap-limited
+      max-width $wrap
 
   [class^="grid"]
     display flex
@@ -1809,7 +1831,7 @@ if $bundleInputs
     padding-right .5em
 
   @media (max-width: 400px)
-  // @note Pour les très petites définitions @todo En test...
+    // @note Pour les très petites définitions @todo En test...
 
     [class*="input-group"] > div div
       overflow hidden
@@ -1895,6 +1917,7 @@ if $bundleButtons
   //    width 100%
   //
   //@media (min-width: $sizeXS)
+  //
   //  .button-group > *
   //    margin-right: 1em // @note Espacement entre deux boutons
 
@@ -2487,7 +2510,8 @@ if $bundleTables
     color $colorCL091
     background-color $colorBG091
 
-  @media (min-width: $sizeXS) // Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
+  @media (min-width: $sizeXS)
+    // Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
 
     [class^="table"][class*="fixed"]
       table-layout fixed
@@ -2843,6 +2867,7 @@ if $bundleMainNav
     text-align center
 
   @media (min-width: $sizeNav)
+
     .only-icon // @note Icône sans texte
       margin-left .5em
 
@@ -2886,6 +2911,49 @@ if $bundleMainNav
 
   .main-nav + *
     padding-top 3.5em !important // @note Décalage sur le conteneur suivant afin de laisser une place pour le menu de navigation en position absolute.
+
+
+// -----------------------------------------------------------------------------
+// @section     Login Avatar
+// @description Connexion utilisateur
+// -----------------------------------------------------------------------------
+if $bundleLoginAvatar
+
+  // @note L'ajout de l'avatar ne doit pas conduire à dénaturer la '.main-nav' en mode déconnecté, d'où le choix suivant :
+
+  .login a
+    display flex
+
+  .login .avatar
+    width 2.5rem
+    height 2.5rem
+
+  @media (max-width: $sizeNav)
+      
+    .login .avatar
+      margin-left auto
+
+    .login a :first-child
+      line-height 2.5
+
+  @media (min-width: $sizeNav)
+  
+    .login
+      overflow hidden
+      border-radius 2.5rem 0 0 2.5rem
+
+    .login a
+      padding-left 0
+
+    .login .avatar
+      order -1
+      border-radius 50%
+      
+    .login a :first-child
+      display none
+    
+    .login a :nth-child(2)
+      margin-left .5rem
 
 
 // -----------------------------------------------------------------------------
@@ -3140,8 +3208,9 @@ if $bundleArticles
     left -9999rem
 
   @media (min-width $sizeNav)
+
     .article header
-      padding 0 1rem 2.5rem
+      padding 0 1rem 1.5rem
 
     .article header div
       height 30vh
@@ -3159,6 +3228,7 @@ if $bundleArticles
     margin-bottom 0
 
   @media (max-width $sizeXS)
+
     .article .button-group
       margin-bottom 0
 

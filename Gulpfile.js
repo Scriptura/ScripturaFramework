@@ -29,7 +29,6 @@ var gulp = require('gulp'),
     gulpsync = require('gulp-sync')(gulp),
     gutil = require('gulp-util'),
     plumber = require('gulp-plumber'),
-    //changed = require('gulp-changed'),
     ftp = require('vinyl-ftp'),
     consolidate = require('gulp-consolidate'),
     lodash = require('lodash'),
@@ -87,41 +86,14 @@ gulp.task('browserSync', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section FTP
-// -----------------------------------------------------------------------------
-
-// @link https://www.npmjs.com/package/vinyl-ftp
-
-// gulp.task( 'deploy', function() {
-//     var conn = ftp.create( {
-//         host:     'localhost',
-//         user:     'admin',
-//         password: 'mypass',
-//         parallel: 10,
-//         log:      gutil.log
-//     });
-//     var globs = [
-//         source
-//     ];
-//     // using base = '.' will transfer everything to /public_html correctly 
-//     // turn off buffering in gulp.src for best performance 
-//     return gulp.src( globs, {
-//         base: '.', // Spécifie la base pour éviter les erreurs de transfert
-//         buffer: false // Désactive le buffer de gulp.src pour de meilleures performance
-//     })
-//         .pipe( conn.newer( '/public_html' ) ) // only upload newer files 
-//         .pipe( conn.dest( '/public_html' ) );
-// });
-
-
-// -----------------------------------------------------------------------------
 // @section Jade
 // -----------------------------------------------------------------------------
 
 // @link https://www.npmjs.com/package/gulp-jade
 // @documentation Jade @see http://jade-lang.com/api/
 
-var inputHtmlJade = source + '/**/*.html.jade',
+var inputJade = source + '/**/*.jade',
+    inputHtmlJade = source + '/**/*.html.jade',
     inputPhpJade = source + '/**/*.php.jade';
 
 gulp.task('jade', function() {
@@ -136,22 +108,23 @@ gulp.task('jade', function() {
       path.extname = '' // Enlève l'extention '.jade' sur le fichier créé
     }))
     .pipe(replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
-    // BEGIN traitement des balises php sélectionnées
+    // BEGIN PHP
     .pipe(replace(/(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
-    .pipe(replace(/(<_php>)(.*)(<\/_php>)/g, '<?php $2; ?>')) // _php => <?php (balises php d'ouverture et de fermeture)
+    .pipe(replace(/(<_php>)((.|\r|\n|\t)*?)(<\/_php>)/g, '<?php $2; ?>')) // _php => balises php d'ouverture et de fermeture avec point virgule final)
+    .pipe(replace(/(<\?php )((.|\r|\n|\t)*?)(\/\/.*)(\n)?(; \?>)/g, '<?php $2$4 ?>')) // Si commentaire php monoligne en fin de code alors pas de point virgule final
+    .pipe(replace(/(\*\/)(\n)?(; \?>)/g, '*/ ?>')) // Idem pour commantaires multilignes
     .pipe(replace(/(<_if>)(.*)(<\/_if>)/g, '<?php if ($2): ?>')) // _if => if(string):
     .pipe(replace(/<_else><\/_else>/g, '<?php else: ?>')) // _else => else:
     .pipe(replace(/(<_elseif>)(.*)(<\/_elseif>)/g, '<?php elseif ($2): ?>')) // _elseif => elseif(string):
     .pipe(replace(/<_endif><\/_endif>/g, '<?php endif; ?>')) // _endif => endif;
     .pipe(replace(/(<_require>)(.*)(<\/_require>)/g, '<?php require \'$2.php\'; ?>')) // _require => require 'string.php';
-    .pipe(replace(/<_require_wp>/g, '<?php require locate_template(\'')) // require de WordPress
+    .pipe(replace(/<_require_wp>/g, '<?php require locate_template(\'')) // Require de WordPress
     .pipe(replace(/<\/_require_wp>/g, '.php\'); ?>'))
-    .pipe(replace(/(\?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
+    .pipe(replace(/( \?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
     .pipe(replace(/({% )(\$\S*)( %})/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : {% $name %} => <?php echo $name; ?>
     .pipe(replace(/({% )(.*)( %})/g, '<?php $2; ?>')) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne
-    .pipe(replace(/;; ?>/g, '; ?>')) // Suppression guillemets doubles (les guillemets de fermeture optionnels)
-    //.pipe(replace(/>.*<?php(.*)?>.*</g, '><?php$1?><'))// Si balises php entre des balises html, alors pas d'espaces
-    // END traitement des balises php
+    .pipe(replace(/;; ?>/g, '; ?>')) // Suppression points virgules doublés
+    // END PHP
     .pipe(replace(/(\n)(<)/, '$2')) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
     .pipe(gulp.dest(source))
     .pipe(browserSync.stream({match: '**/*.html'}));
@@ -471,7 +444,7 @@ gulp.task('glyphicons', function() {
 
 gulp.task('watchjade', function() {
   return gulp.watch(
-        source + '/**/*.jade',
+        inputJade,
         ['jade']
     )
     .on('change', consoleLog);
