@@ -27,18 +27,19 @@ if $bundleGrid
 
   // @note '.wrap-limited' contrôle la largeur maximale du conteneur
   @media (max-width: $sizeXS)
+
     .wrap-limited
-      max-width ($wrap / 3.5)
+      max-width floor($wrap / 4, 0)
 
   @media (min-width: $sizeXS)
 
     .wrap-limited
-      max-width ($wrap / 2.5)
+      max-width floor($wrap / 2.2, 0)
 
   @media (min-width: $sizeS)
 
     .wrap-limited
-      max-width ($wrap / 1.5)
+      max-width floor($wrap / 1.4, 0)
 
   @media (min-width: $sizeL)
 
@@ -486,22 +487,28 @@ h6, .h6
 
 @media (max-width: $sizeXS)
 
-  h1, .h1
+  h1.vmin
+  .h1.vmin
     font-size 9.6vmin // @note Not work on Safari 5.1, Android 4.3, Opera 12.1, IE 9
 
-  h2, .h2
+  h2.vmin
+  .h2.vmin
     font-size 7.6vmin
 
-  h3, .h3
+  h3.vmin
+  .h3.vmin
     font-size 7.2vmin
 
-  h4, .h4
+  h4.vmin
+  .h4.vmin
     font-size 6vmin
 
-  h5, .h5
+  h5.vmin
+  .h5.vmin
     font-size 4.2vmin
 
-  h6, .h6
+  h6.vmin
+  .h6.vmin
     font-size 3.6vmin
 
 b
@@ -1838,10 +1845,10 @@ if $bundleInputs
       max-width 2em // @note Fallback @bugfix @affected Chrome Android (au minimum)
       max-width 25vw
 
-  [class*="input-group"] > div div:first-child
+  [class*="input-group"] > div :first-child
     ifBorderRadius($r2 0 0 $r2)
 
-  [class*="input-group"] > div div:last-child
+  [class*="input-group"] > div :last-child // @note :last-child peut être soit une div finale soit l'imput lui-même
     ifBorderRadius(0 $r2 $r2 0)
 
   .input-group-right input
@@ -2921,38 +2928,49 @@ if $bundleLoginAvatar
 
   // @note L'ajout de l'avatar ne doit pas conduire à dénaturer la '.main-nav' en mode déconnecté, d'où le choix suivant :
 
-  .login a
+  :root .login > *
     display flex
 
   .login .avatar
     width 2.5rem
     height 2.5rem
 
+  @media (min-width: $sizeNav)
+    .login .active .avatar
+      animation animLogin 5s infinite ease-in-out
+
+    @keyframes animLogin
+      0%
+        transform rotate(0deg)
+      10%
+      100%
+        transform rotate(360deg)
+
   @media (max-width: $sizeNav)
       
     .login .avatar
       margin-left auto
 
-    .login a :first-child
+    .login > * :first-child
       line-height 2.5
 
   @media (min-width: $sizeNav)
   
     .login
-      overflow hidden
+      overflow hidden // @todo Permet l'arrondit pour le gravatar mais cache le pseudo-élément de .active
       border-radius 2.5rem 0 0 2.5rem
 
-    .login a
+    :root .login > *
       padding-left 0
 
     .login .avatar
       order -1
       border-radius 50%
       
-    .login a :first-child
+    .login > * :first-child
       display none
     
-    .login a :nth-child(2)
+    .login > * :nth-child(2)
       margin-left .5rem
 
 

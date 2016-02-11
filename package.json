@@ -12,6 +12,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-consolidate": "^0.1.2",
     "gulp-plumber": "^1.0.1",
+    "gulp-sync": "^0.1.4",
     "gulp-util": "^3.0.7",
     "lodash": "^3.10.1",
     "vinyl-ftp": "^0.4.5"
