@@ -63,7 +63,13 @@ The framework uses the syntax [Jade](http://jade-lang.com/), [Stylus](https://le
 
 ### First stage
 
-Work with the workflow by running this command with your terminal to the file in the root: `$ gulp`
+Work with the workflow by running this command with your terminal to the file in the root:
+
+    $ npm install
+
+And monitoring of the folder:
+
+    $ gulp
 
 ### Second stage
 
