@@ -1,6 +1,6 @@
 {
   "name": "Scriptura",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Interface for web apps",
   "main": "Gulpfile.js",
   "dependencies": {
@@ -27,12 +27,12 @@
     "gulp-sass": "^2.1.0",
     "gulp-smushit": "^1.1.0",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-stylus": "^2.1.0",
+    "gulp-stylus": "^2.3.0",
     "gulp-sync": "^0.1.4",
     "gulp-uglify": "^1.5.1",
     "gulp-util": "^3.0.7",
     "jshint": "^2.8.0",
-    "lodash": "^4.3.0",
+    "lodash": "^4.4.0",
     "vinyl-ftp": "^0.4.5"
   },
   "scripts": {
