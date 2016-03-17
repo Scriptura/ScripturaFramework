@@ -7,11 +7,11 @@
 
 /* line 1 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
 
-/* line 417 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
+/* line 3426 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
 
 /* line 12 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
-/* line 196 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
+/* line 417 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
 /* line 13 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeBloomingVariables.styl */
 
@@ -2970,7 +2970,7 @@ sub {
 /* line 1006 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 [class*="list-"][class*="-stripe"]:not([class*="-link"]) > *,
 [class*="list-"][class*="-stripe"] a {
-  background-color: #f7f7f7;
+  background-color: #fff;
   box-shadow: 0.5rem 0.5rem 2rem rgba(0,0,0,0.1);
 }
 
@@ -3100,7 +3100,7 @@ sub {
   position: relative;
   display: block;
   padding: 0.3em 1em;
-  background-color: #f7f7f7;
+  background-color: #fff;
   box-shadow: 0.5rem 0.5rem 2rem rgba(0,0,0,0.1);
 }
 

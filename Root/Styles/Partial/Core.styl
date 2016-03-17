@@ -1005,8 +1005,8 @@ if $bundleLists
 
   [class*="list-"][class*="-stripe"]:not([class*="-link"]) > *
   [class*="list-"][class*="-stripe"] a
-    ifBackgroundColor($colorBG024)
-    ifBoxShadow($colorBS024)
+    ifBackgroundColor($colorBG023)
+    ifBoxShadow($colorBS023)
 
   [class*="list-"][class*="-stripe"] a
     position relative
@@ -1014,8 +1014,8 @@ if $bundleLists
   [class*="list-"] a:focus
   [class*="list-"] a:hover
   [class*="list-"] a:active
-    ifBackgroundColor($colorBG023)
-    ifBoxShadow($colorBS023)
+    ifBackgroundColor($colorBG024)
+    ifBoxShadow($colorBS024)
     animation animList .1s ease-in-out
 
   @keyframes animList
@@ -1087,7 +1087,7 @@ if $bundleNumberlists
     position relative
     display block
     padding .3em 1em
-    background-color $colorBG025
+    ifBackgroundColor($colorBG025)
     ifBoxShadow($colorBS025)
 
   [class^="list-number"] a::before
