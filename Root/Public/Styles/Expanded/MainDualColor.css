@@ -3,15 +3,15 @@
 
 /* line 1 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
 
-/* line 152 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
+/* line 17 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
 
-/* line 152 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
+/* line 1 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
 
 /* line 417 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
 
 /* line 12 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
-/* line 128 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
+/* line 196 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
 /* line 13 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeDualColorVariables.styl */
 
@@ -5092,7 +5092,7 @@ form [class^="columns"] > div {
     display: block;
     width: 1.8em;
     height: 3px;
-    background-color: #688493;
+    background-color: #d77d7d;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
   }
