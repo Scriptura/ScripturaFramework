@@ -2183,7 +2183,7 @@ html {
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
           text-size-adjust: 100%;
-  font: 300 1em false;
+  font: 300 1em sans-serif;
   line-height: 1.5;
   color: #777;
 }
@@ -2259,6 +2259,7 @@ h6,
 .h6,
 legend {
   color: #333;
+  font-family: sans-serif;
   font-weight: 400;
 }
 
@@ -2693,6 +2694,7 @@ sub {
 /* line 778 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 .verse {
   color: #ff6f7d;
+  font-family: sans-serif;
   font-size: 0.7rem !important;
 }
 
