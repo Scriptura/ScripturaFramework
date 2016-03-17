@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.1
-// @lastmodified 2016-2-17 09:16:18
+// @version      0.0.2
+// @lastmodified 2016-2-17 13:49:52
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -118,8 +118,8 @@ jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un a
 */
 
 // -----------------------------------------------------------------------------
-// @section     One Page
-// @description Gestion du gabarit pour un template one page
+// @section     Sections Nav
+// @description Navigation entre sections au clavier
 // -----------------------------------------------------------------------------
 
 (function($) {
@@ -127,7 +127,7 @@ jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un a
 		section = $('.section'), // Navigation via la classe en paramètre
 		menu = $('.scroll-nav a'),
 		body = $('html,body');
-	var topToIndex = function(scrollTop){
+	var topToIndex = function(scrollTop) {
 		var offsetTop = 0,
 			indexlastSection;
 		section.each(function(i){
@@ -145,7 +145,7 @@ jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un a
 		menu.removeClass('active').eq(activeIndex).addClass('active');
 		return activeIndex;
 	};
-	doc.keydown(function(e){ // raccourci clavier
+	doc.keydown(function(e) { // raccourci clavier
 	var active = $('.section.active'), // Navigation via la classe en paramètre + .active
 		tag = e.target.tagName.toLowerCase(); // Détecte sur quel élément est exécuté le script
 		if (tag != 'input' && tag != 'textarea'){
@@ -196,7 +196,7 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 	$('body').attr('id', 'index'); // Ajout d'une ID pour permettre un ciblage via .scroll-top
 	$('<a href="#index" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>').appendTo('body'); // Création de l'élément a.scroll-top
 	var scrolltop = $('.scroll-top'); // Création de la variable après création de la classe dans le DOM
-	//scrolltop.click(function(){ // Retour en haut progressif
+	//scrolltop.click(function() { // Retour en haut progressif
 	//	$('html, body').animate({scrollTop: 0}, 600);
 	//	return false;
 	//});
@@ -618,23 +618,52 @@ jQuery('pre code').each(function() { // Création du bouton de commande
 // - L'attribut 'data-url' de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
 
 jQuery(document).on('click', '[data-display][data-path]', function() {
+	$('.ajax-window').parent().parent().remove(); // Si fichier déjà appelé précédement
 	obj = $(this);
 	type = obj.data('display');
 	path = obj.data('path');
 	if (type === 'global') { // [1]
-		$('.ajax-window').remove(); // Si déjà une fenêtre créée précédement
-		$('<div class="wrap"><div class="ajax-window"></div></div>').appendTo('main'); // Création d'une fenêtre Ajax
-		$('.ajax-window').load(path + '.php');
+		$('<div class="section"><div class="wrap"><div class="ajax-window"></div></div></div>').appendTo('main'); // Création d'une fenêtre Ajax
+		$.ajax({
+			url : path + '.php',
+			complete : function (xhr, result) {
+				if(result != 'success') { // Gestion des erreurs
+					$('<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>').appendTo('main');
+					return;
+				}
+				var response = xhr.responseText;
+				$('.ajax-window').html(response);
+			}
+		});
 	} else if (type === 'popin') { // [2]
 		$('body').css('overflow', 'hidden'); // Pas de scroll sur la page si popin ouverte
 		$('<div class="ajax-window-popin"/>').appendTo('body'); // Création d'une fenêtre Ajax
-		$('.ajax-window-popin').load(path + '.php', function() {
-			$(this)
-				.append('<a href="" id="cmd-popin"/>')
-				.wrapInner('<section id="popin" class="popin"/>');
+		$.ajax({
+			url : path + '.php',
+			complete : function (xhr, result) {
+				if(result != 'success') { // Gestion des erreurs
+					$('<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>').appendTo('main');
+					return;
+				}
+				var response = xhr.responseText;
+				$('.ajax-window-popin')
+					.html(response)
+					.append('<a href="" id="cmd-popin"/>')
+					.wrapInner('<section id="popin" class="popin"/>');
+			}
 		});
 	} else { // [3]
-		$('.ajax-window-' + type).load(path + '.php');
+		$.ajax({
+			url : path + '.php',
+			complete : function (xhr, result) {
+				if(result != 'success') { // Gestion des erreurs
+					$('<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>').appendTo('main');
+					return;
+				}
+				var response = xhr.responseText;
+				$('.ajax-window-' + type).html(response);
+			}
+		});
 	}
 });
 
