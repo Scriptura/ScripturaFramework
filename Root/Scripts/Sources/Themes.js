@@ -3,7 +3,7 @@
 // @description Choix d'un thème
 // -----------------------------------------------------------------------------
 
-var setDefaultTheme = 'Ratatouille'; // @param Nom du thème en CamelCase
+var setDefaultTheme = 'Blooming'; // @param Nom du thème en CamelCase
 var beginLink = '<link rel="stylesheet" href="/Public/Styles/Main';
 var endLink = '.css" media="screen" id="stylesheet">';
 

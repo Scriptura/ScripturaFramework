@@ -53,21 +53,8 @@ strong
 // @description Gestion des couleurs pour un template one page
 // -----------------------------------------------------------------------------
 
-.section:nth-child(odd) ::selection
+.section:nth-child(even) ::selection
   background-color darken(rgba(77, 98, 109, .7), 25%) // #4d626d
-
-.section:nth-child(even) code
-.section:nth-child(even) pre code::before
-.section:nth-child(even) .button
-.section:nth-child(even) [class^="input"] input
-.section:nth-child(even) [class^="input"] select
-.section:nth-child(even) [class^="input"] textarea
-.section:nth-child(even) [class^="list-stripe"] *
-.section:nth-child(even) [class^="list-number"] a
-.section:nth-child(even) [class^="list-number"] a::before
-.section:nth-child(even) [class^="table"] tbody td
-.section:nth-child(even) mark
-  color $color0
 
 .section:nth-child(odd) code
 .section:nth-child(odd) pre code::before
@@ -80,70 +67,74 @@ strong
 .section:nth-child(odd) [class^="list-number"] a::before
 .section:nth-child(odd) [class^="table"] tbody td
 .section:nth-child(odd) mark
-.section:nth-child(odd) .download-link:focus
-.section:nth-child(odd) .download-link:hover
-.section:nth-child(odd) .download-link:active
-  color $color0b
-
-.section:nth-child(even) ::placeholder // @bugfix @affected All Browsers @note Déclaration non factorisable
   color $color0
 
-.section:nth-child(odd) ::placeholder // @bugfix @affected All Browsers @note Déclaration non factorisable
+.section:nth-child(even) code
+.section:nth-child(even) pre code::before
+.section:nth-child(even) .button
+.section:nth-child(even) [class^="input"] input
+.section:nth-child(even) [class^="input"] select
+.section:nth-child(even) [class^="input"] textarea
+.section:nth-child(even) [class^="list-stripe"] *
+.section:nth-child(even) [class^="list-number"] a
+.section:nth-child(even) [class^="list-number"] a::before
+.section:nth-child(even) [class^="table"] tbody td
+.section:nth-child(even) mark
+.section:nth-child(even) .download-link:focus
+.section:nth-child(even) .download-link:hover
+.section:nth-child(even) .download-link:active
   color $color0b
 
-.section:nth-child(even) div
-.section:nth-child(even) .checkbox + label::after
-.section:nth-child(even) .switch + label span::before
-.section:nth-child(even) .switch + label span::after
-.section:nth-child(even) [type="range"] + output
-.section:nth-child(odd) .tooltip
-  color $color1
+.section:nth-child(odd) ::placeholder // @bugfix @affected All Browsers @note Déclaration non factorisable
+  color $color0
 
-.section:nth-child(odd) hr
+.section:nth-child(even) ::placeholder // @bugfix @affected All Browsers @note Déclaration non factorisable
+  color $color0b
+
 .section:nth-child(odd) div
-.section:nth-child(odd) ul
-.section:nth-child(odd) ol
-.section:nth-child(odd) p
-.section:nth-child(odd) a
-.section:nth-child(odd) h1
-.section:nth-child(odd) h2
-.section:nth-child(odd) h3
-.section:nth-child(odd) h4
-.section:nth-child(odd) h5
-.section:nth-child(odd) h6
-.section:nth-child(odd) pre code
-.section:nth-child(odd) [class^="table"] thead
-.section:nth-child(odd) [class^="table"] tfoot
-.section:nth-child(odd) .dropcap
-.section:nth-child(odd) .verse
-.section:nth-child(odd) legend
 .section:nth-child(odd) .checkbox + label::after
 .section:nth-child(odd) .switch + label span::before
 .section:nth-child(odd) .switch + label span::after
 .section:nth-child(odd) [type="range"] + output
 .section:nth-child(even) .tooltip
-  color lighten($color0b, 50%)
+  color $color1
 
-.section:nth-child(even) b
-.section:nth-child(even) strong
-  color lighten($color0, 70%)
+.section:nth-child(even) hr
+.section:nth-child(even) div
+.section:nth-child(even) ul
+.section:nth-child(even) ol
+.section:nth-child(even) p
+.section:nth-child(even) a
+.section:nth-child(even) h1
+.section:nth-child(even) h2
+.section:nth-child(even) h3
+.section:nth-child(even) h4
+.section:nth-child(even) h5
+.section:nth-child(even) h6
+.section:nth-child(even) pre code
+.section:nth-child(even) [class^="table"] thead
+.section:nth-child(even) [class^="table"] tfoot
+.section:nth-child(even) .dropcap
+.section:nth-child(even) .verse
+.section:nth-child(even) legend
+.section:nth-child(even) .checkbox + label::after
+.section:nth-child(even) .switch + label span::before
+.section:nth-child(even) .switch + label span::after
+.section:nth-child(even) [type="range"] + output
+.section:nth-child(odd) .tooltip
+  color lighten($color0b, 50%)
 
 .section:nth-child(odd) b
 .section:nth-child(odd) strong
+  color lighten($color0, 70%)
+
+.section:nth-child(even) b
+.section:nth-child(even) strong
   color lighten($color0b, 50%)
 
-.section:nth-child(odd) .checkbox:disabled + label
-.section:nth-child(odd) .switch:disabled + label
+.section:nth-child(even) .checkbox:disabled + label
+.section:nth-child(even) .switch:disabled + label
   color $darkenGrayscaleB
-
-.section:nth-child(even)
-.section:nth-child(even) pre code
-.section:nth-child(even) .progress div
-.section:nth-child(even) .popin
-.section:nth-child(even) #cmd-popin
-.section:nth-child(even) .cmd-tabs a
-.section:nth-child(odd) .tooltip
-  background-color $color0
 
 .section:nth-child(odd)
 .section:nth-child(odd) pre code
@@ -152,19 +143,16 @@ strong
 .section:nth-child(odd) #cmd-popin
 .section:nth-child(odd) .cmd-tabs a
 .section:nth-child(even) .tooltip
-  background-color $color0b
+  background-color $color0
 
-.section:nth-child(even) [class^="list-stripe"] a:focus
-.section:nth-child(even) [class^="list-stripe"] a:hover
-.section:nth-child(even) [class^="list-stripe"] a:active
-.section:nth-child(even) [class^="list-number"] a:focus
-.section:nth-child(even) [class^="list-number"] a:hover
-.section:nth-child(even) [class^="list-number"] a:active
-.section:nth-child(even) [class^="input"] input
-.section:nth-child(even) [class^="input"] select
-.section:nth-child(even) [class^="input"] textarea
-.section:nth-child(even) .search input
-  background-color lighten($color0, 20%)
+.section:nth-child(even)
+.section:nth-child(even) pre code
+.section:nth-child(even) .progress div
+.section:nth-child(even) .popin
+.section:nth-child(even) #cmd-popin
+.section:nth-child(even) .cmd-tabs a
+.section:nth-child(odd) .tooltip
+  background-color $color0b
 
 .section:nth-child(odd) [class^="list-stripe"] a:focus
 .section:nth-child(odd) [class^="list-stripe"] a:hover
@@ -176,18 +164,19 @@ strong
 .section:nth-child(odd) [class^="input"] select
 .section:nth-child(odd) [class^="input"] textarea
 .section:nth-child(odd) .search input
-  background-color lighten($color0b, 20%)
+  background-color lighten($color0, 20%)
 
-.section:nth-child(even) code
-.section:nth-child(even) code::before
-.section:nth-child(even) [class^="list-stripe"] > *
-.section:nth-child(even) [class^="list-number"] a
-.section:nth-child(even) [class^="list-number"] a::before
-.section:nth-child(even) .button
-.section:nth-child(even) [class^="table"] tbody tr
-.section:nth-child(even) mark
-.section:nth-child(even) .switch + label::after
-  background-color $color1
+.section:nth-child(even) [class^="list-stripe"] a:focus
+.section:nth-child(even) [class^="list-stripe"] a:hover
+.section:nth-child(even) [class^="list-stripe"] a:active
+.section:nth-child(even) [class^="list-number"] a:focus
+.section:nth-child(even) [class^="list-number"] a:hover
+.section:nth-child(even) [class^="list-number"] a:active
+.section:nth-child(even) [class^="input"] input
+.section:nth-child(even) [class^="input"] select
+.section:nth-child(even) [class^="input"] textarea
+.section:nth-child(even) .search input
+  background-color lighten($color0b, 20%)
 
 .section:nth-child(odd) code
 .section:nth-child(odd) code::before
@@ -198,20 +187,21 @@ strong
 .section:nth-child(odd) [class^="table"] tbody tr
 .section:nth-child(odd) mark
 .section:nth-child(odd) .switch + label::after
-.section:nth-child(odd) .download-link:focus
-.section:nth-child(odd) .download-link:hover
-.section:nth-child(odd) .download-link:active
-  background-color lighten($color0b, 50%)
+  background-color $color1
 
-.section:nth-child(even) [class^="message"]
-.section:nth-child(even) [class^="message"]::before
-.section:nth-child(even) .accordion-link > a
-.section:nth-child(even) .accordion-link li a
-.section:nth-child(even) #cmd-popin:hover
-.section:nth-child(even) .checkbox + label::before
-.section:nth-child(even) .switch + label::before
-.section:nth-child(even) [type="range"] + output
-  background-color darken($color0, 10%)
+.section:nth-child(even) code
+.section:nth-child(even) code::before
+.section:nth-child(even) [class^="list-stripe"] > *
+.section:nth-child(even) [class^="list-number"] a
+.section:nth-child(even) [class^="list-number"] a::before
+.section:nth-child(even) .button
+.section:nth-child(even) [class^="table"] tbody tr
+.section:nth-child(even) mark
+.section:nth-child(even) .switch + label::after
+.section:nth-child(even) .download-link:focus
+.section:nth-child(even) .download-link:hover
+.section:nth-child(even) .download-link:active
+  background-color lighten($color0b, 50%)
 
 .section:nth-child(odd) [class^="message"]
 .section:nth-child(odd) [class^="message"]::before
@@ -221,17 +211,18 @@ strong
 .section:nth-child(odd) .checkbox + label::before
 .section:nth-child(odd) .switch + label::before
 .section:nth-child(odd) [type="range"] + output
-.section:nth-child(odd) [class^="input-group"] div
-  background-color darken($color0b, 10%)
+  background-color darken($color0, 10%)
 
-.section:nth-child(even) [class^="table"] thead
-.section:nth-child(even) [class^="table"] tfoot
-.section:nth-child(even) [class^="figure"]
-.section:nth-child(even) .accordion-link > a:focus
-.section:nth-child(even) .accordion-link > a:hover
-.section:nth-child(even) .accordion-link > a:active
-.section:nth-child(even) .accordion-link > a.active
-  background-color $darkenGrayscaleA
+.section:nth-child(even) [class^="message"]
+.section:nth-child(even) [class^="message"]::before
+.section:nth-child(even) .accordion-link > a
+.section:nth-child(even) .accordion-link li a
+.section:nth-child(even) #cmd-popin:hover
+.section:nth-child(even) .checkbox + label::before
+.section:nth-child(even) .switch + label::before
+.section:nth-child(even) [type="range"] + output
+.section:nth-child(even) [class^="input-group"] div
+  background-color darken($color0b, 10%)
 
 .section:nth-child(odd) [class^="table"] thead
 .section:nth-child(odd) [class^="table"] tfoot
@@ -240,66 +231,62 @@ strong
 .section:nth-child(odd) .accordion-link > a:hover
 .section:nth-child(odd) .accordion-link > a:active
 .section:nth-child(odd) .accordion-link > a.active
+  background-color $darkenGrayscaleA
+
+.section:nth-child(even) [class^="table"] thead
+.section:nth-child(even) [class^="table"] tfoot
+.section:nth-child(even) [class^="figure"]
+.section:nth-child(even) .accordion-link > a:focus
+.section:nth-child(even) .accordion-link > a:hover
+.section:nth-child(even) .accordion-link > a:active
+.section:nth-child(even) .accordion-link > a.active
   background-color $darkenGrayscaleB
 
-.section:nth-child(even) [class^="input"].disabled input
 .section:nth-child(odd) [class^="input"].disabled input
+.section:nth-child(even) [class^="input"].disabled input
   background-image repeating-linear-gradient(-45deg, rgba(0, 0, 0, .3), rgba(0, 0, 0, .3) 1px, transparent 1px, transparent 6px)
 
-.section:nth-child(even) [type="range"]::-webkit-slider-runnable-track
+.section:nth-child(odd) [type="range"]::-webkit-slider-runnable-track
   background-color darken($color0, 10%)
 
-.section:nth-child(odd) [type="range"]::-webkit-slider-runnable-track
+.section:nth-child(even) [type="range"]::-webkit-slider-runnable-track
   background-color darken($color0b, 10%)
-
-.section:nth-child(even) .mejs-audio .mejs-controls
-  background darken($color0, 20%) none !important
 
 .section:nth-child(odd) .mejs-audio .mejs-controls
+  background darken($color0, 20%) none !important
+
+.section:nth-child(even) .mejs-audio .mejs-controls
   background darken($color0b, 20%) none !important
 
-.section:nth-child(even) [type="range"]::-webkit-slider-thumb // @bugfix @affected Firefox @note Déclaration non factorisable
+.section:nth-child(odd) [type="range"]::-webkit-slider-thumb // @bugfix @affected Firefox @note Déclaration non factorisable
   background-color $color1
   border-color $color0
 
-.section:nth-child(odd) [type="range"]::-webkit-slider-thumb // @bugfix @affected Firefox @note Déclaration non factorisable
+.section:nth-child(even) [type="range"]::-webkit-slider-thumb // @bugfix @affected Firefox @note Déclaration non factorisable
   background-color lighten($color0b, 50%)
   border-color $color0b
-
-.section:nth-child(even) [type="range"]::-moz-range-track
-  background-color darken($color0, 10%)
 
 .section:nth-child(odd) [type="range"]::-moz-range-track
+  background-color darken($color0, 10%)
+
+.section:nth-child(even) [type="range"]::-moz-range-track
   background-color darken($color0b, 10%)
 
-.section:nth-child(even) [type="range"]::-moz-range-thumb
+.section:nth-child(odd) [type="range"]::-moz-range-thumb
   background-color $color1
   border-color $color0b
 
-.section:nth-child(odd) [type="range"]::-moz-range-thumb
+.section:nth-child(even) [type="range"]::-moz-range-thumb
   background-color lighten($color0b, 50%)
   border-color $color0b
-
-.section:nth-child(even) [class^="message"]
-.section:nth-child(even) [class^="message"]::before
-  border-color $color0
 
 .section:nth-child(odd) [class^="message"]
 .section:nth-child(odd) [class^="message"]::before
-  border-color $color0b
+  border-color $color0
 
-.section:nth-child(even) blockquote
-.section:nth-child(even) code
-.section:nth-child(even) .separator::after
-.section:nth-child(even) .sizeXS-separator::after
-.section:nth-child(even) .button
-.section:nth-child(even) .tabs-united > *
-.section:nth-child(even) .cmd-tabs a
-.section:nth-child(even) .checkbox + label::before
-.section:nth-child(even) .emphasized::before
-.section:nth-child(even) .emphasized::after
-.section:nth-child(even) .download-link
-  border-color $color1
+.section:nth-child(even) [class^="message"]
+.section:nth-child(even) [class^="message"]::before
+  border-color $color0b
 
 .section:nth-child(odd) blockquote
 .section:nth-child(odd) code
@@ -312,6 +299,19 @@ strong
 .section:nth-child(odd) .emphasized::before
 .section:nth-child(odd) .emphasized::after
 .section:nth-child(odd) .download-link
+  border-color $color1
+
+.section:nth-child(even) blockquote
+.section:nth-child(even) code
+.section:nth-child(even) .separator::after
+.section:nth-child(even) .sizeXS-separator::after
+.section:nth-child(even) .button
+.section:nth-child(even) .tabs-united > *
+.section:nth-child(even) .cmd-tabs a
+.section:nth-child(even) .checkbox + label::before
+.section:nth-child(even) .emphasized::before
+.section:nth-child(even) .emphasized::after
+.section:nth-child(even) .download-link
   border-color lighten($color0b, 50%)
 
 .section .cmd-tabs a:focus
@@ -320,52 +320,52 @@ strong
 .section .cmd-tabs a.active // @note Remplace une règle en amont
   border-bottom-color transparent
 
-.section:nth-child(even) [class^="list-number"] a::after
+.section:nth-child(odd) [class^="list-number"] a::after
   border-left-color $color1
 
-.section:nth-child(odd) [class^="list-number"] a::after
+.section:nth-child(even) [class^="list-number"] a::after
   border-left-color lighten($color0b, 50%)
 
-.section:nth-child(even) .tooltip::before
+.section:nth-child(odd) .tooltip::before
   border-bottom-color $color0b
 
-.section:nth-child(odd) .tooltip::before
+.section:nth-child(even) .tooltip::before
   border-bottom-color $color0
 
-.section:nth-child(even) .accordion-link li a
+.section:nth-child(odd) .accordion-link li a
   border-color $darkenGrayscaleA
 
-.section:nth-child(odd) .accordion-link li a
+.section:nth-child(even) .accordion-link li a
   border-color $darkenGrayscaleB
 
-.section:nth-child(even) .svg-color
+.section:nth-child(odd) .svg-color
   fill $color1
 
-.section:nth-child(odd) .svg-color
+.section:nth-child(even) .svg-color
   fill lighten($color0b, 50%)
 
-@media (max-width: $sizeXS)
-
-  .section:nth-child(even) [class^="table"] tbody td:first-child
-    color $color1
+@media (max-width $sizeXS)
 
   .section:nth-child(odd) [class^="table"] tbody td:first-child
+    color $color1
+
+  .section:nth-child(even) [class^="table"] tbody td:first-child
     color lighten($color0b, 50%)
 
-  .section:nth-child(even) [class^="table"] tfoot td
+  .section:nth-child(odd) [class^="table"] tfoot td
     color $color1
     background-color $darkenGrayscaleA
 
-  .section:nth-child(odd) [class^="table"] tfoot td
+  .section:nth-child(even) [class^="table"] tfoot td
     color lighten($color0b, 50%)
     background-color $darkenGrayscaleB
 
-@media (min-width: $sizeXS)
+@media (min-width $sizeXS)
 
-  .section:nth-child(even) [class^="table"][class*="firstcolumn"] tbody td:first-child
+  .section:nth-child(odd) [class^="table"][class*="firstcolumn"] tbody td:first-child
     color $color1
     background-color $darkenGrayscaleA
 
-  .section:nth-child(odd) [class^="table"][class*="firstcolumn"] tbody td:first-child
+  .section:nth-child(even) [class^="table"][class*="firstcolumn"] tbody td:first-child
     color lighten($color0b, 50%)
     background-color $darkenGrayscaleB

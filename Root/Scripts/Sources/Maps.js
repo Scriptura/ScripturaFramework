@@ -127,10 +127,8 @@ function initMap() {
           }, 2000);
         }
 
-      }
+      };
     })(marker, i));
-
-
 
   }
 

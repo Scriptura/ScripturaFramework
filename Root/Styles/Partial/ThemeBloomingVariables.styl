@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// @section     RATATOUILLE VALUES
+// @section	    RATATOUILLE VALUES
 // @description Variables globales pour le thème
 // -----------------------------------------------------------------------------
 
@@ -10,18 +10,19 @@
 
 // @note Le nom de la police doit être le même que ne nom du fichier de la police. Pour raison de simplification...
 
-  $fontName = 'Libre Baskerville'
-  $fontFile = librebaskerville
+  $fontName = false
+  $fontFile = false
 
-  $fontName2 = LibreBaskTang
-  $fontFile2 = LibreBaskTang
+  $fontName2 = false
+  $fontFile2 = false
+
 
 // @subsection Typography
 // -----------------------------------------------------------------------------
 
 //fontFamily =  'Open Sans', 'Helvetica Light', Helvetica, 'Droid Sans', Arial, sans-serif
-  $fontFamily = $fontName, serif            // Default fonts
-  $fontFamily2 = $fontName2, serif          // Titles
+  $fontFamily = 'Droid Sans', sans-serif    // Default fonts
+  $fontFamily2 = 'Droid Sans', sans-serif   // Titles
   $fontFamily3 = false                      // Dropcap
   $fontFamily5 = 'GFS Didot', 'Palatino Linotype', Palatino, sans-serif // :lang(grc)
   $fontFamily6 = 'Libre Baskerville', 'Palatino Linotype', Palatino, sans-serif // :lang(he)
@@ -43,22 +44,23 @@
   $color4 = #7ca166                         // couleur secondaire (vert)
   $color5 = #bb7c3c                         // couleur secondaire (orange)
   $color6 = #5a728a                         // couleur secondaire (bleu)
-  $color7 = #fcf8e3                         // couleur secondaire (jaune)
+  $color7 = #f8fed8                         // couleur secondaire (jaune)
   $colorG = desaturate($color1, 100%)       // gris de référence
 
   $colorCL0001 = #aaa                       // Footer
   $colorBG0001 = #555
   $colorCL0002 = #efefef
   $colorCL0003 = #777
-  $colorBG002 = #ddd
+  $colorBG002 = #f0f0f0
   $colorCL004 = $color1                     // Links
   $colorCL005 = $color1                     // Titles
   $colorBD008 = $color1
-  $colorBG008a = #eee
+  $colorBG008a = darken($colorBG002, 5%)
   $colorBS008 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
   $colorBG009 = $color1
   $colorBS009 = $colorBS008
   $colorCL011 = $color1                     // Verses
+  $colorBG012 = false                       // Dropcaps
   $colorBG015a = transparent                // Ribbons
   $colorBG015b = rgba(255, 255, 255, .2)
   $colorCL016 = #eee !important
@@ -74,7 +76,7 @@
   $colorBG022b = $colorBG021b
   $colorBG023 = #fefefe                     // Special Lists
   $colorBS023 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
-  $colorBG024 = #eee
+  $colorBG024 = lighten($colorBG002, 50%)
   $colorBS024 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
   $colorBG025 = $colorBG024                 // Number Lists
   $colorBS025 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
@@ -86,14 +88,16 @@
   $colorCL0291 = #ddd                       // Surround
   $colorBG0291 = $color1
   $colorBS0291 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
-  $colorBD030 = #eee
+  $colorBG030 = darken($colorBG002, 5%)
+  $colorBD030 = $colorBG002
   $colorBS030 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
+  $colorBG031 = $colorBG030
   $colorBD031 = $colorBD030
   $colorBS031 = $colorBS030
   $colorBG032 = lighten($color6, 70%)       // Messages Box
   $colorBG033 = lighten($color4, 70%)       // lighten() for Stylus : 70% = Sass : 35%
   $colorBG034 = lighten($color5, 70%)
-  $colorBG035a = $color7
+  $colorBG035a = lighten($color7, 70%)
   $colorBG035b = rgba(0, 0, 0, .05)
   $colorCL036 = #ddd                        // Figures
   $colorBG036 = #555
@@ -102,16 +106,19 @@
   $colorBS041 = $colorBS0401
   $colorBS0411 = $colorBS0401               // Players
   $colorFI0351 = $color1                    // Svg
+  $colorBG050 = darken($colorBG002, 5%)     // Inputs
   $colorBD053 = $color1
   $colorCL054 = $color1                     // Buttons
-//$colorCL055 = #fff                        // Input Groups
+  //$colorCL055 = #fff                      // Input Groups
   $colorBG055 = $color1
   $colorBG056 = $color1
   $colorBD056 = $color1
-  $colorBG061 = #ebebeb                     // Checkbox & Radio
+  $colorBG060 = $colorBG050
+  $colorBG061 = darken($colorBG002, 5%)     // Checkbox & Radio
   $colorCL063 = $color1
   $colorBG067 = $color1
   $colorCL0721 = #eee
+  $colorBG073 = darken($colorBG002, 5%)     // Ranges
   $colorBG074a = $color1
   $colorBD074 = $color1
   $colorBG076a = $color1
@@ -123,13 +130,15 @@
   $colorCL083 = #fff
   $colorBG083 = $color1
   $colorBG084 = $color5
+  $colorBG085 = darken($colorBG002, 10%)
+  $colorBG086 = lighten($colorBG002, 10%)
   $colorBD086 = $colorBG084
-  $colorBG006 = #ccc                        // Tabs
+  $colorBG006 = darken($colorBG002, 10%)    // Tabs
   $colorBD006 = #aaa
-  $colorBG087 = #ddd
+  $colorBG087 = $colorBG002
   $colorBD089 = $colorBD006
   $colorBS089 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
-  $colorBD0891 = #eee                       // Tables
+  $colorBD0891 = #fefefe                    // Tables
   $colorBS0891 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
   $colorCL090 = #eee
   $colorBG090 = $color1
@@ -164,14 +173,14 @@
   $colorBG1101 = #555                       // Brand
   $colorBD111 = $color1                     // Download Links
   $colorBG112 = $color1
-  $colorBD113a = #eee                       // Loaders
+  $colorBD113a = darken($colorBG002, 5%)    // Loaders
   $colorBD113b = $color1
   $colorBD114a = $colorBD113a
   $colorBD114b = $color1
   $colorBS115a = 0 4em 0 0 $color1
   $colorCL120 = #aaa !important
   $colorCL0121 = #333                       // Letter
-  $colorBGd001 = #ededed                    // Styles de démonstration
+  $colorBGd001 = #fff                       // Styles de démonstration
 
 
 // @subsection Images
@@ -181,7 +190,7 @@
 // @subsection Rounds
 // -----------------------------------------------------------------------------
 
-  $r1 = .3rem                     // Boites
-  $r2 = $r1                       // Éléments internes
-  $r3 = false                     // Éléments d'informations
-  $r4 = false                     // Bouttons
+  $r1 = .3rem											// Boites
+  $r2 = $r1												// Éléments internes
+  $r3 = false											// Éléments d'informations
+  $r4 = false											// Bouttons

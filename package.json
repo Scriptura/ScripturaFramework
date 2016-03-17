@@ -1,6 +1,6 @@
 {
   "name": "Scriptura",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Interface for web apps",
   "main": "Gulpfile.js",
   "dependencies": {

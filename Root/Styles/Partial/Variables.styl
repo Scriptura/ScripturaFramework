@@ -128,21 +128,21 @@
 
 // @note Le nom de la police doit être le même que ne nom du fichier de la police. Pour raison de simplification...
 
-  $fontName = 'Libre Baskerville'
-  $fontFile = librebaskerville
+  $fontName = false
+  $fontFile = false
 
-  $fontName2 = LibreBaskTang
-  $fontFile2 = LibreBaskTang
+  $fontName2 = false
+  $fontFile2 = false
 
 
 // @subsection Typography
 // -----------------------------------------------------------------------------
 
 //fontFamily =	'Open Sans', 'Helvetica Light', Helvetica, 'Droid Sans', Arial, sans-serif
-  $fontFamily =	$fontName, 'Palatino Linotype', Palatino, sans-serif // fonts par défaut
-  $fontFamily2 = $fontName2                 // hx
-  $fontFamily3 = false                      // .dropcap
-  $fontFamily4 = false                      // .title
+  $fontFamily =	$fontName                   // Default fonts
+  $fontFamily2 = $fontName2                 // Titles
+  $fontFamily3 = false                      // Dropcap
+  //$fontFamily4 = false
   $fontFamily5 = 'GFS Didot', 'Palatino Linotype', Palatino, sans-serif // :lang(grc)
   $fontFamily6 = 'Libre Baskerville', 'Palatino Linotype', Palatino, sans-serif // :lang(he)
   $fontWeight = 300                         // épaisseur par défaut
@@ -175,14 +175,14 @@
 // colorFI080 = fill
 
   $colorCL0001 = false                      // Footer
-  $colorBG0001 = false
+  $colorBG0001 = #333
   $colorCL0002 = false
   $colorCL0003 = false
   $colorCL001 = #777                        // html
   $colorBG002 = $color0                     // body
   $colorBG003 = rgba(255, 111, 125, .5)     // ::selection
   $colorCL004 = $color1                     // Links
-  $colorCL005 = $color1                     // Titles
+  $colorCL005 = #333                        // Titles
   $colorBG007 = rgba(255, 255, 255, .6)
   $colorBD007 = rgba(0, 0, 0, .1)
   $colorBG008a = $color0
@@ -241,7 +241,7 @@
   $colorBG034 = $color5
   $colorBG035a = color7
   $colorBG035b = rgba(0, 0, 0, .05)
-  $colorFI0351 = $color1                    // Svg
+  $colorFI0351 = #333                       // Svg
   $colorCL036 = false                       // Figures
   $colorBG036 = #fefefe
   $colorBS036 = .5rem .5rem 2rem rgba(0, 0, 0, .2)

@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.0
-// @lastmodified 2016-0-11 18:22:15
+// @version      0.0.1
+// @lastmodified 2016-2-17 09:16:18
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -181,7 +181,7 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 			$('html,body').animate({
 				scrollTop: target.offset().top
 			}, 400);
-//			return false;
+			//return false;
 		}
 	}
 });
@@ -196,14 +196,12 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 	$('body').attr('id', 'index'); // Ajout d'une ID pour permettre un ciblage via .scroll-top
 	$('<a href="#index" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>').appendTo('body'); // Création de l'élément a.scroll-top
 	var scrolltop = $('.scroll-top'); // Création de la variable après création de la classe dans le DOM
-	// Retour en haut progressif
-//	scrolltop.click(function(){
-//		$('html, body').animate({scrollTop: 0}, 600);
-//		return false;
-//	});
-	// Apparition de la flèche 'retour en haut' au scroll de la page
-	$(window).scroll(function() {
-		if ($(this).scrollTop() > 100){
+	//scrolltop.click(function(){ // Retour en haut progressif
+	//	$('html, body').animate({scrollTop: 0}, 600);
+	//	return false;
+	//});
+	$(window).scroll(function() { // Apparition de la flèche 'retour en haut' au scroll de la page
+		if ($(this).scrollTop() > 100) {
 			scrolltop.fadeIn();
 		} else {
 			scrolltop.fadeOut();
@@ -645,7 +643,7 @@ jQuery(document).on('click', '[data-display][data-path]', function() {
 // @section Auto Scroll
 // -----------------------------------------------------------------------------
 
-// Scrool vers un élément ajax qui vient d'être appelé
+// Scroll vers un élément ajax qui vient d'être appelé
 jQuery(document).on('click', '#comments', function() {
 		setTimeout(function() {
 			$('html, body').animate({

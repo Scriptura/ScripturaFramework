@@ -8,22 +8,7 @@
   $colorAdd003 = $color5
   $colorAdd004 = $color4
 
-//.footer
-//  background-image linear-gradient( rgba(255, 255, 255, 0.3) 50%, transparent 50%), linear-gradient( 90deg, rgba(255, 255, 255, 0.3) 50%, transparent 50%);
-//  background-size 2rem 2rem
-
-.footer
-  position relative
-
-.main-nav::before
-.main-nav::after
-.footer::before
-  content ''
-  display block
-  position absolute
-  top .2em
-  width 100%
-  border-bottom .1em dashed #aaa
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans:400,700')
 
 .main-nav::after
   top 2.2em
@@ -31,10 +16,10 @@
 .footer::before
   left 0
 
-//  .main-nav
-//    background-color #efefef
-//    background-image linear-gradient(#eee 5%, transparent 5%), linear-gradient(90deg, #eee 5%, transparent 5%)
-//    background-size 1rem 1rem
+//	.main-nav
+//	  background-color #efefef
+//	  background-image linear-gradient(#eee 5%, transparent 5%), linear-gradient(90deg, #eee 5%, transparent 5%)
+//	  background-size 1rem 1rem
 
 :root .main-nav *
     color #fff
@@ -86,7 +71,7 @@
 
 [class*="box"]
   position relative
-  background #ddd
+  background $colorBG002
   background-image linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5))
   ifBorderRadius($r1)
   box-shadow 0 0 2em rgba(0, 0, 0, .1)

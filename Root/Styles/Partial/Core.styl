@@ -1,13 +1,8 @@
-// @note Les classes sont utilisées dans la logique OSCSS, à la manière des espaces de nom, seule la classe '.active' a une utilisation transversale
+// @note Les classes sont utilisées dans la logique OSCSS, à la manière des espaces de nom, seule la classe '.active' est utilisée de manière transversale
 
 // *.styl
 // selector
 //   property value
-//  =>
-// *.css
-// selector {
-//   property: value;
-// };
 
 
 // -----------------------------------------------------------------------------
@@ -26,22 +21,22 @@ if $bundleGrid
     max-width $wrap
 
   // @note '.wrap-limited' contrôle la largeur maximale du conteneur
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     .wrap-limited
       max-width floor($wrap / 4, 0)
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     .wrap-limited
       max-width floor($wrap / 2.2, 0)
 
-  @media (min-width: $sizeS)
+  @media (min-width $sizeS)
 
     .wrap-limited
       max-width floor($wrap / 1.4, 0)
 
-  @media (min-width: $sizeL)
+  @media (min-width $sizeL)
 
     .wrap-limited
       max-width $wrap
@@ -58,7 +53,7 @@ if $bundleGrid
     margin-left $gutter
     margin-bottom $gutter
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     [class^="grid"] [class^="grid"] // @note Grilles imbriquées
       width 100%
@@ -69,7 +64,7 @@ if $bundleGrid
         width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
         margin-left $gutter
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     [class^="grid"] [class^="grid"] // @note Grilles imbriquées
       margin 0
@@ -90,7 +85,7 @@ if $bundleGrid
       .o{$arg}
         margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
 
-  @media (min-width: $sizeXS) and (max-width: $sizeS)
+  @media (min-width $sizeXS) and (max-width $sizeS)
 
     .sizeS-grid12
       width 100% // @note Pas de retrait de gouttière
@@ -110,7 +105,7 @@ if $bundleGrid
     .sizeS-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
       margin-left $gutter
 
-  @media (min-width: $sizeS) and (max-width: $sizeL)
+  @media (min-width $sizeS) and (max-width $sizeL)
 
     for $arg in $columns...0
       .sizeL-m{$arg}
@@ -123,7 +118,7 @@ if $bundleGrid
     .sizeL-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
       margin-left $gutter
 
-  @media (min-width: $sizeL)
+  @media (min-width $sizeL)
 
     for $arg in ($columns - 1)...0
       .sizeXL-o{$arg}
@@ -139,7 +134,7 @@ if $bundleGrid
 if $bundleColumns
   // @note Pas de possibilité de passage à la ligne avec cette classe
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     [class^="columns"]
       display table // @note Important pour le comportement des éléments enfants en display:block
@@ -185,7 +180,7 @@ if $bundleHidden
   .touch .touch-hidden // @note Éléments voilés
     display none
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     .sizeXS-hidden // @note Éléments voilés
       display none
@@ -193,7 +188,7 @@ if $bundleHidden
     .sizeXS-unhidden // @note Éléments dévoilés
       display inline
 
-  @media (min-width: $sizeS)
+  @media (min-width $sizeS)
 
     .sizeS-hidden // @note Éléments voilés
       display none
@@ -201,7 +196,7 @@ if $bundleHidden
     .sizeS-unhidden // @note Éléments dévoilés
       display inline
 
-  @media (min-width: $sizeL)
+  @media (min-width $sizeL)
 
     .sizeL-hidden // @note Éléments voilés
       display none
@@ -209,7 +204,7 @@ if $bundleHidden
     .sizeL-unhidden // @note Éléments dévoilés
       display inline
 
-  @media (min-width: $sizeNav)
+  @media (min-width $sizeNav)
 
     .sizeNav-hidden // @note Éléments voilés
       display none
@@ -229,7 +224,7 @@ if $bundlePositions
     margin-left auto
     margin-right auto
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     .sizeXS-center
       display block
@@ -322,7 +317,7 @@ if $bundleRatios
   :root .ratio-1-12
     padding-bottom 6.25%
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     :root .sizeXS-ratio
       padding-bottom 100%
@@ -330,7 +325,7 @@ if $bundleRatios
     :root .sizeXS-ratio-1-2
       padding-bottom 50%
 
-  @media (min-width: $sizeXS) and (max-width: $sizeS)
+  @media (min-width $sizeXS) and (max-width $sizeS)
 
     :root .sizeS-ratio
       padding-bottom 100%
@@ -451,7 +446,7 @@ h3, .h3
 h4, .h4
 h5, .h5
 h6, .h6
-  color $colorCL005
+  ifColor($colorCL005)
   ifFontFamily($fontFamily2)
   font-weight $fontWeight2
 
@@ -485,11 +480,11 @@ h6, .h6
   margin-bottom .3rem
   font-size 1.2em
 
-@media (max-width: $sizeXS)
+@media (max-width $sizeXS)
 
   h1.vmin
   .h1.vmin
-    font-size 9.6vmin // @note Not work on Safari 5.1, Android 4.3, Opera 12.1, IE 9
+    font-size 9.6vmin // @note Not work on IE 9, Safari 5.1, Android 4.3, Opera 12.1
 
   h2.vmin
   .h2.vmin
@@ -803,8 +798,8 @@ if $bundleDropCaps
     ifFontFamily($fontFamily3)
     font-weight 600
     font-size 3em
-    color $colorCL012
-    background-color $colorBG012
+    ifColor($colorCL012)
+    ifBackgroundColor($colorBG012)
 
 
 // @subsection  Letters
@@ -845,7 +840,7 @@ if $bundleHeadbands
     transform rotate(45deg)
     transform-origin 18rem 1.5rem
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     .headband > *
       font-size .75rem
@@ -945,7 +940,7 @@ if $bundleRibbons
     border-top-color transparent
     border-left-color transparent
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     .sizeXS-ribbon-container-bottom
       background-image linear-gradient(135deg, $colorBG021a 80%, $colorBG021b)
@@ -1058,17 +1053,17 @@ if $bundleSummary
     margin-left $gutter !important
     padding 0 // @note Si liste ul>li
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     .summary > *
       width 'calc(%s - %s - %s)' % ((100% / 12 * 6) $gutter $bugfixGrid)
 
-  @media (min-width: $sizeS)
+  @media (min-width $sizeS)
 
     .summary > *
       width 'calc(%s - %s - %s)' % ((100% / 12 * 4) $gutter $bugfixGrid)
 
-  @media (min-width: $sizeL)
+  @media (min-width $sizeL)
 
     .summary > *
       width 'calc(%s - %s - %s)' % ((100% / 12 * 3) $gutter $bugfixGrid)
@@ -1171,7 +1166,7 @@ if $bundleSeparators
   .sizeXS-separator::after
     border-bottom .4rem solid $colorBD028
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     .sizeXS-hr::after // @note Sur un conteneur, pour marquer visuellement la séparation avec le contenu suivant
       content '\e630'
@@ -1248,6 +1243,7 @@ if $bundleMessagesBox
     margin-top 1.5em
     margin-bottom 1.25em
     padding 1.4em 2em 1em
+    ifColor($colorCL030)
     background-color $colorBG030
     border .1em solid $colorBD030
     ifBorderRadius($r3)
@@ -1317,7 +1313,7 @@ if $bundleMessagesBox
   .message-warning::after
     content '\eabd'
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     .message-api::after
       animation animRotate 5s linear infinite
@@ -1365,7 +1361,7 @@ if $bundleImages
   [class*="thumbnail"]
     width 100% // @note Important à appliquer pour le responsive si le width n'est pas définit préalablement
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     [class*="thumbnail"]
       max-width ($wrap / 4)
@@ -1390,7 +1386,7 @@ if $bundleImages
   // @subsection .align
   // -----------------------------------------------------------------------------
 
-  @media (min-width: $sizeS)
+  @media (min-width $sizeS)
 
     [class*="-alignleft"]
       float left
@@ -1771,7 +1767,7 @@ if $bundleInputs
     width 100%
     margin 1em 0
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     form [class^="columns"] > div
       padding-bottom 0
@@ -1918,12 +1914,12 @@ if $bundleButtons
   .button-group > *
     margin-right 1em // @note Espacement entre deux boutons
 
-  //@media (max-width: $sizeXS)
+  //@media (max-width $sizeXS)
   //
   //  .button-group > *
   //    width 100%
   //
-  //@media (min-width: $sizeXS)
+  //@media (min-width $sizeXS)
   //
   //  .button-group > *
   //    margin-right: 1em // @note Espacement entre deux boutons
@@ -2053,12 +2049,12 @@ if $bundleSwitchs
   // @see  http://www.creativejuiz.fr/
 
   .switch
-    position absolute // @note Label des éléments frères décalés si déclaration en relatif.
+    position absolute // @note Label des éléments frères décalés si déclaration en relatif
     left -9999rem
 
   .switch + label
     position relative
-    display inline-block // @note Évite un clique involontaire par l'utilisateur si label doté automatiquement d'un 'width100%' en définition 'block'.
+    display inline-block // @note Évite un clique involontaire par l'utilisateur car le label prend la règle 'width:100%' si 'display:block'
     margin-top 1em
     padding-left 6em
 
@@ -2231,7 +2227,7 @@ if $bundleRanges
 
   .range-vertical [type="range"]
     flex 1 0 1
-    // @bugfix @affected IE 10-11 @note Valeur flex-basis à préciser obligatoirement pour ce navigateur car valeur par défaut à 0. Passer la valeur à 'auto'.
+    // @bugfix @affected IE 10-11 @note Valeur flex-basis à préciser obligatoirement pour ce navigateur car valeur par défaut à 0
     height 2em
 
   .range-vertical output
@@ -2517,7 +2513,7 @@ if $bundleTables
     color $colorCL091
     background-color $colorBG091
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
     // Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
 
     [class^="table"][class*="fixed"]
@@ -2534,7 +2530,7 @@ if $bundleTables
       background-image repeating-linear-gradient(-45deg, $colorBG094, $colorBG095 1px, transparent 1px, transparent 6px)
       background-size 8px 8px
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     [class^="table"]
       border-collapse collapse
@@ -2621,7 +2617,7 @@ if $bundlePopins
     100%
       transform scale(1)
 
-  @media (min-width: $sizeS)
+  @media (min-width $sizeS)
 
     [id^="popin"]
       left 25%
@@ -2705,7 +2701,7 @@ if $bundleMainNav
     position absolute
     top -9999rem // @note Cacher l'élément
 
-  @media (max-width: $sizeNav)
+  @media (max-width $sizeNav)
 
     .main-nav label
       position absolute
@@ -2714,11 +2710,11 @@ if $bundleMainNav
       right 1em
       width 1.8em
       height 1.8em
-      background-color $colorBG109
+      //background-color $colorBG109
 
-    .main-nav :focus + label
-    .main-nav :hover + label
-      background-color $colorBG1090
+    //.main-nav :focus + label
+    //.main-nav :hover + label
+    //  background-color $colorBG1090
 
     .main-nav label span
     .main-nav label span::before
@@ -2726,14 +2722,14 @@ if $bundleMainNav
       position relative
       top .8em
       display block
-      width 1.4em
+      width 1.8em
       height 3px
       background-color $colorBG110
       transition all .2s
 
-    .main-nav label span
-      position relative
-      left .2em // @bugfix @affected iPad, iPhone @note Pas de possibilité de centrage de l'élément avec 'margin:auto'
+    //.main-nav label span
+    //  position relative
+    //  left .2em // @bugfix @affected iPad, iPhone @note Pas de possibilité de centrage de l'élément avec 'margin:auto'
 
     .main-nav label span::before
     .main-nav label span::after
@@ -2775,12 +2771,12 @@ if $bundleMainNav
   .brand a
     color $colorCL120
 
-  @media (max-width: $sizeNav)
+  @media (max-width $sizeNav)
 
     .main-nav :checked ~ .brand
       border-bottom .1em solid $colorBD1081
 
-  @media (min-width: $sizeNav)
+  @media (min-width $sizeNav)
 
     .brand
       display none
@@ -2826,7 +2822,7 @@ if $bundleMainNav
     ifColor($colorCL106)
     ifBackgroundColor($colorBG106)
 
-  @media (min-width: $sizeNav)
+  @media (min-width $sizeNav)
 
     .main-nav li .active
       ifColor($colorCL1051)
@@ -2873,7 +2869,7 @@ if $bundleMainNav
     margin-right .5em
     text-align center
 
-  @media (min-width: $sizeNav)
+  @media (min-width $sizeNav)
 
     .only-icon // @note Icône sans texte
       margin-left .5em
@@ -2883,7 +2879,7 @@ if $bundleMainNav
   .main-nav a:active [class^="icon"]
     animation animJump .5s ease-in-out
 
-  @media (min-width: $sizeNav)
+  @media (min-width $sizeNav)
 
     .item-push // @note '.item-push' est l'inverse de '.item-pull' (margin-right: auto), cette dernière classe étant non-utilisée.
       margin-left auto
@@ -2892,7 +2888,7 @@ if $bundleMainNav
       30%
         transform translateY(-.3rem)
 
-  @media (max-width: $sizeNav)
+  @media (max-width $sizeNav)
 
     .main-nav
       height 2.5em
@@ -2935,7 +2931,7 @@ if $bundleLoginAvatar
     width 2.5rem
     height 2.5rem
 
-  @media (min-width: $sizeNav)
+  @media (min-width $sizeNav)
     .login .active .avatar
       animation animLogin 5s infinite ease-in-out
 
@@ -2946,7 +2942,7 @@ if $bundleLoginAvatar
       100%
         transform rotate(360deg)
 
-  @media (max-width: $sizeNav)
+  @media (max-width $sizeNav)
       
     .login .avatar
       margin-left auto
@@ -2954,7 +2950,7 @@ if $bundleLoginAvatar
     .login > * :first-child
       line-height 2.5
 
-  @media (min-width: $sizeNav)
+  @media (min-width $sizeNav)
   
     .login
       overflow hidden // @todo Permet l'arrondit pour le gravatar mais cache le pseudo-élément de .active
@@ -3293,12 +3289,12 @@ if $bundleComments
   .comment [href^="#index"]
     transition color .3s
 
-  @media (max-width: $sizeXS)
+  @media (max-width $sizeXS)
 
     .comment [href^="#index"]
       padding-left 1em
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     .comment
       position relative
@@ -3353,12 +3349,12 @@ if $bundleRelationship
     ifBoxShadow($colorBS036)
     transition .15s box-shadow, transform
 
-  @media (min-width: $sizeXS)
+  @media (min-width $sizeXS)
 
     .relationship a
       width 'calc(%s - %s - %s)' % ((100% / 12 * 6) $gutter $bugfixGrid)
 
-  @media (min-width: $sizeS)
+  @media (min-width $sizeS)
 
     .relationship a
       width 'calc(%s - %s - %s)' % ((100% / 12 * 3) $gutter $bugfixGrid)

@@ -4,6 +4,31 @@
 // -----------------------------------------------------------------------------
 
 
+// @subsection  Fonts
+// @description Choix des polices de caractères à charger via @font-face
+// -----------------------------------------------------------------------------
+
+// @note Le nom de la police doit être le même que ne nom du fichier de la police. Pour raison de simplification...
+
+  $fontName = 'Libre Baskerville'
+  $fontFile = librebaskerville
+
+  $fontName2 = LibreBaskTang
+  $fontFile2 = LibreBaskTang
+
+// @subsection Typography
+// -----------------------------------------------------------------------------
+
+//fontFamily =  'Open Sans', 'Helvetica Light', Helvetica, 'Droid Sans', Arial, sans-serif
+  $fontFamily = $fontName, serif            // Default fonts
+  $fontFamily2 = $fontName2, serif          // Titles
+  $fontFamily3 = false                      // Dropcap
+  $fontFamily5 = 'GFS Didot', 'Palatino Linotype', Palatino, sans-serif // :lang(grc)
+  $fontFamily6 = 'Libre Baskerville', 'Palatino Linotype', Palatino, sans-serif // :lang(he)
+  $fontWeight = 300                         // épaisseur par défaut
+  $fontWeight2 = 400                        // hx font
+
+
 // @subsection  Colors
 // @description Propagation des couleurs pour le thème
 // -----------------------------------------------------------------------------
@@ -32,7 +57,7 @@
   $colorBD007 = $color1
   $colorCL011 = $color1                            // Verses
   $colorCL012 = $color1									           // Dropcaps
-  $colorBG012 = none
+  $colorBG012 = false
   $colorCL016 = false
   $colorCL017 = #fff !important
   $colorBG024 = false
