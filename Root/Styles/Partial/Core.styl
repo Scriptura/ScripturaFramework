@@ -1,6 +1,5 @@
 // @note Les classes sont utilisées dans la logique OSCSS, à la manière des espaces de nom, seule la classe '.active' est utilisée de manière transversale
 
-// *.styl
 // selector
 //   property value
 
@@ -2855,7 +2854,7 @@ if $bundleMainNav
       //  background-color #000
       //  box-shadow .5rem .5rem 2rem rgba(0, 0, 0, .2)
 
-      .main-nav .active::after
+      .main-nav li .active::after
         content ''
         display block
         position absolute
@@ -2924,6 +2923,47 @@ if $bundleMainNav
 
   .main-nav + *
     padding-top 3.5em !important // @note Décalage sur le conteneur suivant afin de laisser une place pour le menu de navigation en position absolute.
+
+
+
+// -----------------------------------------------------------------------------
+// @section     Nav Bottom
+// @description Menu en bas pour résolution inférieure à la taille du menu de base
+// -----------------------------------------------------------------------------
+if $bundleNavBottom
+
+  $colorTest = Tan
+  $cmdSize = 2.5em
+
+  @media (max-width $sizeNav)
+
+    .sizeNav-nav-bottom ul
+      position fixed !important
+      top 'calc(100vh - %s)' % $cmdSize
+      left 0 !important // @todo
+      height 100vh
+      transition top .3s
+
+    .sizeNav-nav-bottom ul.active
+      top 0
+
+    .cmd-slide
+      display flex
+      height $cmdSize
+      background-color #333
+      border-top none !important
+
+    .cmd-slide::before
+      content ''
+      display block
+      height .2em
+      width $cmdSize
+      margin auto
+      background-color $colorTest
+      box-shadow 0 floor(- $cmdSize / 4, 2) 0 0 $colorTest, 0 floor($cmdSize / 4, 2) 0 0 $colorTest
+
+  .scroll-top.hidden
+    display none !important // @note Contourne une règle posée en javascript
 
 
 // -----------------------------------------------------------------------------
