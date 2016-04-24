@@ -2,7 +2,7 @@
 // @name         Scriptura
 // @description  Interface for web apps
 // @version      0.0.4
-// @lastmodified 2016-3-17 08:36:59
+// @lastmodified 2016-3-23 10:15:21
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -99,6 +99,7 @@ jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un a
 
 // if .class { getScript('/Scripts/Vendors/Isotope.js') }
 
+
 // -----------------------------------------------------------------------------
 // @section     Main Nav
 // @description Menu de navigation principal
@@ -116,6 +117,30 @@ jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un a
 	});
 })(jQuery);
 */
+
+
+// -----------------------------------------------------------------------------
+// @section     Main Nav Bottom
+// @description Menu de navigation principal, position en bas
+// -----------------------------------------------------------------------------
+
+(function($) {
+	var body = $('body');
+	var menu = $('.sizeNav-nav-bottom ul');
+	var scrollTop = $('.scroll-top');
+	$('.cmd-slide').on('click touchmove', function() {
+		menu.toggleClass('active');
+		if (menu.hasClass('active')) {
+			body.css('overflow', 'hidden'); // Évite la confusion avec un scrool sur la page
+			scrollTop.addClass('hidden');
+		} else {
+			body.css('overflow', 'visible');
+			menu.removeClass('active');
+			scrollTop.removeClass('hidden');
+		}
+	});
+})(jQuery);
+
 
 // -----------------------------------------------------------------------------
 // @section     Sections Nav
