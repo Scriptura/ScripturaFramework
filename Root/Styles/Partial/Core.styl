@@ -2209,7 +2209,7 @@ if $bundleRanges
 
   .range
     flex-wrap wrap
-    flex-direction columns
+    //flex-direction column
 
   .range-vertical-group
     overflow hidden
@@ -2934,25 +2934,31 @@ if $bundleNavBottom
   $colorTest = Tan
   $cmdSize = 2.5em
 
+  .sizeNav-nav-bottom button
+    display none
+
   @media (max-width $sizeNav)
 
-    .sizeNav-nav-bottom ul
+    .sizeNav-nav-bottom
       position fixed !important
       top 'calc(100vh - %s)' % $cmdSize
       left 0 !important // @todo
+      width 100%
       height 100vh
+      background-color #333
       transition top .3s
 
-    .sizeNav-nav-bottom ul.active
+    .sizeNav-nav-bottom.active
       top 0
 
-    .cmd-slide
+    .sizeNav-nav-bottom button
       display flex
+      width 100%
       height $cmdSize
       background-color #333
-      border-top none !important
+      border none
 
-    .cmd-slide::before
+    .sizeNav-nav-bottom button::before
       content ''
       display block
       height .2em
@@ -2960,6 +2966,9 @@ if $bundleNavBottom
       margin auto
       background-color $colorTest
       box-shadow 0 floor(- $cmdSize / 4, 2) 0 0 $colorTest, 0 floor($cmdSize / 4, 2) 0 0 $colorTest
+
+    .sizeNav-nav-bottom ul
+      position static // @todo
 
   .scroll-top.hidden
     display none !important // @note Contourne une règle posée en javascript
