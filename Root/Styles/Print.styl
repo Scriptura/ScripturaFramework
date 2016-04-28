@@ -8,6 +8,10 @@ article header
 .button-group
 .scroll-top
 .no-print
+form
+label
+input
+button
   display none !important
 
 * // @note Cache certains effets éventuels sur les boites et le texte
@@ -23,11 +27,6 @@ body
   font-size 14px
   color #666
   text-align justify
-
-h1
-  font-size 30px
-  line-height 40px
-  text-align left
 
 a
   color #000
@@ -58,6 +57,40 @@ h5, .h5
 h6, .h6
   page-break-after avoid // @note Évite un saut de page après l'élément
 
+h1
+  line-height 3
+  text-align left
+
+h1, .h1
+  margin-top 16px
+  margin-bottom 10px
+  font-size 32px
+
+h2, .h2
+  margin-top 14px
+  margin-bottom 8px
+  font-size 28px
+
+h3, .h3
+  margin-top 12px
+  margin-bottom 6px
+  font-size 24px
+
+h4, .h4
+  margin-top 10px
+  margin-bottom 4px
+  font-size 20px
+
+h5, .h5
+  margin-top 8px
+  margin-bottom 4px
+  font-size 18px
+
+h6, .h6
+  margin-top 6px
+  margin-bottom 4px
+  font-size 16px
+
 blockquote
   margin 0 0 20px
   padding 0 0 0 15px
@@ -68,3 +101,6 @@ blockquote
   margin-bottom 10px
   border 1px dashed #aaa
   border-radius 5px
+
+[class*="map"]
+  min-height 300px
