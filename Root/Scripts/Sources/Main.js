@@ -2,7 +2,7 @@
 // @name         Scriptura
 // @description  Interface for web apps
 // @version      0.0.7
-// @lastmodified 2016-3-28 10:53:49
+// @lastmodified 2016-4-1 00:58:11
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -85,19 +85,11 @@ jQuery.fn.center = function() { // .center()
 
 // #note Par défaut, tous les liens externes conduisent à l'ouverture d'un nouvel onglet, sauf les liens de téléchargement
 
-jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un attribut target_blank sur les liens externes
-	$(this).filter(function() {
-		return this.hostname && this.hostname !== location.hostname;
-	}).attr("target", "_blank");
-});
-
-
-// -----------------------------------------------------------------------------
-// @section     Isotope
-// @description Réorganisation des boites via le plugin addoc
-// -----------------------------------------------------------------------------
-
-// if .class { getScript('/Scripts/Vendors/Isotope.js') }
+(function($) { // Ajout d'un attribut target_blank sur les liens externes
+  $(document).find('a:not(.download-link)').filter(function() {
+    return this.hostname && this.hostname !== location.hostname;
+  }).attr("target", "_blank");
+})(jQuery);
 
 
 // -----------------------------------------------------------------------------
@@ -140,25 +132,6 @@ jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un a
 		}
 	});
 })(jQuery);
-
-/*
-(function($) {
-	var body = $('body');
-	var menu = $('.sizeNav-nav-bottom ul');
-	var scrollTop = $('.scroll-top');
-	$('.cmd-slide').on('click touchmove', function() {
-		menu.toggleClass('active');
-		if (menu.hasClass('active')) {
-			body.css('overflow', 'hidden'); // Évite la confusion avec un scrool sur la page
-			scrollTop.addClass('hidden');
-		} else {
-			body.css('overflow', 'visible');
-			menu.removeClass('active');
-			scrollTop.removeClass('hidden');
-		}
-	});
-})(jQuery);
-*/
 
 
 // -----------------------------------------------------------------------------
@@ -217,15 +190,17 @@ jQuery(document).on('click','a:not(.download-link)',function() { // Ajout d'un a
 // @description Défilement fluide
 // -----------------------------------------------------------------------------
 
-jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
+// @todo Old selector : 'a[href*="#"]:not([href="#"])'
+
+jQuery(document).find('a[href*="#"]:not([href$="#"])').on('click', function() {
 	if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname){
 		var target = $(this.hash);
 		target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
 		if (target.length){
-			$('html,body').animate({
+			$('html, body').animate({
 				scrollTop: target.offset().top
 			}, 400);
-			//return false;
+			return false;
 		}
 	}
 });
@@ -237,13 +212,14 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 // -----------------------------------------------------------------------------
 
 (function($) {
-	$('body').attr('id', 'index'); // Ajout d'une ID pour permettre un ciblage via .scroll-top
-	$('<a href="#index" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>').appendTo('body'); // Création de l'élément a.scroll-top
+	$('body')
+		.attr('id', 'index') // Ajout d'une ID pour permettre un ciblage via .scroll-top
+		.append('<a href="#index" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>'); // Création de l'élément a.scroll-top
 	var scrolltop = $('.scroll-top'); // Création de la variable après création de la classe dans le DOM
-	//scrolltop.click(function() { // Retour en haut progressif
-	//	$('html, body').animate({scrollTop: 0}, 600);
-	//	return false;
-	//});
+	scrolltop.click(function() { // Retour en haut progressif
+		$('html, body').animate({scrollTop: 0}, 600);
+		return false;
+	});
 	$(window).scroll(function() { // Apparition de la flèche 'retour en haut' au scroll de la page
 		if ($(this).scrollTop() > 100) {
 			scrolltop.fadeIn();
@@ -272,7 +248,7 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 	accordion.find('> :nth-child(even)').hide(); // Cacher le contenu
 	accordion.find('> .active').show(); // Montrer le contenu comportant '.active'
 	accordion.find('> .active').prev().addClass('active'); // Si élément de contenu comporte '.active', alors élément précédent (titre) comporte '.active'
-	accordion.find('> a').click(function(e){
+	accordion.find('> a').click(function(e) {
 		var link = $(this);
 		link.toggleClass('active'); // Ajout/suppression de '.active' sur élément cliqué
 		link.siblings().removeClass('active'); // Retrait de '.active' sur les élements frères
@@ -289,9 +265,16 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 // @section Tabs
 // -----------------------------------------------------------------------------
 
-(function($) {
+(function($) { // Construction des onglets et des conteneurs
+
+	var tab = $('[class*="tabs-js"]');
+	tab // Traitement des tableaux
+		.each(function(index){
+			$(this).attr('id', 'tab-' + index); // Ajout d'un id
+		});
+
 	var tabs = $('[class*="tabs-js"]');
-	tabs.addClass('tabs'); // @todo En test, pour le css
+	tabs.addClass('tabs');
 	tabs.find('> :nth-child(even)').hide(); // Cacher le contenu
 	tabs.find('> :nth-child(2)').addClass('active'); // Appliquer la class .active au premier enfant du contenu
 	tabs.find('> .active').show(); // Montrer le contenu .active
@@ -308,10 +291,10 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 	tabs.each(function() {
 		$(this).children('li').insertBefore(this).wrapAll('<ul class="cmd-tabs"/>'); // Placer les onglets devant le conteneur et les entourer
 	});
-	$('.tabs-js-united').addClass('tabs-united'); // @todo En test, pour le css
+	$('.tabs-js-united').addClass('tabs-united');
 	var cmdtabs = $('.cmd-tabs'); // Création de la variable après création de la classe dans le DOM
 	cmdtabs.find(':first-child a').addClass('active'); // Attribuer .active sur le premier onglet
-	cmdtabs.on('click', 'a', function(e){
+	cmdtabs.on('click', 'a', function(e) {
 		var link = $(this);
 		link.parent().parent().children().children().removeClass('active'); // Les onglets frères possèdant la classe .active la perdent
 		link.addClass('active'); // L'onglet courant récupère la classe .active
@@ -322,20 +305,24 @@ jQuery(document).on('click', 'a[href*=#]:not([href=#])', function() {
 })(jQuery);
 
 
-// @note Mémorisation du dernier onglet cliqué
-// @todo En test
-jQuery(document).on('click', '[id^="cmd-tab-"]', function() {
-		localStorage.setItem('tab', this.id); // Option mémorisée en Web Storage
-});
-var tab = localStorage.getItem('tab');
-if (tab) {
-	var idTab = $('[id^="' + tab + '"]');
-	idTab.parent().parent().children().children().removeClass('active'); // Les onglets frères possèdant la classe .active la perdent
-	idTab.addClass('active'); // Ajout d'une classe .active sur l'onglet si option mémorisée
-	idTab.parent().parent().next().children().removeClass('active').hide(); // Traiter l'ancien conteneur actif
-	$('#content-' + tab).addClass('active').show(); // Traitement du contenu en rapport avec l'onglet cliqué
-}
-// localStorage.removeItem('tab');
+(function($) { // @note Mémorisation du dernier onglet cliqué
+			   // @todo Ne mémorise qu'un unique onglet par page.
+	var path = window.location.pathname.replace(/\//g, '').replace(/\./g, '').toLowerCase();
+	var memoTab = 'tab-' + path;
+	$('[id^="cmd-tab-"]').on('click', function() {
+		localStorage.setItem(memoTab, this.id); // Option mémorisée en Web Storage
+	});
+	var tab = localStorage.getItem(memoTab);
+	if (tab) {
+		var idTab = $('[id^="' + tab + '"]');
+		idTab.parent().parent().children().children().removeClass('active'); // Les onglets frères possèdant la classe .active la perdent
+		idTab.addClass('active'); // Ajout d'une classe .active sur l'onglet si option mémorisée
+		idTab.parent().parent().next().children().removeClass('active').hide(); // Traiter l'ancien conteneur actif
+		$('#content-' + tab).addClass('active').show(); // Traitement du contenu en rapport avec l'onglet cliqué
+	}
+	// localStorage.removeItem('tab');
+	// localStorage.clear();
+})(jQuery);
 
 
 // -----------------------------------------------------------------------------
@@ -360,25 +347,26 @@ jQuery(document).on('focusout', 'input, textarea', function() {
 // -----------------------------------------------------------------------------
 
 // Cet ancien code ne fonctionne pas avec Ajax car utilisation de .each() :
-//	jQuery('[type="range"]').each(function() {
-//		var range = $(this);
-//		range.on('input', function() {
-//			range.next().text(range.val());
-//		})
-//		.next().text(range.val());
-//	});
-
-// Nouveau code "Ajax ready" :
-jQuery(document).on('input', '[type="range"]', function() {
+jQuery(document).find('[type="range"]').each(function() {
 	var range = $(this);
-	range.next().text(range.val());
+	range.on('input', function() {
+		range.next().text(range.val());
+	})
+	.next().text(range.val());
 });
 
+// @todo Alternative :
 // Cette partie du code, affichant la valeur de départ dans un output, ne fonctionne pas avec Ajax :
-jQuery('[type="range"]').each(function() {
-	var range = $(this);
-	range.next().text(range.val());
-});
+// jQuery('[type="range"]').each(function() {
+// 	var range = $(this);
+// 	range.next().text(range.val());
+// });
+
+// Valeur si changement "Ajax ready" :
+// jQuery(document).on('input', '[type="range"]', function() {
+// 	var range = $(this);
+// 	range.next().text(range.val());
+// });
 
 
 // -----------------------------------------------------------------------------
@@ -400,11 +388,9 @@ jQuery('.progress div').each(function() {
 // @description Zoom sur les images
 // -----------------------------------------------------------------------------
 
-jQuery('[class*="-focus"]').each(function() {
-	$('<span class="icon-enlarge"/>').prependTo(this);
-});
+$('[class*="-focus"]').prepend('<span class="icon-enlarge"/>');
 
-jQuery(document).on('click', '[class*="-focus"]', function(e){ // @note Event si utilisation sur <a>
+jQuery(document).find('[class*="-focus"]').on('click', function(e) { // @note Event si utilisation sur <a>
 	$(this).find('img').clone()
 		.css('display', 'inherit') // @bugfix @affected Firefox @note Neutralise une déclaration inligne style 'display:inline' induite (via jQuery ?) sous ce navigateur
 		.fadeIn(300)
@@ -412,7 +398,7 @@ jQuery(document).on('click', '[class*="-focus"]', function(e){ // @note Event si
 		.wrap('<div class="focus-off"><div></div></div>') // @bugfix @affected All browsers @note Image en flex item n'a pas son ratio préservé si resize ; une div intermédiaire entre le conteneur .focus-off et l'image corrige ce problème
 		.before('<span class="icon-shrink zoom200"/>');
 	$('body').css('overflow', 'hidden'); // @note Pas de scroll sur la page si photo en focus
-	$(document).on('click' ,'.focus-off', function(e) {
+	$(document).find('.focus-off').on('click', function(e) {
 		$('.focus-off').fadeOut(300);
 		setTimeout(function() {
 			$('.focus-off').remove();
@@ -428,7 +414,7 @@ jQuery(document).on('click', '[class*="-focus"]', function(e){ // @note Event si
 // @description Commande pour l'impression
 // -----------------------------------------------------------------------------
 
-jQuery(document).on('click', '.cmd-print', function() {
+jQuery(document).find('.cmd-print').on('click', function() {
 	window.print();
 	return false;
 });
@@ -439,7 +425,7 @@ jQuery(document).on('click', '.cmd-print', function() {
 // @description Gestion de l'affichage des fenêtres popin
 // -----------------------------------------------------------------------------
 
-jQuery(document).on('click', '#cmd-popin', function(e) { // Supprimer ou cacher la popin
+jQuery(document).find('#cmd-popin').on('click', function(e) { // Supprimer ou cacher la popin
 	var popin = $('#popin');
 	var popinUser = $('#popin-user');
 	if (popinUser) {
@@ -459,7 +445,7 @@ jQuery(document).on('click', '#cmd-popin', function(e) { // Supprimer ou cacher 
 	e.preventDefault();
 });
 
-jQuery(document).on('click', '#user', function(e) { // Afficher la popin #user
+jQuery(document).find('#user').on('click', function(e) { // Afficher la popin #user
 	$('body').css('overflow', 'hidden'); // @note Pas de scroll sur la page si popin visible
 	$('#popin-user')
 		.removeClass('hidden')
@@ -468,7 +454,7 @@ jQuery(document).on('click', '#user', function(e) { // Afficher la popin #user
 	return false;
 });
 
-jQuery(document).on('click', 'body', function(e) { // Si clic en dehors de la popin
+jQuery(document).find('body').on('click', function(e) { // Si clic en dehors de la popin
 	var inside = $('[id^="popin"]');
 	if (!inside.is(e.target) && inside.has(e.target).length === 0) {
 		inside.addClass('popin-error');
@@ -485,8 +471,9 @@ jQuery(document).on('click', 'body', function(e) { // Si clic en dehors de la po
 
 // @note Le pseudo-élément ::first-letter ne se comporte pas de la même manière selon tous les navigateurs, cette solution css/js corrige ce problème.
 // @note Ajout d'une class .dropcap sur le p:first d'un élément parent comportant .adddropcap
+
 jQuery.fn.dropcap = function() {
-	$('[class*="adddropcap"] p:first').each(function() {
+	$('[class*="adddropcap"] p:first-child').each(function() {
 		var string = $(this),
 			newString = string.html().replace(/(<([^>]+)>|[A-Z0-9«»"]|&amp;)/, '<span class="dropcap">$1</span>'); // Ajout d'un span + class sur les caractères sélectionnés, filtrage des balises html
 		string.html(newString);
@@ -661,7 +648,7 @@ jQuery('pre code').each(function() { // Création du bouton de commande
 //      @param '***' : ouverture dans une fenêtre dédiée [3]
 // - L'attribut 'data-url' de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
 
-jQuery(document).on('click', '[data-display][data-path]', function() {
+jQuery(document).find('[data-display][data-path]').on('click', function() {
 	$('.ajax-window').parent().parent().remove(); // Si fichier déjà appelé précédement
 	obj = $(this);
 	type = obj.data('display');
@@ -767,7 +754,7 @@ if (localStorage.getItem('termsuse') === 'true') {
 })(jQuery);
 
 // Code de la touche du clavier actuellement pressée
-jQuery(document).keydown(function(e){
+jQuery(document).keydown(function(e) {
 	console.info('Code keyboard key: ' + e.keyCode);
 });
 
