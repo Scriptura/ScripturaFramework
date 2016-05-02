@@ -307,8 +307,8 @@ gulp.task('stylesexp', function() {
 // @description Modification des entêtes JS et CSS pour chaque modification des Styles
 
 var dateY = new Date().getFullYear(),
-    dateM = new Date().getMonth(),
-    dateD = new Date().getDate(),
+    dateM = ( '0' + ( new Date().getMonth() + 1 ) ).slice(-2), // Janvier = 0
+    dateD = ( '0' + ( new Date().getDate() ) ).slice(-2),
     dateH = new Date().toLocaleTimeString(),
     versionDate = dateY + '-' + dateM + '-' + dateD + ' ' + dateH;
 

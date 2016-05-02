@@ -660,111 +660,14 @@ if $bundleLangages
 if $bundleZoom
   // @note Ces classes permettent de d'augmenter ou réduire la taille de toutes les polices ou éléments enfants
   // @note Cette technique est incompatible avec les unités vmin placés sur les titres
+  // @note Pas de '.zoom100' : aucun intérêt...
   // @todo Pas de possibilité de zoom avec cette technique au-dessous de 50%
 
-  .zoom1000
-    font-size 1000%
-    font-size calc(1em * 10) // @bugfix @affected IE 9-IE11
-
-  .zoom900
-    font-size 900%
-    font-size calc(1em * 9) // @bugfix @affected IE 9-IE11
-
-  .zoom800
-    font-size 800%
-    font-size calc(1em * 8) // @bugfix @affected IE 9-IE11
-
-  .zoom700
-    font-size 700%
-    font-size calc(1em * 7) // @bugfix @affected IE 9-IE11
-
-  .zoom600
-    font-size 600%
-    font-size calc(1em * 6) // @bugfix @affected IE 9-IE11
-
-  .zoom500
-    font-size 500%
-    font-size calc(1em * 5) // @bugfix @affected IE 9-IE11
-
-  .zoom400
-    font-size 400%
-    font-size calc(1em * 4) // @bugfix @affected IE 9-IE11
-
-  .zoom300
-    font-size 300%
-    font-size calc(1em * 3) // @bugfix @affected IE 9-IE11
-
-  .zoom250
-    font-size 250%
-    font-size calc(1em * 2.5) // @bugfix @affected IE 9-IE11
-
-  .zoom200
-    font-size 200%
-    font-size calc(1em * 2) // @bugfix @affected IE 9-IE11
-
-  .zoom150
-    font-size 150%
-    font-size calc(1em * 1.5) // @bugfix @affected IE 9-IE11
-
-  .zoom140
-    font-size 140%
-    font-size calc(1em * 1.4) // @bugfix @affected IE 9-IE11
-
-  .zoom130
-    font-size 130%
-    font-size calc(1em * 1.3) // @bugfix @affected IE 9-IE11
-
-  .zoom120
-    font-size 120%
-    font-size calc(1em * 1.2) // @bugfix @affected IE 9-IE11
-
-  .zoom115
-    font-size 115%
-    font-size calc(1em * 1.15) // @bugfix @affected IE 9-IE11
-
-  .zoom110
-    font-size 110%
-    font-size calc(1em * 1.1) // @bugfix @affected IE 9-IE11
-
-  .zoom105
-    font-size 105%
-    font-size calc(1em * 1.05) // @bugfix @affected IE 9-IE11
-
-  // @note Pas de .zoom100 : aucun intérêt...
-
-  .zoom95
-    font-size 95%
-    font-size calc(1em * .95) // @bugfix @affected IE 9-IE11
-
-  .zoom90
-    font-size 90%
-    font-size calc(1em * .9) // @bugfix @affected IE 9-IE11
-
-  .zoom85
-    font-size 85%
-    font-size calc(1em * .85) // @bugfix @affected IE 9-IE11
-
-  .zoom80
-    font-size 80%
-    font-size calc(1em * .8) // @bugfix @affected IE 9-IE11
-
-  .zoom75
-    font-size 75%
-    font-size calc(1em * .75) // @bugfix @affected IE 9-IE11
-
-  .zoom70
-    font-size 70%
-    font-size calc(1em * .7) // @bugfix @affected IE 9-IE11
-
-  .zoom60
-    font-size 60%
-    font-size calc(1em * .6) // @bugfix @affected IE 9-IE11
-
-  .zoom50
-    font-size 50%
-    font-size calc(1em * .5) // @bugfix @affected IE 9-IE11
-
-  // @todo Pas de possibilité de zoom au-dessous de 50%
+  for $arg in 1000 900 800 700 600 500 400 300 250 200 150 140 130 120 115 110 105 95 90 85 80 75 70 60 50
+    $abstr = $arg / 100
+    .zoom{$arg}
+      font-size $arg * 1%
+      font-size 'calc(1em * %s)' % $abstr // @bugfix @affected IE 9-IE11
 
   .zoom-reset // @note Réinitialisation d'un élément enfant si élément parent zoomé
     font-size 1rem // @note Valeur égale à la taille d'origine
