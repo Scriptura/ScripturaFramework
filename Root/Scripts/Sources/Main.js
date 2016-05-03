@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.9
-// @lastmodified 2016-05-02 15:44:25
+// @version      0.0.10
+// @lastmodified 2016-05-03 08:30:33
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -190,8 +190,6 @@ if (element.length){
 // @description Défilement fluide
 // -----------------------------------------------------------------------------
 
-// @todo Old selector : 'a[href*="#"]:not([href="#"])'
-
 jQuery(document).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 	if (location.pathname.replace(/^\//,'' ) == this.pathname.replace(/^\//,'' ) && location.hostname == this.hostname){
 		var target = $(this.hash);
@@ -200,7 +198,7 @@ jQuery(document).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 			$( 'html, body' ).animate({
 				scrollTop: target.offset().top
 			}, 400 );
-			//return false; // Désactivé afin de préserver les ancres lors d'un clique
+			// @note Pas de 'return false', afin de préserver les ancres
 		}
 	}
 });
@@ -211,15 +209,15 @@ jQuery(document).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 // @description Défilement vers le haut
 // -----------------------------------------------------------------------------
 
+// @note Vanilla Js de 'scrollTop: 0' : 'window.scrollTo( 0, 0 )'
+
 (function($) {
-	$( 'body' )
-		.attr( 'id', 'index' ) // Ajout d'une ID pour permettre un ciblage via .scroll-top
-		.append( '<a href="#index" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>' ); // Création de l'élément a.scroll-top
-	var scrolltop = $( '.scroll-top' ); // Création de la variable après création de la classe dans le DOM
-	// scrolltop.on('click', function() {
-	// 	$( 'html, body' ).animate( {scrollTop: 0}, 600 ); // Retour en haut progressif
-	// 	return false; // Empêche la génération de l'ancre sur le permalien
-	// });
+	$( 'body' ).append( '<a href="" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>' ); // Création de l'élément a.scroll-top
+	var scrolltop = $( '.scroll-top' ); // Création de la variable uniquement après création de l'élément dans le DOM
+	scrolltop.on('click', function() {
+		$( 'html, body' ).animate( {scrollTop: 0}, 600 ); // Retour en haut progressif
+		return false; // Empêche la génération de l'ancre sur le permalien
+	});
 	$(window).scroll(function() { // Apparition de la flèche 'retour en haut' au scroll de la page
 		if ( $( this ).scrollTop() > 100 ) {
 			scrolltop.fadeIn();

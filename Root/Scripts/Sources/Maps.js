@@ -110,7 +110,11 @@ function initMap() {
 
     bounds.extend(latLng); // Récupération des coordonnées du marqueur pour la fonction fitBounds
 
-    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+    // @note Désactivation de Jshint pour cette boucle avec l'instruction '// jshint ignore:line'
+    // @link http://jshint.com/docs/
+    // @todo Jshint : "Don't make functions within a loop" @link https://jslinterrors.com/dont-make-functions-within-a-loop
+
+    google.maps.event.addListener(marker, 'click', (function(marker, i) { // jshint ignore:line
       return function() {
         infowindow.setContent(locations[i][0]); // Info list
         infowindow.open(map, marker);
