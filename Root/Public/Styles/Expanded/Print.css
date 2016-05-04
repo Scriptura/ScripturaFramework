@@ -1,9 +1,9 @@
 
-/* line 297 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 286 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 
-/* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/node_modules/stylus/lib/functions/index.styl */
+/* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
 
-/* line 6 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 6 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 body > :not(main),
 article header,
 .button-group,
@@ -16,14 +16,14 @@ button {
   display: none !important;
 }
 
-/* line 17 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 17 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 * {
   text-shadow: none !important;
   box-shadow: none !important;
   background: transparent !important;
 }
 
-/* line 22 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 22 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 body {
   margin: 2cm;
   font-family: 'Open Sans', Arial, sans-serif;
@@ -34,23 +34,23 @@ body {
   text-align: justify;
 }
 
-/* line 31 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 31 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 a {
   color: #000;
   text-decoration: none;
 }
 
-/* line 35 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 35 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 .links a[href]::after {
   content: ' (' attr(href) ')';
 }
 
-/* line 38 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 38 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 .links a[href^="#"]::after {
   content: '';
 }
 
-/* line 41 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 41 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 p,
 h2,
 h3,
@@ -59,14 +59,14 @@ blockquote {
   widows: 3;
 }
 
-/* line 48 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 48 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 blockquote,
 ul,
 ol {
   page-break-inside: avoid;
 }
 
-/* line 53 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 53 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h2,
 .h2,
 h3,
@@ -80,13 +80,13 @@ h6,
   page-break-after: avoid;
 }
 
-/* line 60 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 60 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h1 {
   line-height: 3;
   text-align: left;
 }
 
-/* line 64 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 64 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h1,
 .h1 {
   margin-top: 16px;
@@ -94,7 +94,7 @@ h1,
   font-size: 32px;
 }
 
-/* line 69 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 69 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h2,
 .h2 {
   margin-top: 14px;
@@ -102,7 +102,7 @@ h2,
   font-size: 28px;
 }
 
-/* line 74 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 74 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h3,
 .h3 {
   margin-top: 12px;
@@ -110,7 +110,7 @@ h3,
   font-size: 24px;
 }
 
-/* line 79 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 79 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h4,
 .h4 {
   margin-top: 10px;
@@ -118,7 +118,7 @@ h4,
   font-size: 20px;
 }
 
-/* line 84 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 84 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h5,
 .h5 {
   margin-top: 8px;
@@ -126,7 +126,7 @@ h5,
   font-size: 18px;
 }
 
-/* line 89 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 89 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 h6,
 .h6 {
   margin-top: 6px;
@@ -134,14 +134,14 @@ h6,
   font-size: 16px;
 }
 
-/* line 94 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 94 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 blockquote {
   margin: 0 0 20px;
   padding: 0 0 0 15px;
   border-left: 5px solid #aaa;
 }
 
-/* line 99 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 99 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 [class*="message"] {
   padding: 10px 20px;
   margin-bottom: 10px;
@@ -149,7 +149,7 @@ blockquote {
   border-radius: 5px;
 }
 
-/* line 105 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaSite/Root/Styles/Print.styl */
+/* line 105 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 [class*="map"] {
   min-height: 300px;
 }

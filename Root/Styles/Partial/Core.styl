@@ -570,7 +570,7 @@ pre code
 
 pre code::before
   position absolute
-  content '# Code'attr(data-code)
+  content '# Code' attr(data-code)
   top -1.9em
   left -.5em
   float left
@@ -1409,8 +1409,139 @@ if $bundleFocus
 
 
 // -----------------------------------------------------------------------------
-// @section Medias
-// Audio, vidéo et Caneva
+// @section     Slideshow
+// @description Diaporama en full page
+// -----------------------------------------------------------------------------
+// @note Le diaporama utilise le plugin jQuery 'Cycle 2'
+// @link http://jquery.malsup.com/cycle2/
+// @documentation http://jquery.malsup.com/cycle2/api/
+if $bundleSlideshow
+
+  .slideshow
+    position relative
+    z-index 0
+    display flex
+    margin-top calc(-2.5rem)
+    padding 0 // @todo Contre le padding de .section
+    width 100%
+    height 100vh
+    background-color #000
+
+  .cycle-item
+  .cycle-item div
+    position absolute
+    top 0
+    left 0
+    bottom 0
+    right 0
+
+  .cycle-item
+    color Orange
+    background-size cover
+    background-position 50% 50%
+
+  .cycle-item img
+    display none
+
+  .cycle-item div
+    display flex
+    flex-direction column
+    text-align center
+    //text-shadow 0 0 .5rem rgba(0, 0, 0, .2)
+
+  .cycle-pager
+    position absolute
+    z-index 200
+    top 2.5rem
+    right 1rem
+    display flex
+  
+  .cycle-pager span
+    display block
+    width 2rem
+    height 2rem
+    margin-left .5rem
+    color transparent
+    border .2rem solid #eee
+    border-radius 50%
+    //box-shadow 0 0 .5rem rgba(0, 0, 0, .2)
+
+  .cycle-pager span:hover
+    cursor pointer
+
+  .cycle-pager span:hover
+  .cycle-pager-active
+    background-color rgba(255, 255, 255, .5)
+
+  .cycle-text
+    margin-left 1rem
+    margin-right 1rem
+    margin-bottom 2rem
+
+  .cycle-text *
+    font-size 8vmin
+    margin-top auto
+
+  @media (min-width $sizeS)
+    .cycle-text *
+      font-size 4rem
+
+  .slideshow button
+  .slideshow button::after
+    border-radius 50%
+
+  .slideshow button
+    position relative //@todo
+    z-index 200
+    padding 5vmin
+    margin auto 10vmin
+    font-size 10vmin
+    font-weight 900
+    text-align center
+    color #ddd
+    background-color rgba(255, 255, 255, .2)
+    border none
+    outline none
+
+  @media (min-width $sizeXS)
+    .slideshow button
+      padding 1rem
+      font-size 4rem
+
+  .slideshow #prev
+    transform rotate(180deg)
+
+  .slideshow #next
+    margin-left auto
+    margin-right 10vmin
+
+  .slideshow button:focus
+  .slideshow button:hover
+  //.slideshow button:active
+    position relative
+    top 2px
+
+  .slideshow button::after
+    position absolute
+    top 0
+    left 0
+    content ''
+    width 100%
+    height 100%
+    background-color rgba(255, 255, 255, 0)
+    opacity 0
+
+  //.slideshow button:focus::after
+  //.slideshow button:hover::after
+  .slideshow button:active::after
+    background-color rgba(255, 255, 255, .5)
+    opacity 1
+    transition .2s
+
+
+// -----------------------------------------------------------------------------
+// @section     Medias
+// @description Audio, vidéo et Caneva
 // -----------------------------------------------------------------------------
 if $bundleMedias
 
@@ -1735,7 +1866,7 @@ if $bundleInputs
     padding-left .5em
     padding-right .5em
 
-  @media (max-width: 400px)
+  @media (max-width 400px)
     // @note Pour les très petites définitions @todo En test...
 
     [class*="input-group"] > div div
