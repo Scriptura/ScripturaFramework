@@ -582,7 +582,7 @@ pre code::before
   ifBoxShadow($colorBS009)
 
 pre code button
-  width inherit !important // @note Contrebalance une règle css par défaut
+  width inherit !important // @note Compense la règle css par défaut
   font-size 50%
 
 blockquote
@@ -1030,7 +1030,7 @@ if $bundleNumberlists
 
   .list-number-rounded a::before
   .list-number-rounded a::after
-    top 50% // @note Contrebalance valeur '.list-number' par défaut
+    top 50% // @note Compense la valeur '.list-number' par défaut
     height 2.1em
     width 2.1em
     border-radius 50%
@@ -1412,17 +1412,17 @@ if $bundleFocus
 // @section     Slideshow
 // @description Diaporama en full page
 // -----------------------------------------------------------------------------
-// @note Le diaporama utilise le plugin jQuery 'Cycle 2'
-// @link http://jquery.malsup.com/cycle2/
-// @documentation http://jquery.malsup.com/cycle2/api/
 if $bundleSlideshow
+
+  $colorTest = #ddd // Orange
+  $colorTS04001 = rgba(0, 0, 0, .2)
 
   .slideshow
     position relative
     z-index 0
     display flex
-    margin-top calc(-2.5rem)
-    padding 0 // @todo Contre le padding de .section
+    margin-top -3.5rem // @note Compense le height de .main-nav
+    //padding 0 // @note Compense le padding de .section
     width 100%
     height 100vh
     background-color #000
@@ -1436,7 +1436,6 @@ if $bundleSlideshow
     right 0
 
   .cycle-item
-    color Orange
     background-size cover
     background-position 50% 50%
 
@@ -1447,24 +1446,23 @@ if $bundleSlideshow
     display flex
     flex-direction column
     text-align center
-    //text-shadow 0 0 .5rem rgba(0, 0, 0, .2)
 
   .cycle-pager
     position absolute
     z-index 200
-    top 2.5rem
+    top 3.5rem
     right 1rem
     display flex
-  
+
   .cycle-pager span
     display block
     width 2rem
     height 2rem
     margin-left .5rem
     color transparent
-    border .2rem solid #eee
+    border .2rem solid $colorTest
     border-radius 50%
-    //box-shadow 0 0 .5rem rgba(0, 0, 0, .2)
+    //box-shadow 0 0 .5rem $colorTS04001
 
   .cycle-pager span:hover
     cursor pointer
@@ -1474,17 +1472,21 @@ if $bundleSlideshow
     background-color rgba(255, 255, 255, .5)
 
   .cycle-text
-    margin-left 1rem
-    margin-right 1rem
-    margin-bottom 2rem
+    margin-bottom 1rem
+    font-size 8vmin
+    color $colorTest
 
   .cycle-text *
-    font-size 8vmin
     margin-top auto
+    //text-shadow -1px 0 0 $colorTS04001, 
+    //  1px 0 0 $colorTS04001,
+    //  0 -1px 0 $colorTS04001,
+    //  0 1px 0 $colorTS04001
 
-  @media (min-width $sizeS)
-    .cycle-text *
-      font-size 4rem
+  @media (min-width $sizeXS)
+
+    .cycle-text
+      font-size 3rem
 
   .slideshow button
   .slideshow button::after
@@ -1494,32 +1496,39 @@ if $bundleSlideshow
     position relative //@todo
     z-index 200
     padding 5vmin
-    margin auto 10vmin
+    margin auto 0
     font-size 10vmin
     font-weight 900
     text-align center
-    color #ddd
+    color $colorTest
     background-color rgba(255, 255, 255, .2)
     border none
     outline none
 
   @media (min-width $sizeXS)
+
     .slideshow button
       padding 1rem
       font-size 4rem
 
-  .slideshow #prev
+  .slideshow #prev [class*="icon-"]
     transform rotate(180deg)
 
-  .slideshow #next
-    margin-left auto
-    margin-right 10vmin
+  .slideshow .pause
+  .slideshow .resume
+    margin auto
+
+  @media (min-width $sizeXS)
+
+    .slideshow .pause
+    .slideshow .resume
+      margin-left auto
+      margin-right 1rem
 
   .slideshow button:focus
   .slideshow button:hover
   //.slideshow button:active
-    position relative
-    top 2px
+    transform translateY(.1rem)
 
   .slideshow button::after
     position absolute
@@ -1537,6 +1546,17 @@ if $bundleSlideshow
     background-color rgba(255, 255, 255, .5)
     opacity 1
     transition .2s
+
+  .slideshow .resume
+    display none // @note Géré en css plutôt qu'en js pour faciliter la personnalisation
+
+  .slideshow #progress
+    position absolute
+    bottom 0
+    left 0
+    height .5rem
+    background Red
+    z-index 500
 
 
 // -----------------------------------------------------------------------------
@@ -1913,7 +1933,7 @@ if $bundleButtons
     @extend .gradient
     ifBorderRadius($r4)
     transition translateZ .1s linear
-    transform translateZ(0)
+    //transform translateZ(0)
 
   .button:hover
   .button:focus

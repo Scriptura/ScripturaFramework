@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.10
-// @lastmodified 2016-05-04 19:06:04
+// @version      0.0.12
+// @lastmodified 2016-05-06 08:17:03
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -205,7 +205,7 @@ jQuery(document).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section Scroll top
+// @section     Scroll top
 // @description Défilement vers le haut
 // -----------------------------------------------------------------------------
 
@@ -229,7 +229,8 @@ jQuery(document).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section Accordions
+// @section     Accordions
+// @description Menu accordéon
 // -----------------------------------------------------------------------------
 
 (function($) {
@@ -260,7 +261,8 @@ jQuery(document).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section Tabs
+// @section     Tabs
+// @description Menu par onglets
 // -----------------------------------------------------------------------------
 
 (function($) { // Construction des onglets et des conteneurs
@@ -420,6 +422,58 @@ jQuery(document).on( 'click', '[class*="-focus"]', function(e) { // @note Event 
 
 
 // -----------------------------------------------------------------------------
+// @section     Slideshow
+// @description Diaporama en full page
+// -----------------------------------------------------------------------------
+
+// @note Le diaporama utilise le plugin jQuery 'Cycle 2'
+// @link http://jquery.malsup.com/cycle2/
+// @documentation http://jquery.malsup.com/cycle2/api/
+
+
+// @subsection Slideshow Progress Bar
+// -----------------------------------------------------------------------------
+
+(function($) {
+
+  var progress = $('#progress'),
+      slideshow = $( '.cycle-slideshow' );
+
+  slideshow.on( 'cycle-initialized cycle-before', function( e, opts ) {
+      progress.stop(true).css( 'width', 0 );
+  });
+
+  slideshow.on( 'cycle-initialized cycle-after', function( e, opts ) {
+      if ( ! slideshow.is('.cycle-paused') )
+          progress.animate({ width: '100%' }, opts.timeout, 'linear' );
+  });
+
+  slideshow.on( 'cycle-paused', function( e, opts ) {
+     progress.stop(); 
+  });
+
+  slideshow.on( 'cycle-resumed', function( e, opts, timeoutRemaining ) {
+      progress.animate({ width: '100%' }, timeoutRemaining, 'linear' );
+  });
+})(jQuery);
+
+
+// @subsection Slideshow switch commands
+// -----------------------------------------------------------------------------
+
+(function($) {
+  $('.slideshow .pause').on( 'click', function() {
+    $( this ).css({'display': 'none'});
+    $( '.slideshow .resume' ).css({'display': 'block'});
+  });
+  $('.slideshow .resume').on( 'click', function() {
+    $( this ).css({'display': 'none'});
+    $( '.slideshow .pause' ).css({'display': 'block'});
+  });
+})(jQuery);
+
+
+// -----------------------------------------------------------------------------
 // @section     Print
 // @description Commande pour l'impression
 // -----------------------------------------------------------------------------
@@ -477,7 +531,8 @@ jQuery(document).on( 'click', 'body', function(e) { // Si clic en dehors de la p
 
 
 // -----------------------------------------------------------------------------
-// @section Drop Cap
+// @section     Drop Cap
+// @description Création de lettrines
 // -----------------------------------------------------------------------------
 
 // @note Le pseudo-élément ::first-letter ne se comporte pas de la même manière selon tous les navigateurs, cette solution css/js corrige ce problème.
@@ -515,7 +570,7 @@ jQuery( '.dropcap' ).dropcap();
 
 // -----------------------------------------------------------------------------
 // @section     Typewriter Js
-// @description Effet 'machine à écrire'
+// @description Effet "machine à écrire"
 // -----------------------------------------------------------------------------
 
 jQuery.fn.typewriter = function( options ) {
@@ -554,7 +609,8 @@ jQuery.fn.typewriter = function( options ) {
 
 
 // -----------------------------------------------------------------------------
-// @section Tooltips
+// @section     Tooltips
+// @description Gestion des infobules
 // -----------------------------------------------------------------------------
 
 jQuery( '.addtooltips a' ).each(function() {
@@ -585,7 +641,8 @@ jQuery( '.addtooltips a' ).each(function() {
 
 
 // -----------------------------------------------------------------------------
-// @section Text selection
+// @section     Text selection
+// @description Sélection du texte des blocs de code
 // -----------------------------------------------------------------------------
 
 // @see http://stackoverflow.com/questions/985272/selecting-text-in-an-element-akin-to-highlighting-with-your-mouse
@@ -647,7 +704,8 @@ jQuery( 'pre code' ).each(function() { // Création du bouton de commande
 
 
 // -----------------------------------------------------------------------------
-// @section Ajax
+// @section     Ajax
+// @description Requêtes HTTP par l'objet XmlHttpRequest
 // -----------------------------------------------------------------------------
 
 // @note Renseignement du script via des attributs data-* plutôt que via les IDs : solution bien plus souple permettant d'utliser les même fichiers cibles sur une même page web, à divers endroits de cette page.
@@ -711,10 +769,10 @@ jQuery(document).on( 'click', '[data-display][data-path]', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section Auto Scroll
+// @section     Auto Scroll
+// @description Scroll vers un élément ajax qui vient d'être appelé
 // -----------------------------------------------------------------------------
 
-// Scroll vers un élément ajax qui vient d'être appelé
 jQuery(document).on( 'click', '#comments', function() {
 		setTimeout(function() {
 			$( 'html, body' ).animate({
@@ -725,7 +783,7 @@ jQuery(document).on( 'click', '#comments', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section CNIL
+// @section     CNIL
 // @description Gestion du message d'information exigé par la CNIL
 // -----------------------------------------------------------------------------
 
