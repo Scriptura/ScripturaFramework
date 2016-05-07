@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.12
-// @lastmodified 2016-05-06 08:17:03
+// @version      0.0.13
+// @lastmodified 2016-05-07 09:39:04
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -191,10 +191,10 @@ if (element.length){
 // -----------------------------------------------------------------------------
 
 jQuery(document).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
-	if (location.pathname.replace(/^\//,'' ) == this.pathname.replace(/^\//,'' ) && location.hostname == this.hostname){
-		var target = $(this.hash);
+	if ( location.pathname.replace( /^\//,'' ) == this.pathname.replace( /^\//,'' ) && location.hostname == this.hostname ) {
+		var target = $( this.hash );
 		target = target.length ? target : $( '[name=' + this.hash.slice(1) +']' );
-		if (target.length){
+		if (target.length) {
 			$( 'html, body' ).animate({
 				scrollTop: target.offset().top
 			}, 400 );
@@ -430,46 +430,67 @@ jQuery(document).on( 'click', '[class*="-focus"]', function(e) { // @note Event 
 // @link http://jquery.malsup.com/cycle2/
 // @documentation http://jquery.malsup.com/cycle2/api/
 
+// @subsection BEGIN Slideshow
+// -----------------------------------------------------------------------------
+
+(function($) {
+	var slideshow = $( '.slideshow' );
+	if ( $( '.slideshow' ).length ) { // Tester présence de la classe
+
 
 // @subsection Slideshow Progress Bar
 // -----------------------------------------------------------------------------
 
-(function($) {
+slideshow.append( '<div class="slide-progress"></div>' );
 
-  var progress = $('#progress'),
-      slideshow = $( '.cycle-slideshow' );
+var progress = slideshow.find( '.slide-progress' );
 
-  slideshow.on( 'cycle-initialized cycle-before', function( e, opts ) {
-      progress.stop(true).css( 'width', 0 );
-  });
+slideshow.on( 'cycle-initialized cycle-before', function( e, opts ) {
+	progress.stop(true).css( 'width', 0 );
+});
 
-  slideshow.on( 'cycle-initialized cycle-after', function( e, opts ) {
-      if ( ! slideshow.is('.cycle-paused') )
-          progress.animate({ width: '100%' }, opts.timeout, 'linear' );
-  });
+slideshow.on( 'cycle-initialized cycle-after', function( e, opts ) {
+	if ( ! slideshow.is('.cycle-paused') )
+		progress.animate({ width: '100%' }, opts.timeout, 'linear' );
+});
 
-  slideshow.on( 'cycle-paused', function( e, opts ) {
-     progress.stop(); 
-  });
+slideshow.on( 'cycle-paused', function( e, opts ) {
+	progress.stop(); 
+});
 
-  slideshow.on( 'cycle-resumed', function( e, opts, timeoutRemaining ) {
-      progress.animate({ width: '100%' }, timeoutRemaining, 'linear' );
-  });
-})(jQuery);
+slideshow.on( 'cycle-resumed', function( e, opts, timeoutRemaining ) {
+	progress.animate({ width: '100%' }, timeoutRemaining, 'linear' );
+});
 
 
 // @subsection Slideshow switch commands
 // -----------------------------------------------------------------------------
 
-(function($) {
-  $('.slideshow .pause').on( 'click', function() {
-    $( this ).css({'display': 'none'});
-    $( '.slideshow .resume' ).css({'display': 'block'});
-  });
-  $('.slideshow .resume').on( 'click', function() {
-    $( this ).css({'display': 'none'});
-    $( '.slideshow .pause' ).css({'display': 'block'});
-  });
+var pause = $(slideshow).find('.pause'),
+    resume = $(slideshow).find('.resume');
+
+pause.on( 'click', function() {
+	$( this ).css({'display': 'none'});
+	resume.css({'display': 'block'});
+});
+resume.on( 'click', function() {
+	$( this ).css({'display': 'none'});
+	pause.css({'display': 'block'});
+});
+
+
+// @subsection Auto-Initialization
+// -----------------------------------------------------------------------------
+
+var url = '../Scripts/Vendors/Cycle.js';
+$.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
+	$( '.slideshow' ).cycle(); // Initialisation du script
+});
+
+// @subsection END Slideshow
+// -----------------------------------------------------------------------------
+
+	} // END if '.slideshow'
 })(jQuery);
 
 
@@ -575,25 +596,25 @@ jQuery( '.dropcap' ).dropcap();
 
 jQuery.fn.typewriter = function( options ) {
 	var opts = $.extend( true, {}, $.fn.typewriter.defaults, options );
-	return this.each(function(i, item){
+	return this.each(function( i, item ){
 		var interval = parseInt(opts.interval , 10) || 100,
-			tabString = $(item).text().split( '' ),
+			tabString = $( item ).text().split( '' ),
 			length = tabString.length,
 			letter = [];
-		$(item).text( '' );
+		$( item ).text( '' );
 		for(var k = 0; k < length; k++){
 			letter.push(
-				$("<span/>", {
-					"css" : {
-						"display" : "none"
+				$('<span/>', {
+					'css' : {
+						'display' : 'none'
 					},
-					"text" : tabString[k]
+					'text' : tabString[k]
 				})
 			);
 		}
 		$(item).queue( function() {
 			for(var i = 0; i < length; i++){
-				letter.shift().appendTo(item).delay(interval * i).fadeIn( 600 );
+				letter.shift().appendTo( item ).delay( interval * i ).fadeIn( 600 );
 			}
 			$( this ).dequeue();
 		});
@@ -602,7 +623,7 @@ jQuery.fn.typewriter = function( options ) {
 
 (function($) {
 	$.fn.typewriter.defaults = {
-		'interval' : 30
+		'interval' : 50
 	};
 	$( '.typewriter' ).typewriter();
 })(jQuery);
@@ -618,7 +639,7 @@ jQuery( '.addtooltips a' ).each(function() {
 		title = link.attr( 'title' ); // Stockage de tous les titles dans une variable
 	link.css( 'position', 'relative' );
 	link.on( 'mouseenter', function() {
-		if (title === undefined || title === '' ) return false; // Pas d'infobule si title manquant ou vide
+		if ( title === undefined || title === '' ) return false; // Pas d'infobule si title manquant ou vide
 		link.append( '<div class="tooltip">' + title + '</div>' );
 		link.attr( 'title', '' ); // Empêche l'affichage des infobules par défaut en vidant les titles
 		var tooltip = $( '.tooltip' );
@@ -735,12 +756,12 @@ jQuery(document).on( 'click', '[data-display][data-path]', function() {
 				$( '.ajax-window' ).html(response);
 			}
 		});
-	} else if (type === 'popin' ) { // [2]
+	} else if ( type === 'popin' ) { // [2]
 		$( 'body' ).css( 'overflow', 'hidden' ); // Pas de scroll sur la page si popin ouverte
 		$( '<div class="ajax-window-popin"/>' ).appendTo( 'body' ); // Création d'une fenêtre Ajax
 		$.ajax({
 			url : path + '.php',
-			complete : function (xhr, result) {
+			complete : function ( xhr, result ) {
 				if(result != 'success' ) { // Gestion des erreurs
 					$( '<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>' ).appendTo( 'main' );
 					return;

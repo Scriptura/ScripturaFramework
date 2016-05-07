@@ -1428,7 +1428,7 @@ if $bundleSlideshow
     background-color #000
 
   .cycle-item
-  .cycle-item div
+  .cycle-item > div
     position absolute
     top 0
     left 0
@@ -1439,7 +1439,8 @@ if $bundleSlideshow
     background-size cover
     background-position 50% 50%
 
-  .cycle-item img
+  .cycle-item + .cycle-item // @note Évite un saut de page au chargement
+  .cycle-item img // Les images sont cachées au profit d'un 'background-image' sur l'élément parent
     display none
 
   .cycle-item div
@@ -1471,21 +1472,16 @@ if $bundleSlideshow
   .cycle-pager-active
     background-color rgba(255, 255, 255, .5)
 
-  .cycle-text
-    margin-bottom 1rem
+  .cycle-text > div
+    margin auto 1rem 3rem
+
+  .cycle-text > div > * // Cette sursélection permet de formater des balises insérées de n'importe quel type
     font-size 8vmin
     color $colorTest
 
-  .cycle-text *
-    margin-top auto
-    //text-shadow -1px 0 0 $colorTS04001, 
-    //  1px 0 0 $colorTS04001,
-    //  0 -1px 0 $colorTS04001,
-    //  0 1px 0 $colorTS04001
-
   @media (min-width $sizeXS)
 
-    .cycle-text
+    .cycle-text > div > *
       font-size 3rem
 
   .slideshow button
@@ -1493,7 +1489,7 @@ if $bundleSlideshow
     border-radius 50%
 
   .slideshow button
-    position relative //@todo
+    position relative
     z-index 200
     padding 5vmin
     margin auto 0
@@ -1518,12 +1514,24 @@ if $bundleSlideshow
   .slideshow .resume
     margin auto
 
+  @media (max-width $sizeXS)
+
+    .slideshow .pause
+    .slideshow .resume
+      display none !important // @note '!important' compense une règle js
+
+    .slideshow #next
+      margin-left auto
+
   @media (min-width $sizeXS)
 
     .slideshow .pause
     .slideshow .resume
       margin-left auto
       margin-right 1rem
+
+  .no-js .slideshow button
+    display none
 
   .slideshow button:focus
   .slideshow button:hover
@@ -1550,7 +1558,7 @@ if $bundleSlideshow
   .slideshow .resume
     display none // @note Géré en css plutôt qu'en js pour faciliter la personnalisation
 
-  .slideshow #progress
+  .slideshow .slide-progress
     position absolute
     bottom 0
     left 0
