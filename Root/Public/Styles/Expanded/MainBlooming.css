@@ -3,24 +3,24 @@
 
 /* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
 
-/* line 8 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
+/* line 17 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
 
 /* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
 
-/* line 17 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
+/* line 420 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Header.styl */
 
 /* line 12 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
-/* line 420 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
+/* line 197 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
 /* line 13 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeBloomingVariables.styl */
 @import url("https://fonts.googleapis.com/css?family=Droid+Sans:400,700");
 
-/* line 197 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeBloomingVariables.styl */
+/* line 58 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeBloomingVariables.styl */
 
 /* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Functions.styl */
 
-/* line 58 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Functions.styl */
+/* line 47 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Functions.styl */
 
 /* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Fonts.styl */
 @font-face {
@@ -44,7 +44,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 47 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Fonts.styl */
+/* line 595 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Fonts.styl */
 
 /* line 4 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Icons.styl */
 
@@ -1033,7 +1033,7 @@
   content: '\EAC5';
 }
 
-/* line 595 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Icons.styl */
+/* line 3552 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Icons.styl */
 
 /* line 13 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 
@@ -3473,8 +3473,8 @@ div[class^="message"] {
 /* line 1254 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 img {
   vertical-align: middle;
-  width: 100%;
   height: auto;
+  max-width: 100%;
 }
 
 /* line 1261 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
@@ -6461,7 +6461,7 @@ form [class^="columns"] > div {
   }
 }
 
-/* line 3552 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
+/* line 135 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 
 /* line 6 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeBloomingAdd.styl */
 

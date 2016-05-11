@@ -11,7 +11,7 @@
 
 /* line 12 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
-/* line 8 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
+/* line 187 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Variables.styl */
 
 /* line 13 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeRatatouilleVariables.styl */
 
@@ -3489,8 +3489,8 @@ div[class^="message"] {
 /* line 1254 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 img {
   vertical-align: middle;
-  width: 100%;
   height: auto;
+  max-width: 100%;
 }
 
 /* line 1261 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
@@ -6477,7 +6477,7 @@ form [class^="columns"] > div {
   }
 }
 
-/* line 187 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
+/* line 152 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 
 /* line 6 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/ThemeRatatouilleAdd.styl */
 
