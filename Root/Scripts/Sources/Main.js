@@ -2,7 +2,7 @@
 // @name         Scriptura
 // @description  Interface for web apps
 // @version      0.0.16
-// @lastmodified 2016-05-11 23:36:18
+// @lastmodified 2016-05-12 06:41:49
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -403,7 +403,9 @@ $( '.progress div' ).each(function() {
 $( '[class*="-focus"]' ).prepend( '<span class="icon-enlarge"/>' );
 
 jQuery(document).on( 'click', '[class*="-focus"]', function(e) { // @note Event si utilisation sur <a>
-	$( this ).find( 'picture' ).clone() // .find( 'img' )
+	$( this )
+		.find( 'picture' ) // .find( 'img' )
+		.clone()
 		.css( 'display', 'inherit' ) // @bugfix @affected Firefox @note Neutralise une déclaration inligne style 'display:inline' induite (via jQuery ?) sous ce navigateur
 		.fadeIn( 300 )
 		.appendTo( 'body' )
