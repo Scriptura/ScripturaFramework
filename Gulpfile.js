@@ -12,10 +12,12 @@
 // -----------------------------------------------------------------------------
 
 // Commandes pour le projet :
-// `gulp` commande globale
-// `gulp images` optimisation des images
-// `gulp glyphicons` pour la refonte de la police d'icônes GlyphIcons
-// Les autres commandes sont lancées automatiquement arpès la surveillance des fichiers (watcher).
+// `gulp` : commande globale
+// `gulp imagesresize` : redimensionnement  des images
+// `gulp imagesmin` : minification des images
+// `gulp glyphmin` : minification des svg de la police d'icônes GlyphIcons
+// `gulp glyphicons` : refonte de la police d'icônes GlyphIcons
+// Les autres commandes sont lancées automatiquement arpès la surveillance des fichiers (watcher) initialisée par la commande globale.
 
 
 // -----------------------------------------------------------------------------
@@ -25,33 +27,34 @@
 // @subsection Dependencies
 // -----------------------------------------------------------------------------
 
-var gulp = require('gulp'),
-    gulpsync = require('gulp-sync')(gulp),
-    gutil = require('gulp-util'),
-    plumber = require('gulp-plumber'),
-    ftp = require('vinyl-ftp'),
-    consolidate = require('gulp-consolidate'),
-    lodash = require('lodash'),
-    browserSync = require('browser-sync'),
-    concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
-    replace = require('gulp-replace'),
-    header = require('gulp-header'),
-    imagemin = require('gulp-imagemin'),
-    jade = require('gulp-jade'),
-    markdown = require('gulp-markdown'),
-    coffee = require('gulp-coffee'),
-    jshint = require('gulp-jshint'),
-    uglify = require('gulp-uglify'),
-    stylus = require('gulp-stylus'),
-    //sass = require('gulp-sass'),
-    //sass = require('gulp-ruby-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    sourcemaps = require('gulp-sourcemaps'),
-    iconfont = require('gulp-iconfont'),
-    //fs = require('fs'),
-    //pkgSync = JSON.parse(fs.readFileSync('./package.json')),
-    pkg = require('./package.json');
+var gulp = require( 'gulp' ),
+    gulpsync = require( 'gulp-sync' )( gulp ),
+    gutil = require( 'gulp-util' ),
+    plumber = require( 'gulp-plumber' ),
+    ftp = require( 'vinyl-ftp' ),
+    consolidate = require( 'gulp-consolidate' ),
+    lodash = require( 'lodash' ),
+    browserSync = require( 'browser-sync' ),
+    concat = require( 'gulp-concat' ),
+    rename = require( 'gulp-rename' ),
+    replace = require( 'gulp-replace' ),
+    header = require( 'gulp-header' ),
+    imageResize = require( 'gulp-image-resize' ),
+    imagemin = require( 'gulp-imagemin' ),
+    jade = require( 'gulp-jade' ),
+    markdown = require( 'gulp-markdown' ),
+    coffee = require( 'gulp-coffee' ),
+    jshint = require( 'gulp-jshint' ),
+    uglify = require( 'gulp-uglify' ),
+    stylus = require( 'gulp-stylus' ),
+    //sass = require( 'gulp-sass' ),
+    //sass = require( 'gulp-ruby-sass' ),
+    autoprefixer = require( 'gulp-autoprefixer' ),
+    sourcemaps = require( 'gulp-sourcemaps' ),
+    iconfont = require( 'gulp-iconfont' ),
+    //fs = require( 'fs' ),
+    //pkgSync = JSON.parse( fs.readFileSync('./package.json' ) ),
+    pkg = require( './package.json' );
 
 
 // @subsection Global variables
@@ -60,9 +63,9 @@ var gulp = require('gulp'),
 var source = './Root', // Dossier sur lequel s'effectue les tâches Gulp
     input = source + '/**/*'; // Tous les fichiers du dossier
 
-var consoleLog = function(event) {
-      console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-    };
+var consoleLog = function( event ) {
+    console.log( 'File ' + event.path + ' was ' + event.type + ', running tasks...' );
+};
 
 // -----------------------------------------------------------------------------
 // @section Browser Sync
@@ -71,19 +74,19 @@ var consoleLog = function(event) {
 // @link https://www.browsersync.io/docs/gulp/
 // @documentation https://www.browsersync.io/docs/options/
 
-gulp.task('browserSync', function() {
-  browserSync({
-    server: {
-      baseDir: source
+gulp.task( 'browserSync', function() {
+  browserSync( {
+    server : {
+      baseDir : source
     },
-    port: 9000,
-    open: true, // Ouverture automatique du navigateur ('false', 'local', 'external', 'ui', 'tunnel')
-    logLevel: 'debug', // Informations essentielles seulement
-    reloadDebounce: 2000, // Temps mini entre deux réactualisations de page
-    logFileChanges: false, // Information sur les fichiers traités (désactivé car verbeux...)
-    notify: false // Fenêtre popin de Browser Sync
-  });
-});
+    port : 9000,
+    open : true, // Ouverture automatique du navigateur ('false', 'local', 'external', 'ui', 'tunnel')
+    logLevel : 'debug', // Informations essentielles seulement
+    reloadDebounce : 2000, // Temps mini entre deux réactualisations de page
+    logFileChanges : false, // Information sur les fichiers traités (désactivé car verbeux...)
+    notify : false // Fenêtre popin de Browser Sync
+  } );
+} );
 
 
 // -----------------------------------------------------------------------------
@@ -97,39 +100,39 @@ var inputJade = source + '/**/*.jade',
     inputHtmlJade = source + '/**/*.html.jade',
     inputPhpJade = source + '/**/*.php.jade';
 
-gulp.task('jade', function() {
+gulp.task( 'jade', function() {
   return gulp
-    .src([inputHtmlJade, inputPhpJade])
+    .src( [ inputHtmlJade, inputPhpJade ])
     //.pipe(changed(source)) // Traitement pour les fichiers changé uniquement @todo En test...
-    .pipe(plumber())
-    .pipe(jade({
-      pretty: true // Idendation du code
-    }))
-    .pipe(rename(function(path) {
+    .pipe( plumber() )
+    .pipe( jade( {
+      pretty : true // Idendation du code
+    } ) )
+    .pipe( rename( function( path ) {
       path.extname = '' // Enlève l'extention '.jade' sur le fichier créé
-    }))
-    .pipe(replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
+    } ) )
+    .pipe( replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
     // BEGIN PHP
-    .pipe(replace(/(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
-    .pipe(replace(/(<_php>)((.|\r|\n|\t)*?)(<\/_php>)/g, '<?php $2; ?>')) // _php => balises php d'ouverture et de fermeture avec point virgule final)
-    .pipe(replace(/(<\?php )((.|\r|\n|\t)*?)(\/\/.*)(\n)?(; \?>)/g, '<?php $2$4 ?>')) // Si commentaire php monoligne en fin de code alors pas de point virgule final
-    .pipe(replace(/(\*\/)(\n)?(; \?>)/g, '*/ ?>')) // Idem pour commantaires multilignes
-    .pipe(replace(/(<_if>)(.*)(<\/_if>)/g, '<?php if ($2): ?>')) // _if => if(string):
-    .pipe(replace(/<_else><\/_else>/g, '<?php else: ?>')) // _else => else:
-    .pipe(replace(/(<_elseif>)(.*)(<\/_elseif>)/g, '<?php elseif ($2): ?>')) // _elseif => elseif(string):
-    .pipe(replace(/<_endif><\/_endif>/g, '<?php endif; ?>')) // _endif => endif;
-    .pipe(replace(/(<_require>)(.*)(<\/_require>)/g, '<?php require \'$2.php\'; ?>')) // _require => require 'string.php';
-    .pipe(replace(/<_require_wp>/g, '<?php require locate_template(\'')) // Require de WordPress
-    .pipe(replace(/<\/_require_wp>/g, '.php\'); ?>'))
-    .pipe(replace(/( \?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
-    .pipe(replace(/({% )(\$\S*)( %})/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : {% $name %} => <?php echo $name; ?>
-    .pipe(replace(/({% )(.*)( %})/g, '<?php $2; ?>')) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne
-    .pipe(replace(/;; ?>/g, '; ?>')) // Suppression points virgules doublés
+    .pipe( replace(/(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
+    .pipe( replace(/(<_php>)((.|\r|\n|\t)*?)(<\/_php>)/g, '<?php $2; ?>')) // _php => balises php d'ouverture et de fermeture avec point virgule final)
+    .pipe( replace(/(<\?php )((.|\r|\n|\t)*?)(\/\/.*)(\n)?(; \?>)/g, '<?php $2$4 ?>')) // Si commentaire php monoligne en fin de code alors pas de point virgule final
+    .pipe( replace(/(\*\/)(\n)?(; \?>)/g, '*/ ?>')) // Idem pour commantaires multilignes
+    .pipe( replace(/(<_if>)(.*)(<\/_if>)/g, '<?php if ($2): ?>')) // _if => if(string):
+    .pipe( replace(/<_else><\/_else>/g, '<?php else: ?>')) // _else => else:
+    .pipe( replace(/(<_elseif>)(.*)(<\/_elseif>)/g, '<?php elseif ($2): ?>')) // _elseif => elseif(string):
+    .pipe( replace(/<_endif><\/_endif>/g, '<?php endif; ?>')) // _endif => endif;
+    .pipe( replace(/(<_require>)(.*)(<\/_require>)/g, '<?php require \'$2.php\'; ?>')) // _require => require 'string.php';
+    .pipe( replace(/<_require_wp>/g, '<?php require locate_template(\'')) // Require de WordPress
+    .pipe( replace(/<\/_require_wp>/g, '.php\'); ?>'))
+    .pipe( replace(/( \?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
+    .pipe( replace(/({% )(\$\S*)( %})/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : {% $name %} => <?php echo $name; ?>
+    .pipe( replace(/({% )(.*)( %})/g, '<?php $2; ?>')) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne
+    .pipe( replace(/;; ?>/g, '; ?>')) // Suppression points virgules doublés
     // END PHP
-    .pipe(replace(/(\n)(<)/, '$2')) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
-    .pipe(gulp.dest(source))
-    .pipe(browserSync.stream({match: '**/*.html'}));
-});
+    .pipe( replace(/(\n)(<)/, '$2')) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
+    .pipe( gulp.dest( source ) )
+    .pipe( browserSync.stream( { match : '**/*.html'} ) );
+} );
 
 
 // -----------------------------------------------------------------------------
@@ -139,10 +142,10 @@ gulp.task('jade', function() {
 // @link https://www.npmjs.com/package/gulp-markdown
 // @documentation Markdown @see https://github.com/chjj/marked#options-1
 
-gulp.task('markdown', function() {
+gulp.task( 'markdown', function() {
     return gulp.src(source + '/*.md')
-        .pipe(markdown())
-        .pipe(gulp.dest(source));
+        .pipe( markdown() )
+        .pipe( gulp.dest( source ) );
 });
 
 
@@ -155,16 +158,16 @@ gulp.task('markdown', function() {
 
 var inputScripts = source + '/Scripts/Sources/**/*.js';
 
-gulp.task('scripts', function() {
+gulp.task( 'scripts', function() {
   return gulp
-    .src(inputScripts)
-    .pipe(plumber())
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    //.pipe(concat('Main.js')) // @todo Concat n'est pas nécessaire pour l'instant, juste en prévision de...
-    .pipe(uglify())
-    .pipe(browserSync.stream({match: '**/*.js'}))
-    .pipe(gulp.dest(source + '/Public/Scripts'));
+    .src( inputScripts )
+    .pipe( plumber() )
+    .pipe( jshint() )
+    .pipe( jshint.reporter('default') )
+    //.pipe( concat( 'Main.js' ) ) // @todo Concat n'est pas nécessaire pour l'instant, juste en prévision de...
+    .pipe( uglify() )
+    .pipe( browserSync.stream( { match : '**/*.js'} ) )
+    .pipe( gulp.dest( source + '/Public/Scripts' ) );
 });
 
 
@@ -183,44 +186,42 @@ gulp.task('scripts', function() {
 // @link https://www.npmjs.com/package/gulp-stylus
 
 var inputStyles = source + '/Styles/*.styl',
-    autoprefixerOptions = { browsers: ['last 2 versions', '> 5%'] };
+    autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
 
-// Version de production :
-gulp.task('styles', function() {
+gulp.task( 'styles', function() { // Version de production
   return gulp
-    .src(inputStyles)
-    .pipe(plumber())
-    .pipe(sourcemaps.init())
-    .pipe(stylus({
-        compress: true,
-        linenos: false // Commentaires indiquant la ligne du fichier Stylus impliqué
-    }))
-    .on('error', function(err) {
-        console.error('Error!', err.message);
+    .src( inputStyles )
+    .pipe( plumber() )
+    .pipe( sourcemaps.init() )
+    .pipe( stylus( {
+        compress : true,
+        linenos : false // Commentaires indiquant la ligne du fichier Stylus impliqué
+    } ) )
+    .on('error', function( err ) {
+        console.error( 'Error!', err.message );
     })
-    .pipe(autoprefixer(autoprefixerOptions))
-    .pipe(sourcemaps.write('../Styles/Maps', {addComment: true}))
-    .pipe(gulp.dest(source + '/Public/Styles'))
-    .pipe(browserSync.stream({match: '**/*.css'}));
+    .pipe(autoprefixer( autoprefixerOptions ) )
+    .pipe(sourcemaps.write( '../Styles/Maps', { addComment : true } ) )
+    .pipe(gulp.dest( source + '/Public/Styles') )
+    .pipe( browserSync.stream( { match : '**/*.css' } ) );
 });
 
-// Version non compressée pour la vérification du code généré en sortie :
-gulp.task('stylesexp', function() {
+gulp.task( 'stylesexp', function() { // Version non compressée permettant un contrôle du code généré en sortie
   return gulp
-    .src(inputStyles)
-    .pipe(plumber())
-    //.pipe(sourcemaps.init())
-    .pipe(stylus({
-        compress: false,
-        linenos: true
-    }))
-    .on('error', function(err) {
-        console.error('Error!', err.message);
-    })
-    .pipe(autoprefixer(autoprefixerOptions))
-    //.pipe(sourcemaps.write('../Styles/Maps', {addComment: true}))
-    .pipe(gulp.dest(source + '/Public/Styles/Expanded'));
-});
+    .src( inputStyles )
+    .pipe( plumber() )
+    //.pipe( sourcemaps.init() )
+    .pipe( stylus({
+        compress : false,
+        linenos : true
+    } ) )
+    .on( 'error', function( err ) {
+        console.error( 'Error!', err.message );
+    } )
+    .pipe( autoprefixer( autoprefixerOptions ) )
+    //.pipe( sourcemaps.write( '../Styles/Maps', {addComment: true } ) )
+    .pipe( gulp.dest( source + '/Public/Styles/Expanded' ) );
+} );
 
 
 // @subsection Ruby Sass
@@ -239,37 +240,37 @@ gulp.task('stylesexp', function() {
 
 // var inputStyles = source + '/Styles/*.scss';
 //
-// gulp.task('styles', function() {
-//   return sass(inputStyles, {
-//         container: 'Styles',   // [1]
-//         style: 'compressed',   // [2]
-//         precision: 2,          // [3]
-//         sourcemap: false       // [4]
-//     })
-//     .pipe(plumber())
-//     .pipe(sourcemaps.init())
-//     .on('error', function(err) {
-//         console.error('Error!', err.message);
-//     })
-//     .pipe(autoprefixer(autoprefixerOptions))
-//     .pipe(sourcemaps.write('../Styles/Maps', {addComment: true}))
-//     .pipe(gulp.dest(source + '/Public/Styles'));
-// });
+// gulp.task( 'styles', function() {
+//   return sass( inputStyles, {
+//         container : 'Styles',   // [1]
+//         style : 'compressed',   // [2]
+//         precision : 2,          // [3]
+//         sourcemap : false       // [4]
+//     } )
+//     .pipe( plumber() )
+//     .pipe( sourcemaps.init() )
+//     .on('error', function( err ) {
+//         console.error( 'Error!', err.message );
+//     } )
+//     .pipe( autoprefixer( autoprefixerOptions ) )
+//     .pipe( sourcemaps.write('../Styles/Maps', {addComment: true}) )
+//     .pipe( gulp.dest( source + '/Public/Styles' ) );
+// } );
 // 
-// gulp.task('stylesexp', function() {
-//   return sass(inputStyles, {
-//         container: 'Expanded', // [1]
-//         style: 'expanded',     // [2]
-//         precision: 2,          // [3]
-//         sourcemap: false       // [4]
-//     })
-//     .pipe(plumber())
-//     .on('error', function(err) {
-//         console.error('Error!', err.message);
-//     })
-//     .pipe(autoprefixer(autoprefixerOptions))
-//     .pipe(gulp.dest(source + '/Public/Styles/Expanded'));
-// });
+// gulp.task( 'stylesexp', function() {
+//   return sass( inputStyles, {
+//         container : 'Expanded', // [1]
+//         style : 'expanded',     // [2]
+//         precision : 2,          // [3]
+//         sourcemap : false       // [4]
+//     } )
+//     .pipe( plumber() )
+//     .on( 'error', function( err ) {
+//         console.error( 'Error!', err.message );
+//     } )
+//     .pipe( autoprefixer( autoprefixerOptions ) )
+//     .pipe( gulp.dest( source + '/Public/Styles/Expanded' ) );
+// } );
 
 
 // @subsection LibSass
@@ -278,26 +279,26 @@ gulp.task('stylesexp', function() {
 // @link https://www.npmjs.com/package/gulp-sass
 
 // var inputStyles = source + '/Styles/*.scss',
-//    autoprefixerOptions = { browsers: ['last 2 versions', '> 5%'] };
+//    autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
 //
-// gulp.task('styles', function() {
+// gulp.task( 'styles', function() {
 //   return gulp
-//     .src(inputStyles)
-//     .pipe(plumber())
-//     .pipe(sourcemaps.init())
-//     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-//     .pipe(sourcemaps.write('../Styles/Maps', {addComment: true}))
-//     .pipe(autoprefixer(autoprefixerOptions))
-//     .pipe(gulp.dest(source + '/Public/Styles'));
-// });
-// gulp.task('stylesexp', function() {
+//     .src( inputStyles )
+//     .pipe( plumber() )
+//     .pipe( sourcemaps.init() )
+//     .pipe( sass( { outputStyle : 'compressed' } ).on( 'error', sass.logError ) )
+//     .pipe( sourcemaps.write( '../Styles/Maps', { addComment: true } ) )
+//     .pipe( autoprefixer( autoprefixerOptions ) )
+//     .pipe( gulp.dest( source + '/Public/Styles' ) );
+// } );
+// gulp.task( 'stylesexp', function() {
 //   return gulp
-//     .src(inputStyles)
-//     .pipe(plumber())
-//     .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
-//     .pipe(autoprefixer(autoprefixerOptions))
-//     .pipe(gulp.dest(source + '/Public/Styles/Expanded'));
-// });
+//     .src( inputStyles )
+//     .pipe( plumber() )
+//     .pipe( sass( { outputStyle : 'expanded' } ).on('error', sass.logError) )
+//     .pipe( autoprefixer(autoprefixerOptions) )
+//     .pipe( gulp.dest( source + '/Public/Styles/Expanded' ) );
+// } );
 
 
 // -----------------------------------------------------------------------------
@@ -307,35 +308,35 @@ gulp.task('stylesexp', function() {
 // @description Modification des entêtes JS et CSS pour chaque modification des Styles
 
 var dateY = new Date().getFullYear(),
-    dateM = ( '0' + ( new Date().getMonth() + 1 ) ).slice(-2), // Janvier = 0
-    dateD = ( '0' + ( new Date().getDate() ) ).slice(-2),
+    dateM = ( '0' + ( new Date().getMonth() + 1 ) ).slice( -2 ), // Janvier = 0
+    dateD = ( '0' + ( new Date().getDate() ) ).slice( -2 ),
     dateH = new Date().toLocaleTimeString(),
     versionDate = dateY + '-' + dateM + '-' + dateD + ' ' + dateH;
 
-gulp.task('metastyles', function() {
+gulp.task( 'metastyles', function() {
   return gulp
-    .src(source + '/Styles/Partial/Header.styl')
-    .pipe(replace(/@name .*\n/, '@name         ' + pkg.name + '\n'))
-    .pipe(replace(/@description .*\n/, '@description  ' + pkg.description + '\n'))
-    .pipe(replace(/@version .*\n/, '@version      ' + pkg.version + '\n'))
-    .pipe(replace(/@lastmodified .*\n/, '@lastmodified ' + versionDate + '\n'))
-    .pipe(replace(/@author .*\n/, '@author       ' + pkg.author + '\n'))
-    .pipe(replace(/@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n'))
-    .pipe(replace(/@license .*\n/, '@license      ' + pkg.license + '\n'))
-    .pipe(gulp.dest(source + '/Styles/Partial'));
+    .src( source + '/Styles/Partial/Header.styl' )
+    .pipe( replace( /@name .*\n/, '@name         ' + pkg.name + '\n' ) )
+    .pipe( replace( /@description .*\n/, '@description  ' + pkg.description + '\n' ) )
+    .pipe( replace( /@version .*\n/, '@version      ' + pkg.version + '\n' ) )
+    .pipe( replace( /@lastmodified .*\n/, '@lastmodified ' + versionDate + '\n' ) )
+    .pipe( replace( /@author .*\n/, '@author       ' + pkg.author + '\n' ) )
+    .pipe( replace( /@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n' ) )
+    .pipe( replace( /@license .*\n/, '@license      ' + pkg.license + '\n' ) )
+    .pipe( gulp.dest( source + '/Styles/Partial' ) );
 });
 
-gulp.task('metascripts', function() {
+gulp.task( 'metascripts', function() {
   return gulp
-    .src(source + '/Scripts/Sources/Main.js')
-    .pipe(replace(/@name .*\n/, '@name         ' + pkg.name + '\n'))
-    .pipe(replace(/@description .*\n/, '@description  ' + pkg.description + '\n'))
-    .pipe(replace(/@version .*\n/, '@version      ' + pkg.version + '\n'))
-    .pipe(replace(/@lastmodified .*\n/, '@lastmodified ' + versionDate + '\n'))
-    .pipe(replace(/@author .*\n/, '@author       ' + pkg.author + '\n'))
-    .pipe(replace(/@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n'))
-    .pipe(replace(/@license .*\n/, '@license      ' + pkg.license + '\n'))
-    .pipe(gulp.dest(source + '/Scripts/Sources'));
+    .src( source + '/Scripts/Sources/Main.js' )
+    .pipe( replace( /@name .*\n/, '@name         ' + pkg.name + '\n' ) )
+    .pipe( replace( /@description .*\n/, '@description  ' + pkg.description + '\n' ) )
+    .pipe( replace( /@version .*\n/, '@version      ' + pkg.version + '\n' ) )
+    .pipe( replace( /@lastmodified .*\n/, '@lastmodified ' + versionDate + '\n' ) )
+    .pipe( replace( /@author .*\n/, '@author       ' + pkg.author + '\n' ) )
+    .pipe( replace( /@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n' ) )
+    .pipe( replace( /@license .*\n/, '@license      ' + pkg.license + '\n' ) )
+    .pipe( gulp.dest( source + '/Scripts/Sources' ) );
 });
 
 
@@ -353,86 +354,160 @@ gulp.task('metascripts', function() {
 //   '// -----------------------------------------------------------------------------',
 //   ''].join('\n');
 // 
-// gulp.task('header', function() {
+// gulp.task( 'header', function() {
 //   return gulp
-//     .src(source + '/Styles/Test.styl')
-//     //.pipe(header('Un message...'))
-//     .pipe(header(banner, { pkg : pkg } ))
-//     .pipe(gulp.dest(source + '/Styles'));
-// });
+//     .src( source + '/Styles/Test.styl' )
+//     //.pipe( header( 'Un message...' ) )
+//     .pipe( header( banner, { pkg : pkg } ) )
+//     .pipe( gulp.dest( source + '/Styles' ) );
+// } );
 
 
 // -----------------------------------------------------------------------------
 // @section Images
 // -----------------------------------------------------------------------------
 
-// @link https://www.npmjs.com/package/gulp-imagemin
 
-var inputImages = source + '/**/*{.jpg,.jpeg,.png,.gif,.svg}';
+// @subsection  Image Resize
+// @description Redimensionnement des images
+// -----------------------------------------------------------------------------
+
+// @link https://www.npmjs.com/package/gulp-image-resize
+// @note Nécessitée d'installer ImageMagick et GraphicsMagick pour exécuter la fonction.
+// @note Utilisation de GraphicsMagick par défaut.
+
+// Options :
+// [1] Copie de l'image source
+// [2] Redimmentionnement à partir de la largeur
+// [3] Découpage en carré
+
+var inputImagesSources = source + '/Images/DemoSources/*.{jpg,jpeg,png}', // @note Ne traiter que le fichier 'Public/Images/', ne surtout pas traiter les fonts SVG.
+    outputImagesSources = source + '/Images/Demo';
+
+gulp.task( 'copyimages', function() { // [1]
+  return gulp
+    .src( inputImagesSources )
+    .pipe( gulp.dest( outputImagesSources ) );
+} );
+
+let arr = [ 300, 400, 600, 800, 1000, 1500, 2000 ];
+
+for ( let val of arr ) {
+    gulp.task( 'imagesresize' + val, function() { // [2]
+      return gulp
+        .src( inputImagesSources )
+        .pipe( plumber() )
+        .pipe( imageResize( {
+            width : val,
+            upscale : false
+            //imageMagick : true // @note Si 'false' : utilisation de GraphicsMagick
+        } ) )
+        .pipe( rename( function( path ) {
+            path.basename += val
+        } ) )
+        .pipe( gulp.dest( outputImagesSources ) );
+    } );
+}
+
+let arrSquare = [ 300, 400, 600, 800, 1000 ];
+
+for ( let val of arrSquare ) {
+    gulp.task( 'imagesresizeS' + val, function() { // [3]
+      return gulp
+        .src( inputImagesSources )
+        .pipe( plumber() )
+        .pipe( imageResize( {
+            width : val,
+            height : val,
+            crop : true,
+            upscale : false
+        } ) )
+        .pipe( rename( function( path ) {
+            path.basename += 'S' + val
+        } ) )
+        .pipe( gulp.dest( outputImagesSources ) );
+    } );
+}
+
+// @subsection  Image Min
+// @description Minification des images
+// -----------------------------------------------------------------------------
+
+// @link https://www.npmjs.com/package/gulp-imagemin
+// @note Ne surtout pas traiter directement les fonts SVG car corruption des fichiers.
+
+var inputImages = source + '/Images/**/*.{jpg,jpeg,png,gif,svg}'; // @note Ne traiter que le fichier 'Public/Images/'
 
 // @note Traitement des images du thème
-gulp.task('images', function() {
+gulp.task( 'imagesmin', function() {
   return gulp
-    .src(source + '/Images/**/*{.jpg,.jpeg,.png,.gif,.svg}') // @note Ne traiter que le fichier 'Images/', ne surtout pas traiter les fonts SVG.
-    .pipe(plumber())
-    .pipe(imagemin({ // Allègement des images
-        progressive: true
-    }))
-    .pipe(gulp.dest(source + '/Images'));
-});
+    .src( inputImages )
+    .pipe( plumber() )
+    .pipe( imagemin( { // Allègement des images
+        progressive : true
+    } ) )
+    .pipe( gulp.dest( source + '/Images' ) );
+} );
 
-// @note Préparation des fichiers SVG sources pour la police d'icônes, ne surtout pas traiter directement les fonts SVG car corruption des fichiers.
-gulp.task('imagesfont', function() {
+
+// @subsection  Fonts
+// @description Minification des svg de la police GlyphIcons
+// -----------------------------------------------------------------------------
+
+gulp.task( 'glyphmin', function() {
   return gulp
-    .src(source + '/Fonts/GlyphIconsSources/*.svg')
-    .pipe(plumber())
-    .pipe(imagemin({ // Allègement des images
-        progressive: true
-    }))
-    .pipe(gulp.dest(source + '/Fonts/GlyphIconsSources'));
+    .src( source + '/Fonts/GlyphIconsSources/*.svg' )
+    .pipe( plumber() )
+    .pipe( imagemin( { // Allègement des images
+        progressive : true
+    } ) )
+    .pipe( gulp.dest( source + '/Fonts/GlyphIconsSources' ) );
 });
 
 
 // -----------------------------------------------------------------------------
-// @section Glyph Icons
+// @section     Glyph Icons
+// @description Refonte de la police d'icônes GlyphIcons
 // -----------------------------------------------------------------------------
 
 // @link https://www.npmjs.com/package/gulp-iconfont
 // @link https://www.npmjs.com/package/gulp-consolidate
 // @link https://www.npmjs.com/package/lodash
-
 // @note 'gulp-consolidate' permet de soutenir un moteur de template, 'lodash' est un moteur de template
 // @documentation https://lodash.com/docs
 
-gulp.task('glyphicons', function() {
+gulp.task( 'glyphicons', function() {
   return gulp
-    .src(source + '/Fonts/GlyphIconsSources/*.svg')
-    .pipe(iconfont({
-      fontName: 'GlyphIcons', // required
-      appendUnicode: true, // recommended option
-      formats: ['ttf', 'eot', 'woff', 'woff2', 'svg'], // default : .ttf, .eot, .woff
-      fontHeight: 1024, // Retaille des icônes en 1024X1024
-      round: 10e3, // Trois décimales (default value: 10e12)
-      timestamp: Math.round(Date.now()/1024), // Recommandé pour obtenir une construction cohérente
-    }))
-      .on('glyphs', function(glyphs) {
+    .src( source + '/Fonts/GlyphIconsSources/*.svg' )
+    .pipe( iconfont( {
+      fontName : 'GlyphIcons', // required
+      appendUnicode : true, // recommended option
+      formats : [ 'ttf', 'eot', 'woff', 'woff2', 'svg' ], // default : .ttf, .eot, .woff
+      fontHeight : 1024, // Retaille des icônes en 1024X1024
+      round : 10e3, // Trois décimales (default value: 10e12)
+      timestamp : Math.round( Date.now()/1024 ), // Recommandé pour obtenir une construction cohérente
+    } ) )
+      .on( 'glyphs', function( glyphs ) {
         var options = {
-            glyphs: glyphs.map(function(glyph) {
-            return { name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0) }
+            glyphs: glyphs.map(function( glyph ) {
+                return {
+                    name : glyph.name,
+                    codepoint : glyph.unicode[0].charCodeAt(0)
+                }
             }),
-            fontName: 'GlyphIcons',
-            fontPath: source + '/Fonts',
-            className: 'icon-'
+            fontName : 'GlyphIcons',
+            fontPath : source + '/Fonts',
+            className : 'icon-'
         };
-        gulp.src(source + '/Styles/Templates/Icons.styl')
-          .pipe(consolidate('lodash', options))
-          .pipe(gulp.dest(source + '/Styles/Partial'));
-        gulp.src(source + '/Includes/Templates/GlyphIcons.jade')
-          .pipe(consolidate('lodash', options))
-          .pipe(gulp.dest(source + '/Includes'));
-        console.log(glyphs, options);
+        gulp.src( source + '/Styles/Templates/Icons.styl' )
+          .pipe( consolidate( 'lodash', options ) )
+          .pipe( gulp.dest( source + '/Styles/Partial' ) );
+        gulp.src( source + '/Includes/Templates/GlyphIcons.jade' )
+          .pipe( consolidate( 'lodash', options ) )
+          .pipe( gulp.dest( source + '/Includes' ) );
+        console.log( glyphs, options );
       })
-    .pipe(gulp.dest(source + '/Fonts'));
+    .pipe( gulp.dest( source + '/Fonts' ) );
 });
 
 
@@ -443,12 +518,12 @@ gulp.task('glyphicons', function() {
 // @note Fonctionnalité watch native sous Gulp
 // @link https://www.npmjs.com/package/gulp-sync
 
-gulp.task('watchjade', function() {
+gulp.task( 'watchjade', function() {
   return gulp.watch(
         inputJade,
-        ['jade']
+        [ 'jade' ]
     )
-    .on('change', consoleLog);
+    .on( 'change', consoleLog );
 });
 
 // gulp.task('watchmarkdown', function() {
@@ -459,26 +534,42 @@ gulp.task('watchjade', function() {
 //     .on('change', consoleLog);
 // });
 
-gulp.task('watchscripts', function() {
+gulp.task( 'watchscripts', function() {
   return gulp.watch(
         inputScripts,
-        gulpsync.sync(['metascripts', 'scripts'])
+        gulpsync.sync( [ 'metascripts', 'scripts' ] )
     )
-    .on('change', consoleLog);
+    .on( 'change', consoleLog );
 });
 
-gulp.task('watchstyles', function() {
+gulp.task( 'watchstyles', function() {
   return gulp.watch(
         source + '/Styles/**/*.styl',
-        gulpsync.sync(['metastyles', ['styles', 'stylesexp']])
+        gulpsync.sync( [ 'metastyles', [ 'styles', 'stylesexp' ]] )
     )
-    .on('change', consoleLog);
+    .on( 'change', consoleLog );
 });
 
 
 // -----------------------------------------------------------------------------
-// @section Default task
+// @section     Tasks
+// @description Combiner les tâches
 // -----------------------------------------------------------------------------
 
-gulp.task('default', gulpsync.sync(['browserSync', ['images', 'imagesfont', 'watchjade', 'watchscripts', 'watchstyles']])); // pas de tâche glyphicons lancée par défaut. Si celle-ci est souhaitée la mettre en synchronisation après imagesfont.
 
+// @subsection Default task
+// -----------------------------------------------------------------------------
+
+gulp.task( 'default', gulpsync.sync( ['browserSync', ['watchjade', 'watchscripts', 'watchstyles'] ] ) ); // pas de tâche glyphicons lancée par défaut. Si celle-ci est souhaitée la mettre en synchronisation après imagesfont.
+
+
+// @subsection Images task
+// -----------------------------------------------------------------------------
+
+gulp.task( 'images', gulpsync.sync( [ [ 'copyimages', 'imagesresize300', 'imagesresize400', 'imagesresize600', 'imagesresize800', 'imagesresize1000', 'imagesresize1500', 'imagesresize2000', 'imagesresizeS300', 'imagesresizeS400', 'imagesresizeS600', 'imagesresizeS800', 'imagesresizeS1000' ], 'imagesmin' ] ) );
+
+
+// @subsection Glyph Icons task
+// -----------------------------------------------------------------------------
+
+gulp.task( 'icons', gulpsync.sync( [ 'glyphmin', 'glyphicons' ] ) );
