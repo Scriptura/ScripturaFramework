@@ -1476,14 +1476,14 @@ if $bundleSlideshow
   .cycle-text > div
     margin auto 1rem 1rem
 
-  .cycle-text > div > * // Cette sursélection permet de formater des balises insérées de n'importe quel type
-    font-size 8vmin
-    color $colorTest
+  //.cycle-text > div > * // Cette sursélection permet de formater des balises insérées de n'importe quel type
+  //  font-size 8vmin
+  //  color $colorTest
 
-  @media (min-width $sizeXS)
+  //@media (min-width $sizeXS)
 
-    .cycle-text > div > *
-      font-size 3rem
+  //  .cycle-text > div > *
+  //    font-size 3rem
 
   .slideshow button
   .slideshow button::after
@@ -1492,9 +1492,10 @@ if $bundleSlideshow
   .slideshow button
     position relative
     z-index 200
-    padding 5vmin
+    width 18vmin
+    height 18vmin
     margin auto 0
-    font-size 10vmin
+    font-size 12vmin
     font-weight 900
     text-align center
     color $colorTest
@@ -1502,14 +1503,29 @@ if $bundleSlideshow
     border none
     outline none
 
+  .slideshow button::before
+    display block
+    font-family GlyphIcons
+
+  .slideshow button#prev::before
+    content '\EA1A'
+    transform rotate(180deg)
+
+  .slideshow button#next::before
+    content '\EA1A'
+
+  .slideshow .pause::before
+    content '\EA28'
+
+  .slideshow .resume::before
+    content '\EA29'
+
   @media (min-width $sizeXS)
 
     .slideshow button
-      padding 1rem
+      width 6rem
+      height 6rem
       font-size 4rem
-
-  .slideshow #prev [class*="icon-"]
-    transform rotate(180deg)
 
   .slideshow .pause
   .slideshow .resume
@@ -1521,7 +1537,7 @@ if $bundleSlideshow
 
     .slideshow .pause
     .slideshow .resume
-      display none !important // @note '!important' compense une règle js
+      display none !important // @note '!important' compense une règle inline posée en js
 
     .slideshow #next
       margin-left auto
@@ -1535,9 +1551,6 @@ if $bundleSlideshow
       margin-left auto
       margin-right 1rem
 
-  .no-js .slideshow button
-    display none
-
   .slideshow button:focus
   .slideshow button:hover
   //.slideshow button:active
@@ -1550,7 +1563,6 @@ if $bundleSlideshow
     content ''
     width 100%
     height 100%
-    background-color rgba(255, 255, 255, 0)
     opacity 0
 
   //.slideshow button:focus::after
@@ -1568,7 +1580,7 @@ if $bundleSlideshow
     bottom 0
     left 0
     height .5rem
-    background Red
+    background rgba(255, 255, 255, .3)
     z-index 500
 
 

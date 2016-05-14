@@ -79,7 +79,7 @@ gulp.task( 'browserSync', function() {
     server : {
       baseDir : source
     },
-    port : 9000,
+    port : 9000, // http://localhost:9000/ or http://192.168.0.10:9000/
     open : true, // Ouverture automatique du navigateur ('false', 'local', 'external', 'ui', 'tunnel')
     logLevel : 'debug', // Informations essentielles seulement
     reloadDebounce : 2000, // Temps mini entre deux réactualisations de page
@@ -429,6 +429,7 @@ for ( let val of arrSquare ) {
     } );
 }
 
+
 // @subsection  Image Min
 // @description Minification des images
 // -----------------------------------------------------------------------------
@@ -485,7 +486,7 @@ gulp.task( 'glyphicons', function() {
       formats : [ 'ttf', 'eot', 'woff', 'woff2', 'svg' ], // default : .ttf, .eot, .woff
       fontHeight : 1024, // Retaille des icônes en 1024X1024
       round : 10e3, // Trois décimales (default value: 10e12)
-      timestamp : Math.round( Date.now()/1024 ), // Recommandé pour obtenir une construction cohérente
+      timestamp : Math.round( Date.now() / 1024 ), // Recommandé pour obtenir une construction cohérente
     } ) )
       .on( 'glyphs', function( glyphs ) {
         var options = {
@@ -524,14 +525,14 @@ gulp.task( 'watchjade', function() {
         [ 'jade' ]
     )
     .on( 'change', consoleLog );
-});
+} );
 
 // gulp.task('watchmarkdown', function() {
 //   return gulp.watch(
 //         source + '/**/*.md',
-//         ['markdown']
+//         [ 'markdown' ]
 //     )
-//     .on('change', consoleLog);
+//     .on( 'change', consoleLog );
 // });
 
 gulp.task( 'watchscripts', function() {
@@ -540,7 +541,7 @@ gulp.task( 'watchscripts', function() {
         gulpsync.sync( [ 'metascripts', 'scripts' ] )
     )
     .on( 'change', consoleLog );
-});
+} );
 
 gulp.task( 'watchstyles', function() {
   return gulp.watch(
@@ -548,7 +549,7 @@ gulp.task( 'watchstyles', function() {
         gulpsync.sync( [ 'metastyles', [ 'styles', 'stylesexp' ]] )
     )
     .on( 'change', consoleLog );
-});
+} );
 
 
 // -----------------------------------------------------------------------------
