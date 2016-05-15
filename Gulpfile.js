@@ -102,7 +102,7 @@ var inputJade = source + '/**/*.jade',
 
 gulp.task( 'jade', function() {
   return gulp
-    .src( [ inputHtmlJade, inputPhpJade ])
+    .src( [ inputHtmlJade, inputPhpJade ] )
     //.pipe(changed(source)) // Traitement pour les fichiers changé uniquement @todo En test...
     .pipe( plumber() )
     .pipe( jade( {
@@ -111,27 +111,27 @@ gulp.task( 'jade', function() {
     .pipe( rename( function( path ) {
       path.extname = '' // Enlève l'extention '.jade' sur le fichier créé
     } ) )
-    .pipe( replace(/@@pkg.version/g, pkg.version)) // récupération de la version du build
+    .pipe( replace( /@@pkg.version/g, pkg.version ) ) // récupération de la version du build
     // BEGIN PHP
-    .pipe( replace(/(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
-    .pipe( replace(/(<_php>)((.|\r|\n|\t)*?)(<\/_php>)/g, '<?php $2; ?>')) // _php => balises php d'ouverture et de fermeture avec point virgule final)
-    .pipe( replace(/(<\?php )((.|\r|\n|\t)*?)(\/\/.*)(\n)?(; \?>)/g, '<?php $2$4 ?>')) // Si commentaire php monoligne en fin de code alors pas de point virgule final
-    .pipe( replace(/(\*\/)(\n)?(; \?>)/g, '*/ ?>')) // Idem pour commantaires multilignes
-    .pipe( replace(/(<_if>)(.*)(<\/_if>)/g, '<?php if ($2): ?>')) // _if => if(string):
-    .pipe( replace(/<_else><\/_else>/g, '<?php else: ?>')) // _else => else:
-    .pipe( replace(/(<_elseif>)(.*)(<\/_elseif>)/g, '<?php elseif ($2): ?>')) // _elseif => elseif(string):
-    .pipe( replace(/<_endif><\/_endif>/g, '<?php endif; ?>')) // _endif => endif;
-    .pipe( replace(/(<_require>)(.*)(<\/_require>)/g, '<?php require \'$2.php\'; ?>')) // _require => require 'string.php';
-    .pipe( replace(/<_require_wp>/g, '<?php require locate_template(\'')) // Require de WordPress
-    .pipe( replace(/<\/_require_wp>/g, '.php\'); ?>'))
-    .pipe( replace(/( \?>)(\n.*)(<\?php )/g, '$2      ')) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
-    .pipe( replace(/({% )(\$\S*)( %})/g, '<?php echo $2; ?>')) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : {% $name %} => <?php echo $name; ?>
-    .pipe( replace(/({% )(.*)( %})/g, '<?php $2; ?>')) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne
-    .pipe( replace(/;; ?>/g, '; ?>')) // Suppression points virgules doublés
+    .pipe( replace( /(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>' ) ) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
+    .pipe( replace( /(<_php>)((.|\r|\n|\t)*?)(<\/_php>)/g, '<?php $2; ?>' ) ) // _php => balises php d'ouverture et de fermeture avec point virgule final)
+    .pipe( replace( /(<\?php )((.|\r|\n|\t)*?)(\/\/.*)(\n)?(; \?>)/g, '<?php $2$4 ?>' ) ) // Si commentaire php monoligne en fin de code alors pas de point virgule final
+    .pipe( replace( /(\*\/)(\n)?(; \?>)/g, '*/ ?>' ) ) // Idem pour commantaires multilignes
+    .pipe( replace( /(<_if>)(.*)(<\/_if>)/g, '<?php if ($2): ?>' ) ) // _if => if(string):
+    .pipe( replace( /<_else><\/_else>/g, '<?php else: ?>' ) ) // _else => else:
+    .pipe( replace( /(<_elseif>)(.*)(<\/_elseif>)/g, '<?php elseif ($2): ?>' ) ) // _elseif => elseif(string):
+    .pipe( replace( /<_endif><\/_endif>/g, '<?php endif; ?>' ) ) // _endif => endif;
+    .pipe( replace( /(<_require>)(.*)(<\/_require>)/g, '<?php require \'$2.php\'; ?>' ) ) // _require => require 'string.php';
+    .pipe( replace( /<_require_wp>/g, '<?php require locate_template(\'' ) ) // Require de WordPress
+    .pipe( replace( /<\/_require_wp>/g, '.php\'); ?>' ) )
+    .pipe( replace( /( \?>)(\n.*)(<\?php )/g, '$2      ' ) ) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
+    .pipe( replace( /({% )(\$\S*)( %})/g, '<?php echo $2; ?>' ) ) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : {% $name %} => <?php echo $name; ?>
+    .pipe( replace( /({% )(.*)( %})/g, '<?php $2; ?>' ) ) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne
+    .pipe( replace( /;; ?>/g, '; ?>' ) ) // Suppression points virgules doublés
     // END PHP
-    .pipe( replace(/(\n)(<)/, '$2')) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
+    .pipe( replace( /(\n)(<)/, '$2' ) ) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
     .pipe( gulp.dest( source ) )
-    .pipe( browserSync.stream( { match : '**/*.html'} ) );
+    .pipe( browserSync.stream( { match : '**/*.html' } ) );
 } );
 
 
@@ -143,10 +143,10 @@ gulp.task( 'jade', function() {
 // @documentation Markdown @see https://github.com/chjj/marked#options-1
 
 gulp.task( 'markdown', function() {
-    return gulp.src(source + '/*.md')
+    return gulp.src( source + '/*.md' )
         .pipe( markdown() )
         .pipe( gulp.dest( source ) );
-});
+} );
 
 
 // -----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ gulp.task( 'scripts', function() {
     .pipe( uglify() )
     .pipe( browserSync.stream( { match : '**/*.js'} ) )
     .pipe( gulp.dest( source + '/Public/Scripts' ) );
-});
+} );
 
 
 // -----------------------------------------------------------------------------
@@ -177,7 +177,7 @@ gulp.task( 'scripts', function() {
 
 // @note Compilation des Styles via un préprocesseur. Choix possible entre Stylus, Ruby Sass ou LibSass.
 // @important Ne pas oublier de charger la dépendance adéquate, les 3 dépendances ne peuvent être chargées en même temps.
-// @note Pour Sass : libSass (en C++) est plus rapide que Ruby, mais limitée dans sa compatibilité des fonctionnalités Sass.
+// @note libSass (porté sous C++) est plus rapide que Ruby Sass, mais limité dans sa compatibilité des fonctionnalités Sass.
 
 
 // @subsection Stylus
@@ -199,19 +199,19 @@ gulp.task( 'styles', function() { // Version de production
     } ) )
     .on('error', function( err ) {
         console.error( 'Error!', err.message );
-    })
+    } )
     .pipe(autoprefixer( autoprefixerOptions ) )
     .pipe(sourcemaps.write( '../Styles/Maps', { addComment : true } ) )
     .pipe(gulp.dest( source + '/Public/Styles') )
     .pipe( browserSync.stream( { match : '**/*.css' } ) );
-});
+} );
 
 gulp.task( 'stylesexp', function() { // Version non compressée permettant un contrôle du code généré en sortie
   return gulp
     .src( inputStyles )
     .pipe( plumber() )
     //.pipe( sourcemaps.init() )
-    .pipe( stylus({
+    .pipe( stylus( {
         compress : false,
         linenos : true
     } ) )
@@ -253,7 +253,7 @@ gulp.task( 'stylesexp', function() { // Version non compressée permettant un co
 //         console.error( 'Error!', err.message );
 //     } )
 //     .pipe( autoprefixer( autoprefixerOptions ) )
-//     .pipe( sourcemaps.write('../Styles/Maps', {addComment: true}) )
+//     .pipe( sourcemaps.write('../Styles/Maps', { addComment: true } ) )
 //     .pipe( gulp.dest( source + '/Public/Styles' ) );
 // } );
 // 
@@ -324,7 +324,7 @@ gulp.task( 'metastyles', function() {
     .pipe( replace( /@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n' ) )
     .pipe( replace( /@license .*\n/, '@license      ' + pkg.license + '\n' ) )
     .pipe( gulp.dest( source + '/Styles/Partial' ) );
-});
+} );
 
 gulp.task( 'metascripts', function() {
   return gulp
@@ -337,7 +337,7 @@ gulp.task( 'metascripts', function() {
     .pipe( replace( /@homepage .*\n/, '@homepage     ' + pkg.homepage + '\n' ) )
     .pipe( replace( /@license .*\n/, '@license      ' + pkg.license + '\n' ) )
     .pipe( gulp.dest( source + '/Scripts/Sources' ) );
-});
+} );
 
 
 // -----------------------------------------------------------------------------
@@ -376,15 +376,10 @@ gulp.task( 'metascripts', function() {
 // @note Nécessitée d'installer ImageMagick et GraphicsMagick pour exécuter la fonction.
 // @note Utilisation de GraphicsMagick par défaut.
 
-// Options :
-// [1] Copie de l'image source
-// [2] Redimmentionnement à partir de la largeur
-// [3] Découpage en carré
-
 var inputImagesSources = source + '/Images/DemoSources/*.{jpg,jpeg,png}', // @note Ne traiter que le fichier 'Public/Images/', ne surtout pas traiter les fonts SVG.
     outputImagesSources = source + '/Images/Demo';
 
-gulp.task( 'copyimages', function() { // [1]
+gulp.task( 'copyimages', function() { // Copie de l'image source
   return gulp
     .src( inputImagesSources )
     .pipe( gulp.dest( outputImagesSources ) );
@@ -393,7 +388,7 @@ gulp.task( 'copyimages', function() { // [1]
 let arr = [ 300, 400, 600, 800, 1000, 1500, 2000 ];
 
 for ( let val of arr ) {
-    gulp.task( 'imagesresize' + val, function() { // [2]
+    gulp.task( 'imagesresize' + val, function() { // Landscape
       return gulp
         .src( inputImagesSources )
         .pipe( plumber() )
@@ -409,10 +404,8 @@ for ( let val of arr ) {
     } );
 }
 
-let arrSquare = [ 300, 400, 600, 800, 1000 ];
-
-for ( let val of arrSquare ) {
-    gulp.task( 'imagesresizeS' + val, function() { // [3]
+for ( let val of arr ) {
+    gulp.task( 'imagesresizeS' + val, function() { // Square
       return gulp
         .src( inputImagesSources )
         .pipe( plumber() )
@@ -420,7 +413,7 @@ for ( let val of arrSquare ) {
             width : val,
             height : val,
             crop : true,
-            upscale : false
+            upscale : true
         } ) )
         .pipe( rename( function( path ) {
             path.basename += 'S' + val
@@ -463,7 +456,7 @@ gulp.task( 'glyphmin', function() {
         progressive : true
     } ) )
     .pipe( gulp.dest( source + '/Fonts/GlyphIconsSources' ) );
-});
+} );
 
 
 // -----------------------------------------------------------------------------
@@ -495,7 +488,7 @@ gulp.task( 'glyphicons', function() {
                     name : glyph.name,
                     codepoint : glyph.unicode[0].charCodeAt(0)
                 }
-            }),
+            } ),
             fontName : 'GlyphIcons',
             fontPath : source + '/Fonts',
             className : 'icon-'
@@ -507,9 +500,9 @@ gulp.task( 'glyphicons', function() {
           .pipe( consolidate( 'lodash', options ) )
           .pipe( gulp.dest( source + '/Includes' ) );
         console.log( glyphs, options );
-      })
+      } )
     .pipe( gulp.dest( source + '/Fonts' ) );
-});
+} );
 
 
 // -----------------------------------------------------------------------------
@@ -533,7 +526,7 @@ gulp.task( 'watchjade', function() {
 //         [ 'markdown' ]
 //     )
 //     .on( 'change', consoleLog );
-// });
+// } );
 
 gulp.task( 'watchscripts', function() {
   return gulp.watch(
@@ -561,16 +554,17 @@ gulp.task( 'watchstyles', function() {
 // @subsection Default task
 // -----------------------------------------------------------------------------
 
-gulp.task( 'default', gulpsync.sync( ['browserSync', ['watchjade', 'watchscripts', 'watchstyles'] ] ) ); // pas de tâche glyphicons lancée par défaut. Si celle-ci est souhaitée la mettre en synchronisation après imagesfont.
+gulp.task( 'default', gulpsync.sync( ['browserSync', ['watchjade', 'watchscripts', 'watchstyles'] ] ) );
 
 
 // @subsection Images task
 // -----------------------------------------------------------------------------
 
-gulp.task( 'images', gulpsync.sync( [ [ 'copyimages', 'imagesresize300', 'imagesresize400', 'imagesresize600', 'imagesresize800', 'imagesresize1000', 'imagesresize1500', 'imagesresize2000', 'imagesresizeS300', 'imagesresizeS400', 'imagesresizeS600', 'imagesresizeS800', 'imagesresizeS1000' ], 'imagesmin' ] ) );
+gulp.task( 'images', gulpsync.sync( [ [ 'copyimages', 'imagesresize300', 'imagesresize400', 'imagesresize600', 'imagesresize800', 'imagesresize1000', 'imagesresize1500', 'imagesresize2000', 'imagesresizeS300', 'imagesresizeS400', 'imagesresizeS600', 'imagesresizeS800', 'imagesresizeS1000', 'imagesresizeS1500', 'imagesresizeS2000' ], 'imagesmin' ] ) );
 
 
 // @subsection Glyph Icons task
 // -----------------------------------------------------------------------------
 
 gulp.task( 'icons', gulpsync.sync( [ 'glyphmin', 'glyphicons' ] ) );
+

@@ -3019,6 +3019,7 @@ if $bundleNavBottom
   @media (max-width $sizeNav)
 
     .sizeNav-nav-bottom
+      overflow-y auto // @note Si nombre d'items du menu plus haut que l'écran
       position fixed !important
       top 'calc(100vh - %s)' % $cmdSize
       left 0 !important // @todo
