@@ -11,10 +11,9 @@
 // @section Commandes
 // -----------------------------------------------------------------------------
 
-// Commandes pour le projet :
+// Commandes principales pour le projet :
 // `gulp` : commande globale
-// `gulp imagesresize` : redimensionnement  des images
-// `gulp imagesmin` : minification des images
+// `gulp images` : traitement des images
 // `gulp glyphmin` : minification des svg de la police d'icônes GlyphIcons
 // `gulp glyphicons` : refonte de la police d'icônes GlyphIcons
 // Les autres commandes sont lancées automatiquement arpès la surveillance des fichiers (watcher) initialisée par la commande globale.
@@ -27,34 +26,35 @@
 // @subsection Dependencies
 // -----------------------------------------------------------------------------
 
-var gulp = require( 'gulp' ),
-    gulpsync = require( 'gulp-sync' )( gulp ),
-    gutil = require( 'gulp-util' ),
-    plumber = require( 'gulp-plumber' ),
-    ftp = require( 'vinyl-ftp' ),
-    consolidate = require( 'gulp-consolidate' ),
-    lodash = require( 'lodash' ),
-    browserSync = require( 'browser-sync' ),
-    concat = require( 'gulp-concat' ),
-    rename = require( 'gulp-rename' ),
-    replace = require( 'gulp-replace' ),
-    header = require( 'gulp-header' ),
-    imageResize = require( 'gulp-image-resize' ),
-    imagemin = require( 'gulp-imagemin' ),
-    jade = require( 'gulp-jade' ),
-    markdown = require( 'gulp-markdown' ),
-    coffee = require( 'gulp-coffee' ),
-    jshint = require( 'gulp-jshint' ),
-    uglify = require( 'gulp-uglify' ),
-    stylus = require( 'gulp-stylus' ),
-    //sass = require( 'gulp-sass' ),
-    //sass = require( 'gulp-ruby-sass' ),
-    autoprefixer = require( 'gulp-autoprefixer' ),
-    sourcemaps = require( 'gulp-sourcemaps' ),
-    iconfont = require( 'gulp-iconfont' ),
-    //fs = require( 'fs' ),
-    //pkgSync = JSON.parse( fs.readFileSync('./package.json' ) ),
-    pkg = require( './package.json' );
+const gulp = require( 'gulp' ),
+      del = require( 'del' ),
+      ftp = require( 'vinyl-ftp' ),
+      lodash = require( 'lodash' ),
+      browserSync = require( 'browser-sync' ),
+      gulpsync = require( 'gulp-sync' )( gulp ),
+      gutil = require( 'gulp-util' ),
+      plumber = require( 'gulp-plumber' ),
+      consolidate = require( 'gulp-consolidate' ),
+      concat = require( 'gulp-concat' ),
+      rename = require( 'gulp-rename' ),
+      replace = require( 'gulp-replace' ),
+      header = require( 'gulp-header' ),
+      imageResize = require( 'gulp-image-resize' ),
+      imagemin = require( 'gulp-imagemin' ),
+      jade = require( 'gulp-jade' ),
+      markdown = require( 'gulp-markdown' ),
+      coffee = require( 'gulp-coffee' ),
+      jshint = require( 'gulp-jshint' ),
+      uglify = require( 'gulp-uglify' ),
+      stylus = require( 'gulp-stylus' ),
+      //sass = require( 'gulp-sass' ),
+      //sass = require( 'gulp-ruby-sass' ),
+      autoprefixer = require( 'gulp-autoprefixer' ),
+      sourcemaps = require( 'gulp-sourcemaps' ),
+      iconfont = require( 'gulp-iconfont' ),
+      //fs = require( 'fs' ),
+      //pkgSync = JSON.parse( fs.readFileSync('./package.json' ) ),
+      pkg = require( './package.json' );
 
 
 // @subsection Global variables
@@ -156,7 +156,8 @@ gulp.task( 'markdown', function() {
 // @link https://www.npmjs.com/package/gulp-jshint
 // @link https://www.npmjs.com/package/gulp-uglify
 
-var inputScripts = source + '/Scripts/Sources/**/*.js';
+var inputScripts = source + '/Scripts/Sources/**/*.js',
+    outputScripts = source + '/Public/Scripts';
 
 gulp.task( 'scripts', function() {
   return gulp
@@ -167,7 +168,7 @@ gulp.task( 'scripts', function() {
     //.pipe( concat( 'Main.js' ) ) // @todo Concat n'est pas nécessaire pour l'instant, juste en prévision de...
     .pipe( uglify() )
     .pipe( browserSync.stream( { match : '**/*.js'} ) )
-    .pipe( gulp.dest( source + '/Public/Scripts' ) );
+    .pipe( gulp.dest( outputScripts ) );
 } );
 
 
@@ -177,7 +178,7 @@ gulp.task( 'scripts', function() {
 
 // @note Compilation des Styles via un préprocesseur. Choix possible entre Stylus, Ruby Sass ou LibSass.
 // @important Ne pas oublier de charger la dépendance adéquate, les 3 dépendances ne peuvent être chargées en même temps.
-// @note libSass (porté sous C++) est plus rapide que Ruby Sass, mais limité dans sa compatibilité des fonctionnalités Sass.
+// @note libSass, porté sous C++, est plus rapide que Ruby Sass, mais limité dans sa compatibilité des fonctionnalités Sass.
 
 
 // @subsection Stylus
@@ -186,7 +187,13 @@ gulp.task( 'scripts', function() {
 // @link https://www.npmjs.com/package/gulp-stylus
 
 var inputStyles = source + '/Styles/*.styl',
+    outputStyles = source + '/Public/Styles',
+    outputStylesExpanded = source + '/Public/Styles/Expanded',
     autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
+
+gulp.task( 'deletstyles', function() { // Suppression des anciens fichiers de styles
+    del( [ outputStyles, outputStylesExpanded ] );
+} );
 
 gulp.task( 'styles', function() { // Version de production
   return gulp
@@ -200,9 +207,9 @@ gulp.task( 'styles', function() { // Version de production
     .on('error', function( err ) {
         console.error( 'Error!', err.message );
     } )
-    .pipe(autoprefixer( autoprefixerOptions ) )
-    .pipe(sourcemaps.write( '../Styles/Maps', { addComment : true } ) )
-    .pipe(gulp.dest( source + '/Public/Styles') )
+    .pipe( autoprefixer( autoprefixerOptions ) )
+    .pipe( sourcemaps.write( '../Styles/Maps', { addComment : true } ) )
+    .pipe( gulp.dest( outputStyles ) )
     .pipe( browserSync.stream( { match : '**/*.css' } ) );
 } );
 
@@ -220,7 +227,7 @@ gulp.task( 'stylesexp', function() { // Version non compressée permettant un co
     } )
     .pipe( autoprefixer( autoprefixerOptions ) )
     //.pipe( sourcemaps.write( '../Styles/Maps', {addComment: true } ) )
-    .pipe( gulp.dest( source + '/Public/Styles/Expanded' ) );
+    .pipe( gulp.dest( outputStylesExpanded ) );
 } );
 
 
@@ -379,6 +386,10 @@ gulp.task( 'metascripts', function() {
 var inputImagesSources = source + '/Images/DemoSources/*.{jpg,jpeg,png}', // @note Ne traiter que le fichier 'Public/Images/', ne surtout pas traiter les fonts SVG.
     outputImagesSources = source + '/Images/Demo';
 
+gulp.task( 'deletimages', function() { // Suppression des images
+    del( outputImagesSources );
+} );
+
 gulp.task( 'copyimages', function() { // Copie de l'image source
   return gulp
     .src( inputImagesSources )
@@ -399,6 +410,24 @@ for ( let val of arr ) {
         } ) )
         .pipe( rename( function( path ) {
             path.basename += val
+        } ) )
+        .pipe( gulp.dest( outputImagesSources ) );
+    } );
+}
+
+for ( let val of arr ) {
+    gulp.task( 'imagesresizeP' + val, function() { // Portrait
+      return gulp
+        .src( inputImagesSources )
+        .pipe( plumber() )
+        .pipe( imageResize( {
+            width : val / 1.8, // Aspect ratio
+            height : val,
+            crop : true,
+            upscale : true
+        } ) )
+        .pipe( rename( function( path ) {
+            path.basename += 'P' + val
         } ) )
         .pipe( gulp.dest( outputImagesSources ) );
     } );
@@ -539,7 +568,7 @@ gulp.task( 'watchscripts', function() {
 gulp.task( 'watchstyles', function() {
   return gulp.watch(
         source + '/Styles/**/*.styl',
-        gulpsync.sync( [ 'metastyles', [ 'styles', 'stylesexp' ]] )
+        gulpsync.sync( [ 'deletstyles', [ 'metastyles', [ 'styles', 'stylesexp' ] ] ] )
     )
     .on( 'change', consoleLog );
 } );
@@ -554,17 +583,56 @@ gulp.task( 'watchstyles', function() {
 // @subsection Default task
 // -----------------------------------------------------------------------------
 
-gulp.task( 'default', gulpsync.sync( ['browserSync', ['watchjade', 'watchscripts', 'watchstyles'] ] ) );
+var tasks = [ 'watchjade', 'watchscripts', 'watchstyles' ]
+
+gulp.task( 'default', gulpsync.sync( [ 'browserSync', tasks ] ) );
+
+
+// @subsection  Noserver task
+// @description Tâche par défaut sans serveur
+// -----------------------------------------------------------------------------
+
+gulp.task( 'noserver', tasks );
 
 
 // @subsection Images task
 // -----------------------------------------------------------------------------
 
-gulp.task( 'images', gulpsync.sync( [ [ 'copyimages', 'imagesresize300', 'imagesresize400', 'imagesresize600', 'imagesresize800', 'imagesresize1000', 'imagesresize1500', 'imagesresize2000', 'imagesresizeS300', 'imagesresizeS400', 'imagesresizeS600', 'imagesresizeS800', 'imagesresizeS1000', 'imagesresizeS1500', 'imagesresizeS2000' ], 'imagesmin' ] ) );
+gulp.task( 'images', gulpsync.sync(
+    [ 'deletimages',
+        [
+            [ 'copyimages',
+            'imagesresize300',
+            'imagesresize400',
+            'imagesresize600',
+            'imagesresize800',
+            'imagesresize1000',
+            'imagesresize1500',
+            'imagesresize2000',
+            'imagesresizeP300',
+            'imagesresizeP400',
+            'imagesresizeP600',
+            'imagesresizeP800',
+            'imagesresizeP1000',
+            'imagesresizeP1500',
+            'imagesresizeP2000',
+            'imagesresizeS300',
+            'imagesresizeS400',
+            'imagesresizeS600',
+            'imagesresizeS800',
+            'imagesresizeS1000',
+            'imagesresizeS1500',
+            'imagesresizeS2000' ],
+            'imagesmin' ]
+    ]
+) );
 
 
 // @subsection Glyph Icons task
 // -----------------------------------------------------------------------------
 
-gulp.task( 'icons', gulpsync.sync( [ 'glyphmin', 'glyphicons' ] ) );
+gulp.task( 'icons', gulpsync.sync(
+    [ 'glyphmin',
+    'glyphicons' ]
+) );
 
