@@ -1,0 +1,50 @@
+
+/* line 297 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+
+/* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
+
+/* line 6 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+.demo-item {
+  overflow: hidden;
+  min-height: 4rem;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+}
+
+/* line 13 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+.demo-layout [class^="m"],
+.demo-layout aside {
+  min-height: 4rem;
+  padding: 0.5rem 0;
+  text-align: center;
+  background-color: #fff;
+}
+
+/* line 20 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+.demo-layout2 [class^="m"] {
+  padding: 0.5rem;
+  background: #fff url("/Images/Demo/ColorfulLeafS1000.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+/* line 26 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+.demo-layout2 > :nth-child(5n+2) {
+  background-image: url("/Images/Demo/LotusMacroS1000.jpg");
+}
+
+/* line 29 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+.demo-layout2 > :nth-child(5n+3) {
+  background-image: url("/Images/Demo/GrassLeafS1000.jpg");
+}
+
+/* line 32 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+.demo-layout2 > :nth-child(5n+4) {
+  background-image: url("/Images/Demo/PacificCityS1000.jpg");
+}
+
+/* line 35 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Demos.styl */
+.demo-layout2 > :nth-child(5n+5) {
+  background-image: url("/Images/Demo/OldMechanismS1000.jpg");
+}

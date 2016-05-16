@@ -53,7 +53,7 @@ const gulp = require( 'gulp' ),
       sourcemaps = require( 'gulp-sourcemaps' ),
       iconfont = require( 'gulp-iconfont' ),
       //fs = require( 'fs' ),
-      //pkgSync = JSON.parse( fs.readFileSync('./package.json' ) ),
+      //pkgSync = JSON.parse( fs.readFileSync( './package.json' ) ),
       pkg = require( './package.json' );
 
 
@@ -103,7 +103,7 @@ var inputJade = source + '/**/*.jade',
 gulp.task( 'jade', function() {
   return gulp
     .src( [ inputHtmlJade, inputPhpJade ] )
-    //.pipe(changed(source)) // Traitement pour les fichiers changé uniquement @todo En test...
+    //.pipe( changed( source ) ) // Traitement pour les fichiers changé uniquement @todo En test...
     .pipe( plumber() )
     .pipe( jade( {
       pretty : true // Idendation du code
@@ -164,10 +164,10 @@ gulp.task( 'scripts', function() {
     .src( inputScripts )
     .pipe( plumber() )
     .pipe( jshint() )
-    .pipe( jshint.reporter('default') )
+    .pipe( jshint.reporter( 'default' ) )
     //.pipe( concat( 'Main.js' ) ) // @todo Concat n'est pas nécessaire pour l'instant, juste en prévision de...
     .pipe( uglify() )
-    .pipe( browserSync.stream( { match : '**/*.js'} ) )
+    .pipe( browserSync.stream( { match : '**/*.js' } ) )
     .pipe( gulp.dest( outputScripts ) );
 } );
 
@@ -237,7 +237,7 @@ gulp.task( 'stylesexp', function() { // Version non compressée permettant un co
 // @link https://www.npmjs.com/package/gulp-ruby-sass
 
 //var inputStyles = source + '/Styles/*.scss',
-//    autoprefixerOptions = { browsers: ['last 2 versions', '> 5%'] };
+//    autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
 
 // Options :
 // [1] Évite la colision des fichiers avec les autres tâches Ruby Sass
@@ -256,11 +256,11 @@ gulp.task( 'stylesexp', function() { // Version non compressée permettant un co
 //     } )
 //     .pipe( plumber() )
 //     .pipe( sourcemaps.init() )
-//     .on('error', function( err ) {
+//     .on( 'error', function( err ) {
 //         console.error( 'Error!', err.message );
 //     } )
 //     .pipe( autoprefixer( autoprefixerOptions ) )
-//     .pipe( sourcemaps.write('../Styles/Maps', { addComment: true } ) )
+//     .pipe( sourcemaps.write( '../Styles/Maps', { addComment : true } ) )
 //     .pipe( gulp.dest( source + '/Public/Styles' ) );
 // } );
 // 
@@ -302,8 +302,8 @@ gulp.task( 'stylesexp', function() { // Version non compressée permettant un co
 //   return gulp
 //     .src( inputStyles )
 //     .pipe( plumber() )
-//     .pipe( sass( { outputStyle : 'expanded' } ).on('error', sass.logError) )
-//     .pipe( autoprefixer(autoprefixerOptions) )
+//     .pipe( sass( { outputStyle : 'expanded' } ).on( 'error', sass.logError ) )
+//     .pipe( autoprefixer( autoprefixerOptions ) )
 //     .pipe( gulp.dest( source + '/Public/Styles/Expanded' ) );
 // } );
 
@@ -459,7 +459,7 @@ for ( let val of arr ) {
 // @link https://www.npmjs.com/package/gulp-imagemin
 // @note Ne surtout pas traiter directement les fonts SVG car corruption des fichiers.
 
-var inputImages = source + '/Images/**/*.{jpg,jpeg,png,gif,svg}'; // @note Ne traiter que le fichier 'Public/Images/'
+var inputImages = source + '/Images/**/*.{ jpg, jpeg, png, gif, svg }'; // @note Ne traiter que le fichier 'Public/Images/'
 
 // @note Traitement des images du thème
 gulp.task( 'imagesmin', function() {
@@ -512,7 +512,7 @@ gulp.task( 'glyphicons', function() {
     } ) )
       .on( 'glyphs', function( glyphs ) {
         var options = {
-            glyphs: glyphs.map(function( glyph ) {
+            glyphs : glyphs.map( function( glyph ) {
                 return {
                     name : glyph.name,
                     codepoint : glyph.unicode[0].charCodeAt(0)
@@ -580,7 +580,7 @@ gulp.task( 'watchstyles', function() {
 // -----------------------------------------------------------------------------
 
 
-// @subsection Default task
+// @subsection Default tasks
 // -----------------------------------------------------------------------------
 
 var tasks = [ 'watchjade', 'watchscripts', 'watchstyles' ]
@@ -588,14 +588,14 @@ var tasks = [ 'watchjade', 'watchscripts', 'watchstyles' ]
 gulp.task( 'default', gulpsync.sync( [ 'browserSync', tasks ] ) );
 
 
-// @subsection  Noserver task
+// @subsection  Noserver tasks
 // @description Tâche par défaut sans serveur
 // -----------------------------------------------------------------------------
 
 gulp.task( 'noserver', tasks );
 
 
-// @subsection Images task
+// @subsection Images tasks
 // -----------------------------------------------------------------------------
 
 gulp.task( 'images', gulpsync.sync(
@@ -628,7 +628,7 @@ gulp.task( 'images', gulpsync.sync(
 ) );
 
 
-// @subsection Glyph Icons task
+// @subsection Glyph Icons tasks
 // -----------------------------------------------------------------------------
 
 gulp.task( 'icons', gulpsync.sync(

@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.21
-// @lastmodified 2016-05-16 08:12:24
+// @version      0.0.22
+// @lastmodified 2016-05-16 09:29:23
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -115,6 +115,8 @@ if (element.length){
 // @section     Main Nav Bottom
 // @description Menu de navigation principal, position en bas
 // -----------------------------------------------------------------------------
+
+// @bugfix @todo La propriété 'overflow:hidden' reste sur le body si redimentionnement de la fenêtre avant fermeture du menu
 
 ( function( $ ) {
 	var body = $( 'body' );
