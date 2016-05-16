@@ -568,7 +568,7 @@ gulp.task( 'watchscripts', function() {
 gulp.task( 'watchstyles', function() {
   return gulp.watch(
         source + '/Styles/**/*.styl',
-        gulpsync.sync( [ 'deletstyles', [ 'metastyles', [ 'styles', 'stylesexp' ] ] ] )
+        gulpsync.sync( [ 'metastyles', [ 'styles', 'stylesexp' ] ] )
     )
     .on( 'change', consoleLog );
 } );
