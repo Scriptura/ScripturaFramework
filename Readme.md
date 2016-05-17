@@ -29,32 +29,6 @@ De leurs côtés les scripts s'appuient sur le Web Storage plutôt que sur les c
 
 Ces technologies impliquent une limitation de la rétrocompatibilité aux navigateurs récents, un parti pris de notre part qui nous permet l'utilisation des dernières technologies du web sans compromis.
 
-## Folder tree and key files
-
-    ├── Gulpfile.js
-    ├── node_modules/
-    ├── package.json
-    ├── Readme.md
-    └── Root/
-        ├── Fonts/
-        ├── Images/
-        ├── index.html.jade
-        ├── index.html
-        ├── Public/
-        │   ├── Scripts/
-        │   │   └── Main.js
-        │   └── Styles/
-        │       ├── Main*.css
-        │       ├── Print.css
-        │       └── Expanded/
-        ├── Scripts/
-        │   ├── Sources/
-        │   │   └── Main*.js
-        │   └── Vendors/
-        └── Styles/
-            ├── Main.styl
-            └── Partial/
-
 ## Get Started
 
 ### First stage
@@ -83,3 +57,29 @@ And in the file's footer:
 ### Third stage
 
 That's all! You can start creating with jade syntaxe.
+
+## Folder tree and key files
+
+    ├── Gulpfile.js
+    ├── node_modules/
+    ├── package.json
+    ├── Readme.md
+    └── Root/
+        ├── Fonts/
+        ├── Images/
+        ├── index.html.jade
+        ├── index.html
+        ├── Public/
+        │   ├── Scripts/
+        │   │   └── Main.js
+        │   └── Styles/
+        │       ├── Main*.css
+        │       ├── Print.css
+        │       └── Expanded/
+        ├── Scripts/
+        │   ├── Sources/
+        │   │   └── Main*.js
+        │   └── Vendors/
+        └── Styles/
+            ├── Main.styl
+            └── Partial/
