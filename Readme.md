@@ -59,7 +59,7 @@ Ces technologies impliquent une limitation de la rétrocompatibilité aux naviga
 
 ## Template
 
-The framework uses the syntax [Jade](http://jade-lang.com/), [Stylus](https://learnboost.github.io/stylus/), jQuery
+The framework uses the syntax [Jade](http://jade-lang.com/), [Stylus](https://learnboost.github.io/stylus/) and Javascript ([jQuery](https://jquery.com/))
 
 ## Get Started
 
