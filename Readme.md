@@ -1,7 +1,7 @@
 # Scriptura
 > Interface for web apps
 
-__Project under development...__
+A framework [Jade](http://jade-lang.com/)/[Stylus](https://learnboost.github.io/stylus/)/[jQuery](https://jquery.com/))
 
 * [Demo Page](http://scriptura.github.io/)
 
@@ -57,10 +57,6 @@ Ces technologies impliquent une limitation de la rétrocompatibilité aux naviga
             ├── Main.styl
             └── Partial/
 
-## Template
-
-The framework uses the syntax [Jade](http://jade-lang.com/), [Stylus](https://learnboost.github.io/stylus/) and Javascript ([jQuery](https://jquery.com/))
-
 ## Get Started
 
 ### First stage
@@ -79,7 +75,7 @@ Create an .html.jade or an .php.jade file in the folder.
 
 With in the file's header:
 
-    link(rel='stylesheet', href='./Public/Styles/Main.css', media='screen')
+    link(rel='stylesheet' href='./Public/Styles/Main.css' media='screen')
 
 And in the file's footer:
 
