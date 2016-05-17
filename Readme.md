@@ -33,27 +33,29 @@ Ces technologies impliquent une limitation de la rétrocompatibilité aux naviga
 
 ## Folder tree and key files
 
-    ├── index.html.jade
-    ├── Scripts
-    │   ├── Vendors
-    │   ├── Sources
-    │   │   └── Main.js
-    ├── Styles
-    │   │   └── Main.styl
-    │       └── Partial
-    ├── Public
-    │   ├── Scripts
-    │   │   └── Main.js
-    │   └── Styles
-    │       ├── Main*.css
-    │       ├── Print.css
-    │       └── Expanded
-    ├── Images
-    ├── Fonts
-    ├── package.json
-    ├── Gruntfile.js
+    ├── Gulpfile.js
     ├── node_modules
-    └── Readme.md
+    ├── package.json
+    ├── Readme.md
+    └── Root/
+        ├── Fonts/
+        ├── Images/
+        ├── index.html.jade
+        ├── index.html
+        ├── Public/
+        │   ├── Scripts/
+        │   │   └── Main.js
+        │   └── Styles/
+        │       ├── Main*.css
+        │       ├── Print.css
+        │       └── Expanded/
+        ├── Scripts/
+        │   ├── Sources/
+        │   │   └── Main*.js
+        │   └── Vendors/
+        └── Styles/
+            ├── Main.styl
+            └── Partial/
 
 ## Template
 
