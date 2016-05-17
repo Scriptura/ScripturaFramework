@@ -32,7 +32,7 @@ Ces technologies impliquent une limitation de la rétrocompatibilité aux naviga
 ## Folder tree and key files
 
     ├── Gulpfile.js
-    ├── node_modules
+    ├── node_modules/
     ├── package.json
     ├── Readme.md
     └── Root/
