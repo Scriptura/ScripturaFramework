@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.22
-// @lastmodified 2016-05-16 22:53:35
+// @version      0.0.23
+// @lastmodified 2016-05-17 11:18:53
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -51,7 +51,7 @@ var supports = ( function() {
 // -----------------------------------------------------------------------------
 
 var element = $( 'audio, video' );
-if (element.length){
+if (element.length) {
 	// Appel des sripts
 	$( 'body' ).append( '<script src="../Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js"><\/script>' );
 	$( 'audio, video' ).mediaelementplayer();
@@ -89,7 +89,7 @@ if (element.length){
   $( document ).find( 'a:not(.download-link)' ).filter( function() {
     return this.hostname && this.hostname !== location.hostname;
   }).attr("target", "_blank");
-})( jQuery );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ if (element.length){
 		$( '.main-nav ul' ).slideToggle( 300 ).css( 'display', 'flex' );
 		$( this ).toggleClass( 'active' ); // Permet de cibler le bouton si actif
 	} );
-})( jQuery );
+} )( jQuery );
 */
 
 
@@ -133,7 +133,7 @@ if (element.length){
 			scrollTop.removeClass( 'hidden' );
 		}
 	} );
-})( jQuery );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -146,10 +146,10 @@ if (element.length){
 		section = $( '.section' ), // Navigation via la classe en paramètre
 		menu = $( '.scroll-nav a' ),
 		body = $( 'html,body' );
-	var topToIndex = function(scrollTop) {
+	var topToIndex = function( scrollTop ) {
 		var offsetTop = 0,
 			indexlastSection;
-		section.each( function(i){
+		section.each( function( i ) {
 			offsetTop = $( this ).offset().top;
 			if ( scrollTop > offsetTop - 100 ) {
 				indexlastSection = i;
@@ -159,22 +159,22 @@ if (element.length){
 	};
 	var retrieveActive = function() {
 		var scrollTop = doc.scrollTop(),
-			activeIndex = topToIndex(scrollTop);
-		section.removeClass( 'active' ).eq(activeIndex).addClass( 'active' );
-		menu.removeClass( 'active' ).eq(activeIndex).addClass( 'active' );
+			activeIndex = topToIndex( scrollTop );
+		section.removeClass( 'active' ).eq( activeIndex ).addClass( 'active' );
+		menu.removeClass( 'active' ).eq( activeIndex ).addClass( 'active' );
 		return activeIndex;
 	};
 	doc.keydown( function( e ) { // raccourci clavier
 	var active = $( '.section.active' ), // Navigation via la classe en paramètre + .active
 		tag = e.target.tagName.toLowerCase(); // Détecte sur quel élément est exécuté le script
-		if (tag != 'input' && tag != 'textarea' ){
+		if (tag != 'input' && tag != 'textarea' ) {
 			if ( e.keyCode == 90 ) { // 'z' @bugfix @note Conflit avec arrow left ( '37' )
-				body.animate({
+				body.animate( {
 					scrollTop: active.prev().length ? active.prev().offset().top : active.offset().top
 				}, 400 );
 			}
 			if ( e.keyCode == 83 ) { // 's' @bugfix @note Conflit avec arrow right ( '39' )
-				body.animate({
+				body.animate( {
 					scrollTop: active.next().length ? active.next().offset().top : active.offset().top
 				}, 400 );
 			}
@@ -184,7 +184,7 @@ if (element.length){
 		retrieveActive();
 	} );
 	retrieveActive();
-})( jQuery );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -220,14 +220,14 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 		$( 'html, body' ).animate( {scrollTop: 0}, 600 ); // Retour en haut progressif
 		return false; // Empêche la génération de l'ancre sur le permalien
 	} );
-	$(window).scroll( function() { // Apparition de la flèche 'retour en haut' au scroll de la page
+	$( window ).scroll( function() { // Apparition de la flèche 'retour en haut' au scroll de la page
 		if ( $( this ).scrollTop() > 100 ) {
 			scrolltop.fadeIn();
 		} else {
 			scrolltop.fadeOut();
 		}
 	} );
-})( jQuery );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -240,7 +240,7 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 	$( '.accordion-js' ).addClass( 'accordion' ); // Ajout d'une class pour le style
 	$( '.accordion-js-link' ).addClass( 'accordion-link' ); // Idem
 	accordion.attr({ // Ajout d'une id par accordéon (facultatif)
-		id: function(index){
+		id: function( index ) {
 			return 'accordion-' + index;
 		}
 	} );
@@ -254,12 +254,12 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 		link.toggleClass( 'active' ); // Ajout/suppression de '.active' sur élément cliqué
 		link.siblings().removeClass( 'active' ); // Retrait de '.active' sur les élements frères
 		link.siblings( '[class*="accordion"] > :nth-child(even)' ).slideUp();
-		if (!link.next().is( ':visible' )){
+		if (!link.next().is( ':visible' )) {
 			link.next().slideDown().addClass( 'active' );
 		}
 		e.preventDefault();
 	} );
-})( jQuery );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -271,7 +271,7 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 
 	// var tab = $( '[class*="tabs-js"]' );
 	// tab // Traitement des tableaux
-	// 	.each( function(index){
+	// 	.each( function( index ) {
 	// 		$( this ).attr( 'id', 'tab-' + index); // Ajout d'un id
 	// 	} );
 
@@ -281,13 +281,13 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 	tabs.find( '> :nth-child(2)' ).addClass( 'active' ); // Appliquer la class .active au premier enfant du contenu
 	tabs.find( '> .active' ).show(); // Montrer le contenu .active
 	tabs.find( '> :nth-child(odd)' )
-		.each( function(index){
+		.each( function( index ) {
 			$( this ).wrap( '<li><a href="#tab-' + index + '" id="cmd-tab-' + index + '"></a></li>' ); // Ajout de balises, d'un href et d'une id par onglet
 		} );
 	tabs.find( '> li a *' )
 		.contents().unwrap(); // Supprime les balises contenues dans le texte. Ce code est appliqué seulement après l'ajout des balises liens pour éviter un effet de décalage dû aux noeuds de texte laissés après le retrait des balises
 	tabs.find( '> :nth-child(even)' ) // Traitement des contenus
-		.each( function(index){
+		.each( function( index ) {
 			$( this ).attr( 'id', 'content-cmd-tab-' + index); // Ajout d'un id
 		} );
 	tabs.each( function() {
@@ -304,17 +304,17 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 		$( '#content-' + this.id).addClass( 'active' ).show(); // Traitement du contenu en rapport avec l'onglet cliqué
 		e.preventDefault();
 	} );
-})( jQuery );
+} )( jQuery );
 
 
 ( function( $ ) { // @note Mémorisation du dernier onglet cliqué
 			   // @todo Ne mémorise qu'un unique onglet par page.
-	var path = window.location.pathname.replace(/\//g, '' ).replace(/\./g, '' ).toLowerCase();
+	var path = window.location.pathname.replace( /\//g, '' ).replace( /\./g, '' ).toLowerCase();
 	var memoTab = 'tab-' + path;
 	$( '[id^="cmd-tab-"]' ).on( 'click', function() {
-		localStorage.setItem(memoTab, this.id); // Option mémorisée en Web Storage
+		localStorage.setItem( memoTab, this.id ); // Option mémorisée en Web Storage
 	} );
-	var tab = localStorage.getItem(memoTab);
+	var tab = localStorage.getItem( memoTab );
 	if (tab) {
 		var idTab = $( '[id^="' + tab + '"]' );
 		idTab.parent().parent().children().children().removeClass( 'active' ); // Les onglets frères possèdant la classe .active la perdent
@@ -324,7 +324,7 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 	}
 	// localStorage.removeItem( 'tab' );
 	// localStorage.clear();
-})( jQuery );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -339,7 +339,7 @@ jQuery( document ).on( 'focus', 'input, textarea', function() {
 } );
 
 jQuery( document ).on( 'focusout', 'input, textarea', function() {
-	$( this ).attr( 'placeholder', placeholder); // Rétablissement du ::placeholder
+	$( this ).attr( 'placeholder', placeholder ); // Rétablissement du ::placeholder
 } );
 
 
@@ -352,9 +352,9 @@ jQuery( document ).on( 'focusout', 'input, textarea', function() {
 jQuery( '[type="range"]' ).each( function() {
 	var range = $( this );
 	range.on( 'input', function() {
-		range.next().text(range.val());
+		range.next().text( range.val() );
 	})
-	.next().text(range.val());
+	.next().text( range.val() );
 } );
 
 // @todo Alternative :
@@ -381,7 +381,7 @@ var bar = $( '#progress-test' );
 
 $( '#progress-start' ).on( 'click', function() {
   var value = bar.data( 'value' );
-  setInterval(frame, 10);
+  setInterval( frame, 10 );
   function frame() {
     if ( value < 100 ) {
       value++;
@@ -455,12 +455,12 @@ slideshow
 var progress = slideshow.find( '.slide-progress' );
 
 slideshow.on( 'cycle-initialized cycle-before', function( e, opts ) {
-	progress.stop(true).css( 'width', 0 );
+	progress.stop( true ).css( 'width', 0 );
 } );
 
 slideshow.on( 'cycle-initialized cycle-after', function( e, opts ) {
 	if ( ! slideshow.is( '.cycle-paused' ) )
-		progress.animate( { width: '100%' }, opts.timeout, 'linear' );
+		progress.animate( { width : '100%' }, opts.timeout, 'linear' );
 } );
 
 slideshow.on( 'cycle-paused', function( e, opts ) {
@@ -468,7 +468,7 @@ slideshow.on( 'cycle-paused', function( e, opts ) {
 } );
 
 slideshow.on( 'cycle-resumed', function( e, opts, timeoutRemaining ) {
-	progress.animate( { width: '100%' }, timeoutRemaining, 'linear' );
+	progress.animate( { width : '100%' }, timeoutRemaining, 'linear' );
 } );
 
 
@@ -479,12 +479,12 @@ var pause = $( slideshow ).find( '.pause' ),
     resume = $( slideshow ).find( '.resume' );
 
 pause.on( 'click', function() {
-	$( this ).css( { 'display': 'none' } );
-	resume.css( { 'display': 'block' } );
+	$( this ).css( { 'display' : 'none' } );
+	resume.css( { 'display' : 'block' } );
 } );
 resume.on( 'click', function() {
-	$( this ).css( { 'display': 'none' } );
-	pause.css( { 'display': 'block' } );
+	$( this ).css( { 'display' : 'none' } );
+	pause.css( { 'display' : 'block' } );
 } );
 
 
@@ -501,7 +501,7 @@ $.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
 // -----------------------------------------------------------------------------
 
 	} // END if '.slideshow'
-})( jQuery );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -572,8 +572,8 @@ jQuery( document ).on( 'click', 'body', function( e ) { // Si clic en dehors de 
 jQuery.fn.dropcap = function() {
 	$( '[class*="adddropcap"] p:first-child' ).each( function() {
 		var string = $( this ),
-			newString = string.html().replace(/(<([^>]+)>|[A-Z0-9«»"]|&amp;)/, '<span class="dropcap">$1</span>' ); // Ajout d'un span + class sur les caractères sélectionnés, filtrage des balises html
-		string.html(newString);
+			newString = string.html().replace( /(<([^>]+)>|[A-Z0-9«»"]|&amp;)/, '<span class="dropcap">$1</span>' ); // Ajout d'un span + class sur les caractères sélectionnés, filtrage des balises html
+		string.html( newString );
 	} );
 };
 
@@ -591,8 +591,8 @@ jQuery( '.dropcap' ).dropcap();
 // jQuery.fn.letter = function() {
 // 	$( ':header, legend, .h1, .h2, .h3, .h4, .h5, .h6, .addletter' ).each( function() {
 // 		var string = $( this ),
-// 			newString = string.html().replace(/([A-Z«»"]|&amp;)(?![^<>]*>)/gm, '<span class="letter">$1</span>' );
-// 		string.html(newString);
+// 			newString = string.html().replace( /([A-Z«»"]|&amp;)(?![^<>]*>)/gm, '<span class="letter">$1</span>' );
+// 		string.html( newString );
 // 	} );
 // };
 
@@ -606,7 +606,7 @@ jQuery( '.dropcap' ).dropcap();
 
 jQuery.fn.typewriter = function( options ) {
 	var opts = $.extend( true, {}, $.fn.typewriter.defaults, options );
-	return this.each( function( i, item ){
+	return this.each( function( i, item ) {
 		var interval = parseInt(opts.interval , 10) || 100,
 			tabString = $( item ).text().split( '' ),
 			length = tabString.length,
@@ -697,20 +697,20 @@ jQuery.fn.selectText = function() {
 jQuery( 'pre code' ).each( function() { // Création du bouton de commande
 	var select = $( this ).data( 'select' ),
 		value = $( this ).data( 'value' );
-	if (select) {
+	if ( select ) {
 		var code = $( this );
 		code.parent().css( 'position', 'relative' );
 		code.wrapInner( '<div/>' ); // @bugfix @affected IE (au minimum) @note L'ajout d'une div entre l'élément code et son contenu permet d'éviter la sélection non souhaitée de ses pseudo-éléments
-		if (value) {
+		if ( value ) {
 			code.prepend( '<button class="button">' + value + '</button>' );
 		} else {
 			code.prepend( '<button class="button">Select</button>' );
 		}
 		$( this ).parent().find( 'button' )
-		.css({
-			'position': 'absolute',
-			'right': '0'
-		})
+		.css( {
+			'position' : 'absolute',
+			'right' : '0'
+		} )
 		.on( 'click', function() {
 			code.find( 'div' ).selectText();
 		} );
@@ -727,11 +727,11 @@ jQuery( 'pre code' ).each( function() { // Création du bouton de commande
 // @todo En développement...
 //	( function test( $ ) {
 //		var $span = $( '<span style="display:none;font-family:Tangerine"></span>' ).appendTo( 'body' ); // création d'un span de test
-//		if ($span.css( 'fontFamily' ) !== 'Tangerine' ){
+//		if ($span.css( 'fontFamily' ) !== 'Tangerine' ) {
 //			$( 'head' ).append( '<link href="./Styles/Public/Fonts.css" rel="stylesheet">' ); // lien de repli
 //		}
 //		$span.remove();
-//	})( jQuery );
+//	} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -753,7 +753,7 @@ jQuery( document ).on( 'click', '[data-display][data-path]', function() {
 	obj = $( this );
 	type = obj.data( 'display' );
 	path = obj.data( 'path' );
-	if (type === 'global' ) { // [1]
+	if ( type === 'global' ) { // [1]
 		$( '<div class="section"><div class="wrap"><div class="ajax-window"></div></div></div>' ).appendTo( 'main' ); // Création d'une fenêtre Ajax
 		$.ajax({
 			url : path + '.php',
@@ -769,7 +769,7 @@ jQuery( document ).on( 'click', '[data-display][data-path]', function() {
 	} else if ( type === 'popin' ) { // [2]
 		$( 'body' ).css( 'overflow', 'hidden' ); // Pas de scroll sur la page si popin ouverte
 		$( '<div class="ajax-window-popin"/>' ).appendTo( 'body' ); // Création d'une fenêtre Ajax
-		$.ajax({
+		$.ajax( {
 			url : path + '.php',
 			complete : function ( xhr, result ) {
 				if(result != 'success' ) { // Gestion des erreurs
@@ -806,8 +806,8 @@ jQuery( document ).on( 'click', '[data-display][data-path]', function() {
 
 jQuery( document ).on( 'click', '#comments', function() {
 		setTimeout( function() {
-			$( 'html, body' ).animate({
-				scrollTop: $( '#index-comments' ).offset().top
+			$( 'html, body' ).animate( {
+				scrollTop : $( '#index-comments' ).offset().top
 			}, 600 );
 	}, 300 );
 } );
@@ -846,12 +846,12 @@ if (localStorage.getItem( 'termsuse' ) === 'true' ) {
 // Évite à IE de planter si mode "développement" désactivé
 ( function( $ ) {
 	var f = function() {};
-	if (!window.console){
+	if ( !window.console ) {
 		window.console = {
 			log:f, info:f, warn:f, debug:f, error:f
 		};
 	}
-})( jQuery );
+} )( jQuery );
 
 // Code de la touche du clavier actuellement pressée
 jQuery( document ).keydown( function( e ) {

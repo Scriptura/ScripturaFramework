@@ -20,6 +20,16 @@
 
 
 // -----------------------------------------------------------------------------
+// @section Ongoing project
+// -----------------------------------------------------------------------------
+
+// @todo Source différente en fonction de la commande gulp :
+// @link http://stackoverflow.com/questions/23023650/is-it-possible-to-pass-a-flag-to-gulp-to-have-it-run-tasks-in-different-ways
+// @link https://www.npmjs.com/package/yargs
+// @link https://www.npmjs.com/package/gulp-if/
+
+
+// -----------------------------------------------------------------------------
 // @section Variables
 // -----------------------------------------------------------------------------
 
@@ -80,7 +90,7 @@ gulp.task( 'browserSync', function() {
       baseDir : source
     },
     port : 9000, // http://localhost:9000/ or http://192.168.0.10:9000/
-    open : true, // Ouverture automatique du navigateur ('false', 'local', 'external', 'ui', 'tunnel')
+    open : 'external', // Ouverture automatique du navigateur (true, false, 'local', 'external', 'ui', 'tunnel')
     logLevel : 'debug', // Informations essentielles seulement
     reloadDebounce : 2000, // Temps mini entre deux réactualisations de page
     logFileChanges : false, // Information sur les fichiers traités (désactivé car verbeux...)
@@ -130,6 +140,7 @@ gulp.task( 'jade', function() {
     .pipe( replace( /;; ?>/g, '; ?>' ) ) // Suppression points virgules doublés
     // END PHP
     .pipe( replace( /(\n)(<)/, '$2' ) ) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
+    .pipe( replace( /(-->)/, ' $1' ) ) // Correction pour Jade : ajout d'un espace en fin de commentaire
     .pipe( gulp.dest( source ) )
     .pipe( browserSync.stream( { match : '**/*.html' } ) );
 } );
@@ -191,9 +202,9 @@ var inputStyles = source + '/Styles/*.styl',
     outputStylesExpanded = source + '/Public/Styles/Expanded',
     autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
 
-gulp.task( 'deletstyles', function() { // Suppression des anciens fichiers de styles
-    del( [ outputStyles, outputStylesExpanded ] );
-} );
+// gulp.task( 'deletstyles', function() { // Suppression des anciens fichiers de styles
+//     del( [ outputStyles, outputStylesExpanded ] );
+// } );
 
 gulp.task( 'styles', function() { // Version de production
   return gulp
@@ -236,8 +247,8 @@ gulp.task( 'stylesexp', function() { // Version non compressée permettant un co
 
 // @link https://www.npmjs.com/package/gulp-ruby-sass
 
-//var inputStyles = source + '/Styles/*.scss',
-//    autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
+// var inputStyles = source + '/Styles/*.scss',
+//     autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
 
 // Options :
 // [1] Évite la colision des fichiers avec les autres tâches Ruby Sass

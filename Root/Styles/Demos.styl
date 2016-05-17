@@ -3,6 +3,8 @@
 // @description Styles de démonstration
 // -----------------------------------------------------------------------------
 
+$sizeXS =   36.01rem
+
 .demo-item
   overflow hidden
   min-height 4rem
@@ -19,22 +21,80 @@
 
 .demo-layout2 [class^="m"]
   padding .5rem
-  background #fff url('/Images/Demo/ColorfulLeafS1000.jpg')
+  background-color #fff
   background-size cover
   background-position 50% 50%
 
-.demo-layout2 > :nth-child(5n+2)
-  background-image url('/Images/Demo/LotusMacroS1000.jpg')
+@media screen and (max-width: 36.01rem)
 
-.demo-layout2 > :nth-child(5n+3)
-  background-image url('/Images/Demo/GrassLeafS1000.jpg')
+  .demo-layout2 [class^="m"]
+    background-image url('/Images/Demo/ColorfulLeafS600.jpg')
 
-.demo-layout2 > :nth-child(5n+4)
-  background-image url('/Images/Demo/PacificCityS1000.jpg')
+  .demo-layout2 > :nth-child(5n+2)
+    background-image url('/Images/Demo/LotusMacroS600.jpg')
 
-.demo-layout2 > :nth-child(5n+5)
-  background-image url('/Images/Demo/OldMechanismS1000.jpg')
+  .demo-layout2 > :nth-child(5n+3)
+    background-image url('/Images/Demo/GrassLeafS600.jpg')
 
-//.demo-ratio [class^="ratio"]
-//  background-color #fff
+  .demo-layout2 > :nth-child(5n+4)
+    background-image url('/Images/Demo/PacificCityS600.jpg')
+
+  .demo-layout2 > :nth-child(5n+5)
+    background-image url('/Images/Demo/OldMechanismS600.jpg')
+
+@media screen and (min-width: 36.01rem) and (max-width: 65.01rem)
+
+  .demo-layout2 [class^="m"]
+    background-image url('/Images/Demo/ColorfulLeafS1000.jpg')
+
+  .demo-layout2 > :nth-child(5n+2)
+    background-image url('/Images/Demo/LotusMacroS1000.jpg')
+
+  .demo-layout2 > :nth-child(5n+3)
+    background-image url('/Images/Demo/GrassLeafS1000.jpg')
+
+  .demo-layout2 > :nth-child(5n+4)
+    background-image url('/Images/Demo/PacificCityS1000.jpg')
+
+  .demo-layout2 > :nth-child(5n+5)
+    background-image url('/Images/Demo/OldMechanismS1000.jpg')
+
+@media screen and (min-width: 65.01rem)
+
+  .demo-layout2 [class^="m"]
+    background-image url('/Images/Demo/ColorfulLeafS2000.jpg')
+
+  .demo-layout2 > :nth-child(5n+2)
+    background-image url('/Images/Demo/LotusMacroS2000.jpg')
+
+  .demo-layout2 > :nth-child(5n+3)
+    background-image url('/Images/Demo/GrassLeafS2000.jpg')
+
+  .demo-layout2 > :nth-child(5n+4)
+    background-image url('/Images/Demo/PacificCityS2000.jpg')
+
+  .demo-layout2 > :nth-child(5n+5)
+    background-image url('/Images/Demo/OldMechanismS2000.jpg')
+
+.demo-ratio [class^="ratio"]
+  background-color #fff
+
+.slideshow .cycle-text *
+.slideshow .cycle-text
+  color #fff
+  fill #fff
+
+.slideshow .cycle-text a.vmin
+  margin-top 10vmin
+  font-size 12vmin
+  text-decoration none
+
+@media (min-width $sizeXS)
+
+  .slideshow .cycle-text a.vmin
+    font-size 5rem !important
+
+.slideshow .cycle-text [class*="icon"]
+  color #eee
+  transform rotate(90deg)
 
