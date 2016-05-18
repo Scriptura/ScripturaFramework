@@ -15,34 +15,33 @@
 
 // @note Remplace le script Modernizr
 
-// Vérification de javascript
-jQuery( 'html' ).addClass( 'js' ).removeClass( 'no-js' );
-
-// Vérification du support de touch ( jQuery )
-//	$(window).one({
-//		tap : function() {
-//			Modernizr.touch = false; // Add this line if you have Modernizr
-//			$( 'html' ).addClass( 'touch' );
-//		}
-//	} );
-
-// Vérification du support de touch (Vanilla js) :
-var supports = ( function() {
-	var html = document.documentElement,
-		touch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
-	if (touch) {
-		html.className += ' touch';
-		return {
-			touch: true
-		};
-	}
-	else {
-		html.className += ' no-touch';
-		return {
-			touch: false
-		};
-	}
-})();
+( function( $ ) {
+	$( 'html' ).addClass( 'js' ).removeClass( 'no-js' ); // Vérification de Javascript
+	// Vérification du support de touch ( jQuery )
+	//	$(window).one({
+	//		tap : function() {
+	//			Modernizr.touch = false; // Add this line if you have Modernizr
+	//			$( 'html' ).addClass( 'touch' );
+	//		}
+	//	} );
+	// Vérification du support de touch (Vanilla js) :
+	var supports = ( function() {
+		var html = document.documentElement,
+			touch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
+		if (touch) {
+			html.className += ' touch';
+			return {
+				touch: true
+			};
+		}
+		else {
+			html.className += ' no-touch';
+			return {
+				touch: false
+			};
+		}
+	} )();
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -50,32 +49,16 @@ var supports = ( function() {
 // @description Configuration pour MediaElement.js
 // -----------------------------------------------------------------------------
 
-var element = $( 'audio, video' );
-if (element.length) {
-	// Appel des sripts
-	$( 'body' ).append( '<script src="../Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js"><\/script>' );
-	$( 'audio, video' ).mediaelementplayer();
-	// Appel des styles
-	$( 'head' ).append( '<link rel="stylesheet" href="../Scripts/Vendors/MediaElementJS/mediaelementplayer.css" media="screen">' );
-}
-
-
-// -----------------------------------------------------------------------------
-// @section     Center
-// @description Centrer un élément en position fixed
-// -----------------------------------------------------------------------------
-
-// @todo Ne fonctionne pas avec Safari
-// jQuery.fn.center = function() { // .center()
-// 	this.css({
-// 		'position': 'fixed',
-// 		'left': '50%',
-// 		'top': '50%',
-// 		'margin-left': -this.outerWidth() / 2 + 'px',
-// 		'margin-top': -this.outerHeight() / 2 + 'px'
-// 	} );
-// 	return this;
-// };
+( function( $ ) {
+	var element = $( 'audio, video' );
+	if ( element.length ) {
+		// Appel des sripts
+		$( 'body' ).append( '<script src="../Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js"><\/script>' );
+		$( 'audio, video' ).mediaelementplayer();
+		// Appel des styles
+		$( 'head' ).append( '<link rel="stylesheet" href="../Scripts/Vendors/MediaElementJS/mediaelementplayer.css" media="screen">' );
+	}
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -86,9 +69,9 @@ if (element.length) {
 // #note Par défaut, tous les liens externes conduisent à l'ouverture d'un nouvel onglet, sauf les liens de téléchargement
 
 ( function( $ ) { // Ajout d'un attribut target_blank sur les liens externes
-  $( document ).find( 'a:not(.download-link)' ).filter( function() {
-    return this.hostname && this.hostname !== location.hostname;
-  }).attr("target", "_blank");
+	$( document ).find( 'a:not(.download-link)' ).filter( function() {
+		return this.hostname && this.hostname !== location.hostname;
+	} ).attr( 'target', '_blank' );
 } )( jQuery );
 
 
@@ -192,18 +175,30 @@ if (element.length) {
 // @description Défilement fluide
 // -----------------------------------------------------------------------------
 
-jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
-	if ( location.pathname.replace( /^\//,'' ) == this.pathname.replace( /^\//,'' ) && location.hostname == this.hostname ) {
-		var target = $( this.hash );
-		target = target.length ? target : $( '[name=' + this.hash.slice(1) +']' );
-		if (target.length) {
-			$( 'html, body' ).animate({
-				scrollTop: target.offset().top
-			}, 400 );
-			// @note Pas de 'return false', afin de préserver les ancres
+( function( $ ) {
+	$( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
+		if ( location.pathname.replace( /^\//,'' ) == this.pathname.replace( /^\//,'' ) && location.hostname == this.hostname ) {
+			var target = $( this.hash );
+			target = target.length ? target : $( '[name=' + this.hash.slice(1) +']' );
+			if (target.length) {
+				$( 'html, body' ).animate({
+					scrollTop: target.offset().top
+				}, 400 );
+				// @note Pas de 'return false', afin de préserver les ancres
+			}
 		}
-	}
-} );
+	} );
+} )( jQuery );
+
+
+// -----------------------------------------------------------------------------
+// @section     Body Index
+// @description Ajout d'une ID sur le body pour permettre un ciblage de retour en haut
+// -----------------------------------------------------------------------------
+
+( function( $ ) {
+	$( 'body' ).attr( 'id', 'index' );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -332,15 +327,16 @@ jQuery( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 // @description Si focus sur un élément de formulaire alors suppression du ::placeholder
 // -----------------------------------------------------------------------------
 
-jQuery( document ).on( 'focus', 'input, textarea', function() {
-	var input = $( this );
-	placeholder = input.attr( 'placeholder' );
-	input.attr( 'placeholder', '' );
-} );
-
-jQuery( document ).on( 'focusout', 'input, textarea', function() {
-	$( this ).attr( 'placeholder', placeholder ); // Rétablissement du ::placeholder
-} );
+( function( $ ) {
+	$( document ).on( 'focus', 'input, textarea', function() {
+		var input = $( this );
+		placeholder = input.attr( 'placeholder' );
+		input.attr( 'placeholder', '' );
+	} );
+	$( document ).on( 'focusout', 'input, textarea', function() {
+		$( this ).attr( 'placeholder', placeholder ); // Rétablissement du ::placeholder
+	} );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -348,27 +344,30 @@ jQuery( document ).on( 'focusout', 'input, textarea', function() {
 // @description Affichage de la valeur d'un input
 // -----------------------------------------------------------------------------
 
+( function( $ ) {
 // Cet ancien code ne fonctionne pas avec Ajax car utilisation de .each() :
-jQuery( '[type="range"]' ).each( function() {
-	var range = $( this );
-	range.on( 'input', function() {
-		range.next().text( range.val() );
-	})
-	.next().text( range.val() );
-} );
+	$( '[type="range"]' ).each( function() {
+		var range = $( this );
+		range.on( 'input', function() {
+			range.next().text( range.val() );
+		})
+		.next().text( range.val() );
+	} );
+} )( jQuery );
 
-// @todo Alternative :
-// Cette partie du code, affichant la valeur de départ dans un output, ne fonctionne pas avec Ajax :
-// jQuery( '[type="range"]' ).each( function() {
-// 	var range = $( this );
-// 	range.next().text(range.val());
-// } );
-
-// Valeur si changement "Ajax ready" :
-// jQuery( document ).on( 'input', '[type="range"]', function() {
-// 	var range = $( this );
-// 	range.next().text(range.val());
-// } );
+( function( $ ) {
+	// @todo Alternative :
+	// Cette partie du code, affichant la valeur de départ dans un output, ne fonctionne pas avec Ajax :
+	// $( '[type="range"]' ).each( function() {
+	// 	var range = $( this );
+	// 	range.next().text(range.val());
+	// } );
+	// Valeur si changement "Ajax ready" :
+	// $( document ).on( 'input', '[type="range"]', function() {
+	// 	var range = $( this );
+	// 	range.next().text(range.val());
+	// } );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -376,25 +375,28 @@ jQuery( '[type="range"]' ).each( function() {
 // @description Barre de progression
 // -----------------------------------------------------------------------------
 
-// @note Demo :
-var bar = $( '#progress-test' );
+( function( $ ) {
+	// @note Demo :
+	var bar = $( '#progress-test' );
+	$( '#progress-start' ).on( 'click', function() {
+	  var value = bar.data( 'value' );
+	  setInterval( frame, 10 );
+	  function frame() {
+	    if ( value < 100 ) {
+	      value++;
+	      bar.css( 'width', value + '%' );
+	    }
+	  }
+	} );
+} )( jQuery );
 
-$( '#progress-start' ).on( 'click', function() {
-  var value = bar.data( 'value' );
-  setInterval( frame, 10 );
-  function frame() {
-    if ( value < 100 ) {
-      value++;
-      bar.css( 'width', value + '%' );
-    }
-  }
-} );
-
-$( '.progress div' ).each( function() {
-	var bar = $( this ),
-		value = bar.data( 'value' );
-	bar.css( 'width', value + '%' );
-} );
+( function( $ ) {
+	$( '.progress div' ).each( function() {
+		var bar = $( this ),
+			value = bar.data( 'value' );
+		bar.css( 'width', value + '%' );
+	} );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -402,28 +404,28 @@ $( '.progress div' ).each( function() {
 // @description Zoom sur les images
 // -----------------------------------------------------------------------------
 
-$( '[class*="-focus"]' ).prepend( '<span class="icon-enlarge"/>' );
-
-jQuery( document ).on( 'click', '[class*="-focus"]', function( e ) { // @note Event si utilisation sur <a>
-	$( this )
-		.find( 'picture' ) // .find( 'img' )
-		.clone()
-		.css( 'display', 'inherit' ) // @bugfix @affected Firefox @note Neutralise une déclaration inligne style 'display:inline' induite (via jQuery ?) sous ce navigateur
-		.fadeIn( 300 )
-		.appendTo( 'body' )
-		.wrap( '<div class="focus-off"><div></div></div>' ) // @bugfix @affected All browsers @note Image en flex item n'a pas son ratio préservé si resize ; une div intermédiaire entre le conteneur .focus-off et l'image corrige ce problème
-		.before( '<span class="icon-shrink zoom200"/>' );
-	$( 'body' ).css( 'overflow', 'hidden' ); // @note Pas de scroll sur la page si photo en focus
-	$( document ).find( '.focus-off' ).on( 'click', function( e ) {
-		$( '.focus-off' ).fadeOut( 300 );
-		setTimeout( function() {
-			$( '.focus-off' ).remove();
-		}, 300 );
-		$( 'body' ).css( 'overflow', 'visible' ); // @note Scroll réactivé
+( function( $ ) {
+	$( '[class*="-focus"]' ).prepend( '<span class="icon-enlarge"/>' ); // Ajout d'une icône si classe détectée
+	$( document ).on( 'click', '[class*="-focus"]', function( e ) { // @note Event si utilisation sur <a>
+		$( this )
+			.find( 'picture' ) // .find( 'img' )
+			.clone()
+			.css( 'display', 'inherit' ) // @bugfix @affected Firefox @note Neutralise une déclaration inligne style 'display:inline' induite (via jQuery ?) sous ce navigateur
+			.fadeIn( 300 )
+			.appendTo( 'body' )
+			.wrap( '<div class="focus-off"><div></div></div>' ) // @bugfix @affected All browsers @note Image en flex item n'a pas son ratio préservé si resize ; une div intermédiaire entre le conteneur .focus-off et l'image corrige ce problème
+			.before( '<span class="icon-shrink zoom200"/>' );
+		$( 'body' ).css( 'overflow', 'hidden' ); // @note Pas de scroll sur la page si photo en focus
+		$( document ).find( '.focus-off' ).on( 'click', function( e ) {
+			$( '.focus-off' ).fadeOut( 300 );
+			setTimeout( function() {
+				$( '.focus-off' ).remove();
+			}, 300 );
+			$( 'body' ).css( 'overflow', 'visible' ); // @note Scroll réactivé
+		} );
+		e.preventDefault();
 	} );
-	e.preventDefault();
-} );
-
+} )( jQuery );
 
 // -----------------------------------------------------------------------------
 // @section     Slideshow
@@ -445,57 +447,57 @@ jQuery( document ).on( 'click', '[class*="-focus"]', function( e ) { // @note Ev
 // @subsection Slideshow Progress Bar
 // -----------------------------------------------------------------------------
 
-slideshow
-    .append( '<button id="prev"/>' )
-    .append( '<button data-cycle-cmd="pause" data-cycle-context="#slideshow1" class="pause"/>' )
-    .append( '<button data-cycle-cmd="resume" data-cycle-context="#slideshow1" class="resume"/>' )
-    .append( '<button id="next"/>' )
-    .append( '<div class="slide-progress"/>' );
+		slideshow
+			.append( '<button id="prev"/>' )
+			.append( '<button data-cycle-cmd="pause" data-cycle-context="#slideshow1" class="pause"/>' )
+			.append( '<button data-cycle-cmd="resume" data-cycle-context="#slideshow1" class="resume"/>' )
+			.append( '<button id="next"/>' )
+			.append( '<div class="slide-progress"/>' );
 
-var progress = slideshow.find( '.slide-progress' );
+		var progress = slideshow.find( '.slide-progress' );
 
-slideshow.on( 'cycle-initialized cycle-before', function( e, opts ) {
-	progress.stop( true ).css( 'width', 0 );
-} );
+		slideshow.on( 'cycle-initialized cycle-before', function( e, opts ) {
+			progress.stop( true ).css( 'width', 0 );
+		} );
 
-slideshow.on( 'cycle-initialized cycle-after', function( e, opts ) {
-	if ( ! slideshow.is( '.cycle-paused' ) )
-		progress.animate( { width : '100%' }, opts.timeout, 'linear' );
-} );
+		slideshow.on( 'cycle-initialized cycle-after', function( e, opts ) {
+			if ( ! slideshow.is( '.cycle-paused' ) )
+				progress.animate( { width : '100%' }, opts.timeout, 'linear' );
+		} );
 
-slideshow.on( 'cycle-paused', function( e, opts ) {
-	progress.stop(); 
-} );
+		slideshow.on( 'cycle-paused', function( e, opts ) {
+			progress.stop(); 
+		} );
 
-slideshow.on( 'cycle-resumed', function( e, opts, timeoutRemaining ) {
-	progress.animate( { width : '100%' }, timeoutRemaining, 'linear' );
-} );
+		slideshow.on( 'cycle-resumed', function( e, opts, timeoutRemaining ) {
+			progress.animate( { width : '100%' }, timeoutRemaining, 'linear' );
+		} );
 
 
 // @subsection Slideshow switch commands
 // -----------------------------------------------------------------------------
 
-var pause = $( slideshow ).find( '.pause' ),
-    resume = $( slideshow ).find( '.resume' );
+		var pause = $( slideshow ).find( '.pause' ),
+		    resume = $( slideshow ).find( '.resume' );
 
-pause.on( 'click', function() {
-	$( this ).css( { 'display' : 'none' } );
-	resume.css( { 'display' : 'block' } );
-} );
-resume.on( 'click', function() {
-	$( this ).css( { 'display' : 'none' } );
-	pause.css( { 'display' : 'block' } );
-} );
+		pause.on( 'click', function() {
+			$( this ).css( { 'display' : 'none' } );
+			resume.css( { 'display' : 'block' } );
+		} );
+		resume.on( 'click', function() {
+			$( this ).css( { 'display' : 'none' } );
+			pause.css( { 'display' : 'block' } );
+		} );
 
 
 // @subsection Auto-Initialization
 // -----------------------------------------------------------------------------
 
-var url = '../Scripts/Vendors/Cycle.js';
+		var url = '../Scripts/Vendors/Cycle.js';
 
-$.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
-	$( '.slideshow' ).cycle(); // Initialisation du script
-} );
+		$.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
+			$( '.slideshow' ).cycle(); // Initialisation du script
+		} );
 
 // @subsection END Slideshow
 // -----------------------------------------------------------------------------
@@ -509,10 +511,12 @@ $.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
 // @description Commande pour l'impression
 // -----------------------------------------------------------------------------
 
-jQuery( document ).on( 'click', '.cmd-print', function() {
-	window.print();
-	return false;
-} );
+( function( $ ) {
+	$( document ).on( 'click', '.cmd-print', function() {
+		window.print();
+		return false;
+	} );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -520,45 +524,45 @@ jQuery( document ).on( 'click', '.cmd-print', function() {
 // @description Gestion de l'affichage des fenêtres popin
 // -----------------------------------------------------------------------------
 
-jQuery( document ).on( 'click', '#cmd-popin', function( e ) { // Supprimer ou cacher la popin
-	var popin = $( '#popin' );
-	var popinUser = $( '#popin-user' );
-	if ( popinUser ) {
-		$( 'body' ).css( 'overflow', 'visible' ); // @note Scroll réactivé
-	}
-	popin
-		.fadeOut( 300 );
-		setTimeout( function() {
-			$( '.ajax-window-popin' ).remove(); // Suppression de la fenêtre Ajax et donc de la popin qu'elle contient
-			// popin.remove();
-			//return false;
-		}, 300 );
-	popinUser
-		.fadeOut( 300 );
-		setTimeout( function() {
-			popinUser.addClass( 'hidden' );
-		}, 300 );
-	e.preventDefault();
-} );
-
-jQuery( document ).on( 'click', '#user', function( e ) { // Afficher la popin #user
-	$( 'body' ).css( 'overflow', 'hidden' ); // @note Pas de scroll sur la page si popin visible
-	$( '#popin-user' )
-		.removeClass( 'hidden' )
-		.fadeIn( 300 ); // Afficher les popins 'login' ou 'profil'
-//	e.preventDefault();
-	return false;
-} );
-
-jQuery( document ).on( 'click', 'body', function( e ) { // Si clic en dehors de la popin
-	var inside = $( '[id^="popin"]' );
-	if (!inside.is(e.target) && inside.has(e.target).length === 0) {
-		inside.addClass( 'popin-error' );
-		setTimeout( function() {
-			inside.removeClass( 'popin-error' );
-		}, 300 );
-	}
-} );
+( function( $ ) {
+	$( document ).on( 'click', '#cmd-popin', function( e ) { // Supprimer ou cacher la popin
+		var popin = $( '#popin' );
+		var popinUser = $( '#popin-user' );
+		if ( popinUser ) {
+			$( 'body' ).css( 'overflow', 'visible' ); // @note Scroll réactivé
+		}
+		popin
+			.fadeOut( 300 );
+			setTimeout( function() {
+				$( '.ajax-window-popin' ).remove(); // Suppression de la fenêtre Ajax et donc de la popin qu'elle contient
+				// popin.remove();
+				//return false;
+			}, 300 );
+		popinUser
+			.fadeOut( 300 );
+			setTimeout( function() {
+				popinUser.addClass( 'hidden' );
+			}, 300 );
+		e.preventDefault();
+	} );
+	$( document ).on( 'click', '#user', function( e ) { // Afficher la popin #user
+		$( 'body' ).css( 'overflow', 'hidden' ); // @note Pas de scroll sur la page si popin visible
+		$( '#popin-user' )
+			.removeClass( 'hidden' )
+			.fadeIn( 300 ); // Afficher les popins 'login' ou 'profil'
+	//	e.preventDefault();
+		return false;
+	} );
+	$( document ).on( 'click', 'body', function( e ) { // Si clic en dehors de la popin
+		var inside = $( '[id^="popin"]' );
+		if (!inside.is(e.target) && inside.has(e.target).length === 0) {
+			inside.addClass( 'popin-error' );
+			setTimeout( function() {
+				inside.removeClass( 'popin-error' );
+			}, 300 );
+		}
+	} );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -644,32 +648,33 @@ jQuery.fn.typewriter = function( options ) {
 // @description Gestion des infobules
 // -----------------------------------------------------------------------------
 
-jQuery( '.addtooltips a' ).each( function() {
-	var link = $( this ),
-		title = link.attr( 'title' ); // Stockage de tous les titles dans une variable
-	link.css( 'position', 'relative' );
-	link.on( 'mouseenter', function() {
-		if ( title === undefined || title === '' ) return false; // Pas d'infobule si title manquant ou vide
-		link.append( '<div class="tooltip">' + title + '</div>' );
-		link.attr( 'title', '' ); // Empêche l'affichage des infobules par défaut en vidant les titles
-		var tooltip = $( '.tooltip' );
-		tooltip.css({
-			'position' : 'absolute',
-			'opacity' : '0'
+( function( $ ) {
+	$( '.addtooltips a' ).each( function() {
+		var link = $( this ),
+			title = link.attr( 'title' ); // Stockage de tous les titles dans une variable
+		link.css( 'position', 'relative' );
+		link.on( 'mouseenter', function() {
+			if ( title === undefined || title === '' ) return false; // Pas d'infobule si title manquant ou vide
+			link.append( '<div class="tooltip">' + title + '</div>' );
+			link.attr( 'title', '' ); // Empêche l'affichage des infobules par défaut en vidant les titles
+			var tooltip = $( '.tooltip' );
+			tooltip.css({
+				'position' : 'absolute',
+				'opacity' : '0'
+			} );
+			tooltip.animate({
+				'opacity' : '1'
+			}, 500 );
 		} );
-		tooltip.animate({
-			'opacity' : '1'
-		}, 500 );
-	} );
-	link.on( 'mouseout', function() {
-		var tooltip = $( '.tooltip' );
-		tooltip.fadeOut( 500, function() {
-			tooltip.remove();
-			link.attr( 'title', title ); // Réinjecter la valeur du title pour l'accessibilité
+		link.on( 'mouseout', function() {
+			var tooltip = $( '.tooltip' );
+			tooltip.fadeOut( 500, function() {
+				tooltip.remove();
+				link.attr( 'title', title ); // Réinjecter la valeur du title pour l'accessibilité
+			} );
 		} );
 	} );
-} );
-
+} )( jQuery );
 
 // -----------------------------------------------------------------------------
 // @section     Text selection
@@ -694,28 +699,30 @@ jQuery.fn.selectText = function() {
 	}
 };
 
-jQuery( 'pre code' ).each( function() { // Création du bouton de commande
-	var select = $( this ).data( 'select' ),
-		value = $( this ).data( 'value' );
-	if ( select ) {
-		var code = $( this );
-		code.parent().css( 'position', 'relative' );
-		code.wrapInner( '<div/>' ); // @bugfix @affected IE (au minimum) @note L'ajout d'une div entre l'élément code et son contenu permet d'éviter la sélection non souhaitée de ses pseudo-éléments
-		if ( value ) {
-			code.prepend( '<button class="button">' + value + '</button>' );
-		} else {
-			code.prepend( '<button class="button">Select</button>' );
+( function( $ ) {
+	$( 'pre code' ).each( function() { // Création du bouton de commande
+		var select = $( this ).data( 'select' ),
+			value = $( this ).data( 'value' );
+		if ( select ) {
+			var code = $( this );
+			code.parent().css( 'position', 'relative' );
+			code.wrapInner( '<div/>' ); // @bugfix @affected IE (au minimum) @note L'ajout d'une div entre l'élément code et son contenu permet d'éviter la sélection non souhaitée de ses pseudo-éléments
+			if ( value ) {
+				code.prepend( '<button class="button">' + value + '</button>' );
+			} else {
+				code.prepend( '<button class="button">Select</button>' );
+			}
+			$( this ).parent().find( 'button' )
+			.css( {
+				'position' : 'absolute',
+				'right' : '0'
+			} )
+			.on( 'click', function() {
+				code.find( 'div' ).selectText();
+			} );
 		}
-		$( this ).parent().find( 'button' )
-		.css( {
-			'position' : 'absolute',
-			'right' : '0'
-		} )
-		.on( 'click', function() {
-			code.find( 'div' ).selectText();
-		} );
-	}
-} );
+	} );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -731,7 +738,7 @@ jQuery( 'pre code' ).each( function() { // Création du bouton de commande
 //			$( 'head' ).append( '<link href="./Styles/Public/Fonts.css" rel="stylesheet">' ); // lien de repli
 //		}
 //		$span.remove();
-//	} )( jQuery );
+// 	} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -748,55 +755,57 @@ jQuery( 'pre code' ).each( function() { // Création du bouton de commande
 //      @param '***' : ouverture dans une fenêtre dédiée [3]
 // - L'attribut 'data-url' de l'élément ajax doit correspondre au nom du fichier placé dans le dossier 'ajax'. Le script récupère le fichier et l'affiche dans une fenêtre '.ajax-window-*'.
 
-jQuery( document ).on( 'click', '[data-display][data-path]', function() {
-	$( '.ajax-window' ).parent().parent().remove(); // Si fichier déjà appelé précédement
-	obj = $( this );
-	type = obj.data( 'display' );
-	path = obj.data( 'path' );
-	if ( type === 'global' ) { // [1]
-		$( '<div class="section"><div class="wrap"><div class="ajax-window"></div></div></div>' ).appendTo( 'main' ); // Création d'une fenêtre Ajax
-		$.ajax({
-			url : path + '.php',
-			complete : function (xhr, result) {
-				if(result != 'success' ) { // Gestion des erreurs
-					$( '<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>' ).appendTo( 'main' );
-					return;
+( function( $ ) {
+	$( document ).on( 'click', '[data-display][data-path]', function() {
+		$( '.ajax-window' ).parent().parent().remove(); // Si fichier déjà appelé précédement
+		obj = $( this );
+		type = obj.data( 'display' );
+		path = obj.data( 'path' );
+		if ( type === 'global' ) { // [1]
+			$( '<div class="section"><div class="wrap"><div class="ajax-window"></div></div></div>' ).appendTo( 'main' ); // Création d'une fenêtre Ajax
+			$.ajax({
+				url : path + '.php',
+				complete : function (xhr, result) {
+					if(result != 'success' ) { // Gestion des erreurs
+						$( '<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>' ).appendTo( 'main' );
+						return;
+					}
+					var response = xhr.responseText;
+					$( '.ajax-window' ).html( response );
 				}
-				var response = xhr.responseText;
-				$( '.ajax-window' ).html( response );
-			}
-		} );
-	} else if ( type === 'popin' ) { // [2]
-		$( 'body' ).css( 'overflow', 'hidden' ); // Pas de scroll sur la page si popin ouverte
-		$( '<div class="ajax-window-popin"/>' ).appendTo( 'body' ); // Création d'une fenêtre Ajax
-		$.ajax( {
-			url : path + '.php',
-			complete : function ( xhr, result ) {
-				if(result != 'success' ) { // Gestion des erreurs
-					$( '<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>' ).appendTo( 'main' );
-					return;
+			} );
+		} else if ( type === 'popin' ) { // [2]
+			$( 'body' ).css( 'overflow', 'hidden' ); // Pas de scroll sur la page si popin ouverte
+			$( '<div class="ajax-window-popin"/>' ).appendTo( 'body' ); // Création d'une fenêtre Ajax
+			$.ajax( {
+				url : path + '.php',
+				complete : function ( xhr, result ) {
+					if(result != 'success' ) { // Gestion des erreurs
+						$( '<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>' ).appendTo( 'main' );
+						return;
+					}
+					var response = xhr.responseText;
+					$( '.ajax-window-popin' )
+						.html(response)
+						.append( '<a href="" id="cmd-popin"/>' )
+						.wrapInner( '<section id="popin" class="popin"/>' );
 				}
-				var response = xhr.responseText;
-				$( '.ajax-window-popin' )
-					.html(response)
-					.append( '<a href="" id="cmd-popin"/>' )
-					.wrapInner( '<section id="popin" class="popin"/>' );
-			}
-		} );
-	} else { // [3]
-		$.ajax({
-			url : path + '.php',
-			complete : function (xhr, result) {
-				if(result != 'success' ) { // Gestion des erreurs
-					$( '<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>' ).appendTo( 'main' );
-					return;
+			} );
+		} else { // [3]
+			$.ajax({
+				url : path + '.php',
+				complete : function (xhr, result) {
+					if(result != 'success' ) { // Gestion des erreurs
+						$( '<div class="section"><div class="wrap"><div class="ajax-window"><p class="message-error">Error: File not found</p></div></div></div>' ).appendTo( 'main' );
+						return;
+					}
+					var response = xhr.responseText;
+					$( '.ajax-window-' + type ).html( response );
 				}
-				var response = xhr.responseText;
-				$( '.ajax-window-' + type ).html( response );
-			}
-		} );
-	}
-} );
+			} );
+		}
+	} );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -804,13 +813,15 @@ jQuery( document ).on( 'click', '[data-display][data-path]', function() {
 // @description Scroll vers un élément ajax qui vient d'être appelé
 // -----------------------------------------------------------------------------
 
-jQuery( document ).on( 'click', '#comments', function() {
-		setTimeout( function() {
-			$( 'html, body' ).animate( {
-				scrollTop : $( '#index-comments' ).offset().top
-			}, 600 );
-	}, 300 );
-} );
+( function( $ ) {
+	$( document ).on( 'click', '#comments', function() {
+			setTimeout( function() {
+				$( 'html, body' ).animate( {
+					scrollTop : $( '#index-comments' ).offset().top
+				}, 600 );
+		}, 300 );
+	} );
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -818,21 +829,19 @@ jQuery( document ).on( 'click', '#comments', function() {
 // @description Gestion du message d'information exigé par la CNIL
 // -----------------------------------------------------------------------------
 
-// @note Ce script peut-être désacrivé si les données utilisateurs ne sont pas récupérées lors de la navigation sur les pages
+// @note Ce script peut-être désactivé si les données utilisateurs ne sont pas récupérées lors de la navigation sur les pages
 
-jQuery( '.terms-use' ).css( 'display', 'inline' ); // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
-
-jQuery( document ).on( 'click', '#terms-use', function() {
-	localStorage.setItem( 'termsuse', 'true' );
-	$( '.terms-use' ).remove();
-} );
-
-if (localStorage.getItem( 'termsuse' ) === 'true' ) {
-	$( '.terms-use' ).remove();
-}
-
-// Réinitialisation de la valeur pour les tests, la clef peut aussi s'effacer directement via l'outil d'inspection
-//	localStorage.removeItem( 'termsuse' );
+( function( $ ) {
+	$( '.terms-use' ).css( 'display', 'inline' ); // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
+	$( document ).on( 'click', '#terms-use', function() {
+		localStorage.setItem( 'termsuse', 'true' );
+		$( '.terms-use' ).remove();
+	} );
+	if (localStorage.getItem( 'termsuse' ) === 'true' ) {
+		$( '.terms-use' ).remove();
+	}
+	//	localStorage.removeItem( 'termsuse' ); // Réinitialisation de la valeur pour les tests, la clef peut aussi s'effacer directement via l'outil d'inspection
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
