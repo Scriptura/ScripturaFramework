@@ -1378,7 +1378,7 @@ if $bundleFocus
   [class*="-focus"] [class*="icon"]
   .focus-off [class*="icon"]
     position absolute
-    z-index 31
+    z-index 1
     right $gutter
 
   [class*="-focus"] [class*="icon"]
@@ -1476,14 +1476,14 @@ if $bundleSlideshow
   .cycle-text > div
     margin auto 1rem 1rem
 
-  //.cycle-text > div > * // Cette sursélection permet de formater des balises insérées de n'importe quel type
-  //  font-size 8vmin
+  :root .cycle-text *:not(button)
+    font-size 8vmin
   //  color $colorTest
 
-  //@media (min-width $sizeXS)
+  @media (min-width $sizeXS)
 
-  //  .cycle-text > div > *
-  //    font-size 3rem
+    :root .cycle-text *:not(button)
+      font-size 3rem
 
   .slideshow button
   .slideshow button::after

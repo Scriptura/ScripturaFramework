@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.23
-// @lastmodified 2016-05-17 12:36:35
+// @version      0.0.24
+// @lastmodified 2016-05-19 21:26:15
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -448,6 +448,7 @@
 // -----------------------------------------------------------------------------
 
 		slideshow
+			.append( '<div class="cycle-pager"/>' )
 			.append( '<button id="prev"/>' )
 			.append( '<button data-cycle-cmd="pause" data-cycle-context="#slideshow1" class="pause"/>' )
 			.append( '<button data-cycle-cmd="resume" data-cycle-context="#slideshow1" class="resume"/>' )

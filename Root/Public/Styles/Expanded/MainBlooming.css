@@ -3610,7 +3610,7 @@ figure {
 [class*="-focus"] [class*="icon"],
 .focus-off [class*="icon"] {
   position: absolute;
-  z-index: 31;
+  z-index: 1;
   right: 1rem;
 }
 
@@ -3742,6 +3742,18 @@ figure {
 /* line 1476 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
 .cycle-text > div {
   margin: auto 1rem 1rem;
+}
+
+/* line 1479 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
+:root .cycle-text *:not(button) {
+  font-size: 8vmin;
+}
+@media (min-width: 36.01rem) {
+
+/* line 1485 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */
+  :root .cycle-text *:not(button) {
+    font-size: 3rem;
+  }
 }
 
 /* line 1488 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/Partial/Core.styl */

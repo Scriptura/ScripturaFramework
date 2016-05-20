@@ -79,22 +79,11 @@ $sizeXS =   36.01rem
 .demo-ratio [class^="ratio"]
   background-color #fff
 
-.slideshow .cycle-text *
-.slideshow .cycle-text
+.slideshow .cycle-text *:not(button)
   color #fff
   fill #fff
 
-.slideshow .cycle-text a.vmin
-  margin-top 10vmin
-  font-size 12vmin
-  text-decoration none
-
-@media (min-width $sizeXS)
-
-  .slideshow .cycle-text a.vmin
-    font-size 5rem !important
-
-.slideshow .cycle-text [class*="icon"]
-  color #eee
+.slideshow .cycle-text button::before
+  content '\EA1A'
   transform rotate(90deg)
 

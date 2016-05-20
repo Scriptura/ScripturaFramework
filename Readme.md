@@ -78,8 +78,8 @@ That's all! You can start creating with jade syntaxe.
         │       └── Expanded/
         ├── Scripts/
         │   ├── Sources/
-        │   │   └── Main*.js
+        │   │   └── Main.js
         │   └── Vendors/
         └── Styles/
-            ├── Main.styl
+            ├── Main*.styl
             └── Partial/
