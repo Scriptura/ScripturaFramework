@@ -494,7 +494,7 @@
 // @subsection Auto-Initialization
 // -----------------------------------------------------------------------------
 
-		var url = '../Scripts/Vendors/Cycle.js';
+		var url = templateUri + '/Scripts/Vendors/Cycle.js';
 
 		$.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
 			$( '.slideshow' ).cycle(); // Initialisation du script
