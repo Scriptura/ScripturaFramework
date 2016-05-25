@@ -36,6 +36,8 @@
 // @subsection Dependencies
 // -----------------------------------------------------------------------------
 
+// @note `npm i -D gulp-*` == `npm install --save-dev gulp-*`
+
 const gulp = require( 'gulp' ),
       del = require( 'del' ),
       ftp = require( 'vinyl-ftp' ),

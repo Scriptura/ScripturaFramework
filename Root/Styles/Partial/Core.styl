@@ -1071,7 +1071,7 @@ if $bundleSeparators
   @media (max-width $sizeXS)
 
     .sizeXS-hr::after // @note Sur un conteneur, pour marquer visuellement la séparation avec le contenu suivant
-      content '\e630'
+      content '\EA0A'
       display block
       margin 1.6em auto 1em
       font-family GlyphIcons
@@ -2845,7 +2845,11 @@ if $bundleMainNav
     line-height 2.5
     height 2.5em
     padding-left 1em
+    padding-right 4rem
     background-color $colorBG1101
+    overflow hidden // @note Pour couper les titres longs
+    white-space nowrap
+    text-overflow ellipsis
 
   [class^="brand"] a
     color $colorCL120
@@ -2859,7 +2863,7 @@ if $bundleMainNav
 
     [class^="brand"]
       display none
-  
+
   .brand-image
     background-image $image000
     background-size 2em 2em
@@ -3018,9 +3022,10 @@ if $bundleNavBottom
 
   @media (max-width $sizeNav)
 
-    .sizeNav-nav-bottom
+    .sizeNav-nav-bottom .wrap > :last-child
       overflow-y auto // @note Si nombre d'items du menu plus haut que l'écran
       position fixed !important
+      z-index 10
       top 'calc(100vh - %s)' % $cmdSize
       left 0 !important // @todo
       width 100%
@@ -3028,7 +3033,7 @@ if $bundleNavBottom
       background-color #333
       transition top .3s
 
-    .sizeNav-nav-bottom.active
+    .sizeNav-nav-bottom .wrap > :last-child.active
       top 0
 
     .sizeNav-nav-bottom button
@@ -3052,6 +3057,11 @@ if $bundleNavBottom
 
   .scroll-top.hidden
     display none !important // @note Contourne une règle posée en javascript
+
+  @media (max-width $sizeNav)
+
+    .sizeNav-nav-bottom ~ .footer
+      padding-bottom 2.5rem // @note Permet de prendre en compte le menu en position basse
 
 
 // -----------------------------------------------------------------------------
@@ -3121,7 +3131,6 @@ if $bundleBreadcrumb
   .breadcrumb ul
     margin -.5rem 0 .5rem !important
     padding-left 0 !important
-    
     overflow hidden // @note Pour couper les textes longs
     white-space nowrap
     text-overflow ellipsis
@@ -3268,35 +3277,19 @@ if $bundleLoaders
 // @section     Alert Messages
 // -----------------------------------------------------------------------------
 
-// @subsection  Terms of use
-// @description Mentions légales informatique et liberté
+// @subsection  Terms of use & No Script
 // -----------------------------------------------------------------------------
 
 .terms-use
-  position fixed
-  display none // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
-  z-index 4000
-  bottom -1.5rem
-  right 0
-  padding 1rem
-
-.terms-use > *
-  display flex
-
-.terms-use button
-  align-self center
-  margin 0 0 0 1em
-
-
-// @subsection No Script
-// -----------------------------------------------------------------------------
-
 .noscript
   position fixed
   z-index 4000
   bottom -1.5rem
   right 0
   padding 1rem
+
+.terms-use
+  display none // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
 
 
 // @subsection Old Browers
