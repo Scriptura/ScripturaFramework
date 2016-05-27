@@ -327,6 +327,8 @@
 // @description Si focus sur un élément de formulaire alors suppression du ::placeholder
 // -----------------------------------------------------------------------------
 
+// @todo Impacte aussi sur les checkbox et radio, à voir...
+
 ( function( $ ) {
 	$( document ).on( 'focus', 'input, textarea', function() {
 		var input = $( this );
@@ -721,6 +723,27 @@ jQuery.fn.selectText = function() {
 			.on( 'click', function() {
 				code.find( 'div' ).selectText();
 			} );
+		}
+	} );
+} )( jQuery );
+
+
+// -----------------------------------------------------------------------------
+// @section     Readable Password
+// @description Checkbox permettant de voir les mots de passe en clair
+// -----------------------------------------------------------------------------
+
+( function( $ ) {
+	// @note La solution javascript de création du checkbox a été supprimée et remplacée par la solution html : elle donne le choix ou non de cette fonction et est plus souple pour les traductions du title du checkbox.
+	//$('.input [type="password"]')
+	//	.after( '<input type="checkbox"/>' )
+	//	.parent().addClass( 'input-password' );
+	$( document ).on( 'click', '.input-password [type="checkbox"]', function() {
+		var visiblePassword = $( this );
+		if( visiblePassword.is(':checked' ) ) {
+			visiblePassword.siblings( '[type="password"]' ).attr('type', 'text');
+		} else {
+			visiblePassword.siblings( '[type="text"]' ).attr('type', 'password');
 		}
 	} );
 } )( jQuery );

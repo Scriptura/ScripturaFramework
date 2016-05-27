@@ -1862,9 +1862,9 @@ if $bundleInputs
     background-color $colorBG050
     border none
 
-  .input input
+  .input input // @note La déclaration '.input input' évite l'application de la règle sur '.input-group'
   [class*="input"] select
-  [class*="input"] textarea // @note La déclaration '.input input' évite l'application de la règle sur '.input-group'
+  [class*="input"] textarea
     ifBorderRadius($r2)
 
   [class*="input"].disabled label
@@ -1927,6 +1927,18 @@ if $bundleInputs
 
   .input-group-right input
     text-align right
+
+  .js .input-password // @note Classe ajoutée via javascript
+    position relative
+
+  .js .input-password [type="checkbox"]
+    position absolute
+    bottom .7em
+    left calc(100% - 2em)
+    width 1em !important // @bugfix Firefox
+  
+  .js .input-password input:not([type="checkbox"])
+    padding-right 3em
 
   // @note Code intéresant si couplé à des regex :
   //[class*="input"] :invalid:focus
@@ -1992,18 +2004,8 @@ if $bundleButtons
   .button-group > *
     margin-right 1em // @note Espacement entre deux boutons
 
-  //@media (max-width $sizeXS)
-  //
-  //  .button-group > *
-  //    width 100%
-  //
-  //@media (min-width $sizeXS)
-  //
-  //  .button-group > *
-  //    margin-right: 1em // @note Espacement entre deux boutons
 
-
-// @subsection  .search form
+// @subsection Search Form
 // -----------------------------------------------------------------------------
 if $bundleSearch
 
@@ -3061,7 +3063,7 @@ if $bundleNavBottom
   @media (max-width $sizeNav)
 
     .sizeNav-nav-bottom ~ .footer
-      padding-bottom 2.5rem // @note Permet de prendre en compte le menu en position basse
+      padding-bottom 3.5rem // @note Permet de prendre en compte le menu en position basse
 
 
 // -----------------------------------------------------------------------------
@@ -3274,7 +3276,7 @@ if $bundleLoaders
 
 
 // -----------------------------------------------------------------------------
-// @section     Alert Messages
+// @section Alert Messages
 // -----------------------------------------------------------------------------
 
 // @subsection  Terms of use & No Script

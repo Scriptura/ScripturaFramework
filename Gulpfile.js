@@ -15,7 +15,7 @@
 // `gulp` : commande globale
 // `gulp images` : traitement des images
 // `gulp glyphmin` : minification des svg de la police d'icônes GlyphIcons
-// `gulp glyphicons` : refonte de la police d'icônes GlyphIcons
+// `gulp icons` : refonte de la police d'icônes GlyphIcons avec ses styles et le html de démonstration
 // Les autres commandes sont lancées automatiquement arpès la surveillance des fichiers (watcher) initialisée par la commande globale.
 
 
@@ -518,32 +518,32 @@ gulp.task( 'glyphicons', function() {
     .pipe( iconfont( {
       fontName : 'GlyphIcons', // required
       appendUnicode : true, // recommended option
-      formats : [ 'ttf', 'eot', 'woff', 'woff2', 'svg' ], // default : .ttf, .eot, .woff
+      formats : [ 'ttf', 'eot', 'woff', 'woff2', 'svg' ], // default : 'ttf', 'eot', 'woff'
       fontHeight : 1024, // Retaille des icônes en 1024X1024
       round : 10e3, // Trois décimales (default value: 10e12)
       timestamp : Math.round( Date.now() / 1024 ), // Recommandé pour obtenir une construction cohérente
     } ) )
-      .on( 'glyphs', function( glyphs ) {
-        var options = {
-            glyphs : glyphs.map( function( glyph ) {
-                return {
-                    name : glyph.name,
-                    codepoint : glyph.unicode[0].charCodeAt(0)
-                }
-            } ),
-            fontName : 'GlyphIcons',
-            fontPath : source + '/Fonts',
-            className : 'icon-'
-        };
-        gulp.src( source + '/Styles/Templates/Icons.styl' )
-          .pipe( consolidate( 'lodash', options ) )
-          .pipe( gulp.dest( source + '/Styles/Partial' ) );
-        gulp.src( source + '/Includes/Templates/GlyphIcons.jade' )
-          .pipe( consolidate( 'lodash', options ) )
-          .pipe( gulp.dest( source + '/Includes' ) );
-        console.log( glyphs, options );
-      } )
-    .pipe( gulp.dest( source + '/Fonts' ) );
+    .on( 'glyphs', function( glyphs ) {
+      var options = {
+          glyphs : glyphs.map( function( glyph ) {
+              return {
+                  name : glyph.name,
+                  codepoint : glyph.unicode[0].charCodeAt(0)
+              }
+          } ),
+          fontName : 'GlyphIcons',
+          fontPath : source + '/Fonts',
+          className : 'icon-'
+      };
+      gulp.src( source + '/Styles/Templates/Icons.styl' )
+        .pipe( consolidate( 'lodash', options ) )
+        .pipe( gulp.dest( source + '/Styles/Partial' ) );
+      gulp.src( source + '/Includes/Templates/GlyphIcons.jade' )
+        .pipe( consolidate( 'lodash', options ) )
+        .pipe( gulp.dest( source + '/Includes' ) );
+      console.log( glyphs, options );
+    } )
+  .pipe( gulp.dest( source + '/Fonts' ) );
 } );
 
 
@@ -644,8 +644,12 @@ gulp.task( 'images', gulpsync.sync(
 // @subsection Glyph Icons tasks
 // -----------------------------------------------------------------------------
 
+// @note Les tâches de styles sont ajoutées car le style doit être recompilé suite à l'ajout d'icônes
+
 gulp.task( 'icons', gulpsync.sync(
     [ 'glyphmin',
-    'glyphicons' ]
+    'glyphicons',
+    'styles',
+    'stylesexp' ]
 ) );
 
