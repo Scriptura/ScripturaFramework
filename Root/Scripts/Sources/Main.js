@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.27
-// @lastmodified 2016-05-25 23:02:45
+// @version      0.0.29
+// @lastmodified 2016-05-31 05:51:08
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -429,6 +429,7 @@
 	} );
 } )( jQuery );
 
+
 // -----------------------------------------------------------------------------
 // @section     Slideshow
 // @description Diaporama en full page
@@ -438,17 +439,11 @@
 // @link http://jquery.malsup.com/cycle2/
 // @documentation http://jquery.malsup.com/cycle2/api/
 
-// @subsection BEGIN Slideshow
-// -----------------------------------------------------------------------------
-
 ( function( $ ) {
 	var slideshow = $( '.slideshow' );
-	if ( $( '.slideshow' ).length ) { // Tester présence de la classe
-
-
-// @subsection Slideshow Progress Bar
-// -----------------------------------------------------------------------------
-
+	var el = $( '.slideshow > .cycle-item' );
+	if ( el[1] ) { // Si au moins deux items présents
+		// Create Commands:
 		slideshow
 			.append( '<div class="cycle-pager"/>' )
 			.append( '<button id="prev"/>' )
@@ -456,33 +451,24 @@
 			.append( '<button data-cycle-cmd="resume" data-cycle-context="#slideshow1" class="resume"/>' )
 			.append( '<button id="next"/>' )
 			.append( '<div class="slide-progress"/>' );
-
+		// Slideshow Progress Bar:
 		var progress = slideshow.find( '.slide-progress' );
-
 		slideshow.on( 'cycle-initialized cycle-before', function( e, opts ) {
 			progress.stop( true ).css( 'width', 0 );
 		} );
-
 		slideshow.on( 'cycle-initialized cycle-after', function( e, opts ) {
 			if ( ! slideshow.is( '.cycle-paused' ) )
 				progress.animate( { width : '100%' }, opts.timeout, 'linear' );
 		} );
-
 		slideshow.on( 'cycle-paused', function( e, opts ) {
-			progress.stop(); 
+			progress.stop();
 		} );
-
 		slideshow.on( 'cycle-resumed', function( e, opts, timeoutRemaining ) {
 			progress.animate( { width : '100%' }, timeoutRemaining, 'linear' );
 		} );
-
-
-// @subsection Slideshow switch commands
-// -----------------------------------------------------------------------------
-
+		// Slideshow switch commands:
 		var pause = $( slideshow ).find( '.pause' ),
 		    resume = $( slideshow ).find( '.resume' );
-
 		pause.on( 'click', function() {
 			$( this ).css( { 'display' : 'none' } );
 			resume.css( { 'display' : 'block' } );
@@ -491,21 +477,12 @@
 			$( this ).css( { 'display' : 'none' } );
 			pause.css( { 'display' : 'block' } );
 		} );
-
-
-// @subsection Auto-Initialization
-// -----------------------------------------------------------------------------
-
+		// Auto-Initialization:
 		var url = templateUri + '/Scripts/Vendors/Cycle.js';
-
 		$.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
 			$( '.slideshow' ).cycle(); // Initialisation du script
 		} );
-
-// @subsection END Slideshow
-// -----------------------------------------------------------------------------
-
-	} // END if '.slideshow'
+	}
 } )( jQuery );
 
 
@@ -538,8 +515,6 @@
 			.fadeOut( 300 );
 			setTimeout( function() {
 				$( '.ajax-window-popin' ).remove(); // Suppression de la fenêtre Ajax et donc de la popin qu'elle contient
-				// popin.remove();
-				//return false;
 			}, 300 );
 		popinUser
 			.fadeOut( 300 );
@@ -548,17 +523,16 @@
 			}, 300 );
 		e.preventDefault();
 	} );
-	$( document ).on( 'click', '#user', function( e ) { // Afficher la popin #user
+	$( document ).on( 'click', '#user', function() { // Afficher la popin #user
 		$( 'body' ).css( 'overflow', 'hidden' ); // @note Pas de scroll sur la page si popin visible
 		$( '#popin-user' )
 			.removeClass( 'hidden' )
 			.fadeIn( 300 ); // Afficher les popins 'login' ou 'profil'
-	//	e.preventDefault();
 		return false;
 	} );
 	$( document ).on( 'click', 'body', function( e ) { // Si clic en dehors de la popin
 		var inside = $( '[id^="popin"]' );
-		if (!inside.is(e.target) && inside.has(e.target).length === 0) {
+		if (!inside.is( e.target ) && inside.has( e.target ).length === 0) {
 			inside.addClass( 'popin-error' );
 			setTimeout( function() {
 				inside.removeClass( 'popin-error' );
@@ -648,7 +622,7 @@ jQuery.fn.typewriter = function( options ) {
 
 // -----------------------------------------------------------------------------
 // @section     Tooltips
-// @description Gestion des infobules
+// @description Gestion des infobulles
 // -----------------------------------------------------------------------------
 
 ( function( $ ) {
@@ -659,7 +633,7 @@ jQuery.fn.typewriter = function( options ) {
 		link.on( 'mouseenter', function() {
 			if ( title === undefined || title === '' ) return false; // Pas d'infobule si title manquant ou vide
 			link.append( '<div class="tooltip">' + title + '</div>' );
-			link.attr( 'title', '' ); // Empêche l'affichage des infobules par défaut en vidant les titles
+			link.attr( 'title', '' ); // Empêche l'affichage des infobulles par défaut en vidant les titles
 			var tooltip = $( '.tooltip' );
 			tooltip.css({
 				'position' : 'absolute',

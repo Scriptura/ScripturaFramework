@@ -1233,12 +1233,6 @@ if $bundleMessagesBox
     100%
       transform rotate(360deg)
 
-  @keyframes animBlink
-    0%
-      opacity 1
-    50%
-      opacity .2
-
 
 // -----------------------------------------------------------------------------
 // @section Images
@@ -1876,14 +1870,41 @@ if $bundleInputs
     cursor not-allowed
 
   [class*="input"].invalid input
+  [class*="input"].invalid select
+  [class*="input"].invalid textarea
     padding-left .7em // @note Rattrapage de la bordure
+    padding-right .7em // @note idem
     background-color $colorBG053
     border .3em solid $colorBD053
     background-position right .7em center // @note Révision de l'emplacement de l'astérisque si champ obligatoire
 
+  [class*="input"].invalid :not(:focus)
+  //[class*="input"].invalid input:not(:focus)
+  //[class*="input"].invalid select:not(:focus)
+  //[class*="input"].invalid textarea:not(:focus)
+    animation anim-inputinvalid 2s infinite
+    
+  @keyframes anim-inputinvalid
+    0%
+      border-color $colorBD053
+    50%
+      border-color $colorBD0531
+    100%
+      border-color $colorBD053
+
   .invalid p
     font-style italic
     color $colorCL054
+
+  .invalid p::before
+    content '\EA5A'
+    font-family GlyphIcons
+    font-size .8em
+    font-style normal
+    margin-right .5em
+
+  [class*="input"].invalid :focus + p::before
+    animation animBlink 2s infinite
 
   [class*="input"] :required
   [class*="input"] .required // @note '.required' pour éléments select, et fallback all browsers
@@ -1928,17 +1949,21 @@ if $bundleInputs
   .input-group-right input
     text-align right
 
-  .js .input-password // @note Classe ajoutée via javascript
+  .input-password // @note Classe ajoutée via javascript
     position relative
 
-  .js .input-password [type="checkbox"]
+  .input-password [type="checkbox"]
+    //content '\EAC7'
     position absolute
     bottom .7em
-    left calc(100% - 2em)
+    right 0
     width 1em !important // @bugfix Firefox
+    margin 0 1em 0 0
+    cursor pointer
   
-  .js .input-password input:not([type="checkbox"])
+  .input-password input:not([type="checkbox"])
     padding-right 3em
+    ifBorderRadius($r2)
 
   // @note Code intéresant si couplé à des regex :
   //[class*="input"] :invalid:focus
@@ -2648,6 +2673,12 @@ if $bundleTables
 [class^="ajax-window"]:not([class*="popin"]) *
   animation animAjaxContent .2s ease-in-out
 
+  @keyframes animAjaxContent
+    0%
+      transform scale(0)
+    100%
+      transform scale(1)
+
 
 // -----------------------------------------------------------------------------
 // @section     Popins
@@ -2666,23 +2697,23 @@ if $bundlePopins
     background $colorBG098
     ifBoxShadow($colorBS098)
 
-// @todo Solution en conflit avec animPopinError :
-//.popin-begin
-//  animation animPopinBegin .2s ease-in-out
-//@keyframes animPopinBegin
-//  0%
-//    transform scale(0)
-//  100%
-//    transform scale(1)
+  // @todo Solution en conflit avec animPopinError :
+  //.popin-begin
+  //  animation animPopinBegin .2s ease-in-out
+  //@keyframes animPopinBegin
+  //  0%
+  //    transform scale(0)
+  //  100%
+  //    transform scale(1)
 
-  .popin-end
-    animation animPopinEnd .2s ease-in-out
+  //.popin-end
+  //  animation animPopinEnd .2s ease-in-out
 
-  @keyframes animPopinEnd
-    0%
-      transform scale(1)
-    100%
-      transform scale(0)
+  //@keyframes animPopinEnd
+  //  0%
+  //    transform scale(1)
+  //  100%
+  //    transform scale(0)
 
   .popin-error
     animation animPopinError .3s
@@ -2690,12 +2721,6 @@ if $bundlePopins
   @keyframes animPopinError
     50%
       transform scale(1.03)
-
-  @keyframes animAjaxContent
-    0%
-      transform scale(0)
-    100%
-      transform scale(1)
 
   @media (min-width $sizeS)
 
@@ -3516,4 +3541,17 @@ if $bundleRelationship
 
 .avatar
   background-size cover
+
+
+// -----------------------------------------------------------------------------
+// @section     Resource Sharing
+// @description Partage du code sur plusieurs bundles
+// -----------------------------------------------------------------------------
+if $bundleMessagesBox and $bundleInputs
+
+  @keyframes animBlink
+    0%
+      opacity 1
+    50%
+      opacity .2
 
