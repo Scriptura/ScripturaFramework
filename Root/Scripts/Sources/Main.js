@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.29
-// @lastmodified 2016-05-31 05:51:08
+// @version      0.0.30
+// @lastmodified 2016-06-01 22:07:56
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -53,12 +53,17 @@
 	var element = $( 'audio, video' );
 	if ( element.length ) {
 		// Appel des sripts
-		$( 'body' ).append( '<script src="../Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js"><\/script>' );
-		$( 'audio, video' ).mediaelementplayer();
-		// Appel des styles
-		$( 'head' ).append( '<link rel="stylesheet" href="../Scripts/Vendors/MediaElementJS/mediaelementplayer.css" media="screen">' );
+		var uriScript = templateUri + '/Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js';
+		$.getScript( uriScript, function() { // Chargement via Ajax
+			$( 'audio, video' ).mediaelementplayer(); // Initialisation du script
+		} );
+		$( 'head' ).append( '<link rel="stylesheet" href="../Scripts/Vendors/MediaElementJS/mediaelementplayer.css" media="screen">' ); // Appel des styles
 	}
 } )( jQuery );
+
+// @archive Ancienne méthode avant $getScript() :
+//$( 'body > footer' ).append( '<script src="../Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js"><\/script>' );
+//$( 'audio, video' ).mediaelementplayer();
 
 
 // -----------------------------------------------------------------------------
@@ -209,7 +214,7 @@
 // @note Vanilla Js de 'scrollTop: 0' : 'window.scrollTo( 0, 0 )'
 
 ( function( $ ) {
-	$( 'body' ).append( '<a href="" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>' ); // Création de l'élément a.scroll-top
+	$( 'body > footer' ).append( '<a href="" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>' ); // Création de l'élément 'a.scroll-top'
 	var scrolltop = $( '.scroll-top' ); // Création de la variable uniquement après création de l'élément dans le DOM
 	scrolltop.on( 'click', function() {
 		$( 'html, body' ).animate( {scrollTop: 0}, 600 ); // Retour en haut progressif
@@ -414,7 +419,7 @@
 			.clone()
 			.css( 'display', 'inherit' ) // @bugfix @affected Firefox @note Neutralise une déclaration inligne style 'display:inline' induite (via jQuery ?) sous ce navigateur
 			.fadeIn( 300 )
-			.appendTo( 'body' )
+			.appendTo( 'body > footer' )
 			.wrap( '<div class="focus-off"><div></div></div>' ) // @bugfix @affected All browsers @note Image en flex item n'a pas son ratio préservé si resize ; une div intermédiaire entre le conteneur .focus-off et l'image corrige ce problème
 			.before( '<span class="icon-shrink zoom200"/>' );
 		$( 'body' ).css( 'overflow', 'hidden' ); // @note Pas de scroll sur la page si photo en focus
@@ -478,8 +483,8 @@
 			pause.css( { 'display' : 'block' } );
 		} );
 		// Auto-Initialization:
-		var url = templateUri + '/Scripts/Vendors/Cycle.js';
-		$.getScript( url, function() { // Chargement de la librairie 'Cycle 2'
+		var uriScript = templateUri + '/Scripts/Vendors/Cycle.js';
+		$.getScript( uriScript, function() {  // Chargement via Ajax
 			$( '.slideshow' ).cycle(); // Initialisation du script
 		} );
 	}

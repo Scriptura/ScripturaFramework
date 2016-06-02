@@ -1470,6 +1470,9 @@ if $bundleSlideshow
   .cycle-text > div
     margin auto 1rem 2rem
 
+  .cycle-text > div *
+    color #fff
+
   :root .cycle-text *:not(button)
     font-size 8vmin
   //  color $colorTest
@@ -2877,9 +2880,10 @@ if $bundleMainNav
     overflow hidden // @note Pour couper les titres longs
     white-space nowrap
     text-overflow ellipsis
+    color $colorCL120
 
   [class^="brand"] a
-    color $colorCL120
+    color $colorCL120 // @note Même couleur que pour .brand
 
   @media (max-width $sizeNav)
 
