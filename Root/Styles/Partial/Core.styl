@@ -617,16 +617,17 @@ sub
 // -----------------------------------------------------------------------------
 if $bundleLinks
 
-  .links a::after
+  //.links p a::after // @note Le 'p' empêche l'exécution du style sur d'autres éléments que les paragraphes
+  .links p a::after
     font-family GlyphIcons
     font-size .7em
     margin-left .2em
     transition all .5s
 
-  .links a:not([href="#"])::after
+  .links p a:not([href="#"])::after
     content '\ea61' // @note Afficher une icône
 
-  .links a[href="#"]::after
+  .links p a[href="#"]::after
       content '\ea81'
 
   .links a:focus::after
@@ -2621,27 +2622,11 @@ if $bundleTables
     color $colorCL091
     background-color $colorBG091
 
-  @media (min-width $sizeXS)
-    // Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
-
-    [class^="table"][class*="fixed"]
-      table-layout fixed
-
-    [class^="table"][class*="firstcolumn"] tbody td:first-child
-      color $colorCL092
-      background-color $colorBG092
-
-    [class^="table"] tbody td
-      border 1px solid $colorBD093
-
-    [class^="table"] tbody :empty
-      background-image repeating-linear-gradient(-45deg, $colorBG094, $colorBG095 1px, transparent 1px, transparent 6px)
-      background-size 8px 8px
-
   @media (max-width $sizeXS)
 
     [class^="table"]
       border-collapse collapse
+      border .2em solid $colorBD097
 
     [class^="table"] thead
       display none
@@ -2663,9 +2648,26 @@ if $bundleTables
     [class^="table"] tbody td:empty::before
       content attr(data-thead) '\00a0: --'
 
+    //[class^="table"] tbody td
+    //  border-left .2em solid $colorBD097
+    //  border-right .2em solid $colorBD097
+
+  @media (min-width $sizeXS)
+    // Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
+
+    [class^="table"][class*="fixed"]
+      table-layout fixed
+
+    [class^="table"][class*="firstcolumn"] tbody td:first-child
+      color $colorCL092
+      background-color $colorBG092
+
     [class^="table"] tbody td
-      border-left .2em solid $colorBD097
-      border-right .2em solid $colorBD097
+      border 1px solid $colorBD093
+
+    [class^="table"] tbody :empty
+      background-image repeating-linear-gradient(-45deg, $colorBG094, $colorBG095 1px, transparent 1px, transparent 6px)
+      background-size 8px 8px
 
 
 // -----------------------------------------------------------------------------

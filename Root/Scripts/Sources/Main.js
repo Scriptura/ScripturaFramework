@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.30
-// @lastmodified 2016-06-01 22:07:56
+// @version      0.0.31
+// @lastmodified 2016-06-05 18:30:26
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -417,6 +417,7 @@
 		$( this )
 			.find( 'picture' ) // .find( 'img' )
 			.clone()
+			.find( 'img' ).removeAttr( 'width' ).removeAttr( 'height' ) // @note La suppression des attributs de dimention de l'image permet le responsive en zoom
 			.css( 'display', 'inherit' ) // @bugfix @affected Firefox @note Neutralise une déclaration inligne style 'display:inline' induite (via jQuery ?) sous ce navigateur
 			.fadeIn( 300 )
 			.appendTo( 'body > footer' )
@@ -746,7 +747,7 @@ jQuery.fn.selectText = function() {
 
 // -----------------------------------------------------------------------------
 // @section     Ajax
-// @description Requêtes HTTP par l'objet XmlHttpRequest
+// @description Requêtes HTTP via l'objet XmlHttpRequest
 // -----------------------------------------------------------------------------
 
 // @note Renseignement du script via des attributs data-* plutôt que via les IDs : solution bien plus souple permettant d'utliser les même fichiers cibles sur une même page web, à divers endroits de cette page.
@@ -874,4 +875,16 @@ jQuery( document ).keydown( function( e ) {
 console.time( 'test' );
 // Le script
 console.timeEnd( 'test' );
+
+// Repère les éléments dépassants en responsive
+var docWidth = document.documentElement.offsetWidth;
+[].forEach.call(
+  document.querySelectorAll( '*' ),
+  function( el ) {
+    if (el.offsetWidth > docWidth) {
+      console.log( el );
+    }
+  }
+);
 */
+

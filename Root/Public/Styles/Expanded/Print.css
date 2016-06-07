@@ -153,3 +153,21 @@ blockquote {
 [class*="map"] {
   min-height: 300px;
 }
+
+/* line 108 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+[class^="table"] {
+  border: 1px dotted #ddd;
+}
+
+/* line 111 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+[class^="table"][class*="fixed"] {
+  table-layout: fixed;
+}
+
+/* line 114 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+[class^="table"] td,
+[class^="table"] th {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border: 1px dotted #ddd;
+}
