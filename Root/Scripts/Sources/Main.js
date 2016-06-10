@@ -2,7 +2,7 @@
 // @name         Scriptura
 // @description  Interface for web apps
 // @version      0.0.31
-// @lastmodified 2016-06-05 18:30:26
+// @lastmodified 2016-06-08 05:33:25
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -53,17 +53,14 @@
 	var element = $( 'audio, video' );
 	if ( element.length ) {
 		// Appel des sripts
-		var uriScript = templateUri + '/Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js';
-		$.getScript( uriScript, function() { // Chargement via Ajax
+		var scriptUri = templateUri + '/Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js';
+		var stylesUri = templateUri + '/Scripts/Vendors/MediaElementJS/mediaelementplayer.css';
+		$.getScript( scriptUri, function() { // Chargement via Ajax
 			$( 'audio, video' ).mediaelementplayer(); // Initialisation du script
 		} );
-		$( 'head' ).append( '<link rel="stylesheet" href="../Scripts/Vendors/MediaElementJS/mediaelementplayer.css" media="screen">' ); // Appel des styles
+		$( 'head' ).append( '<link rel="stylesheet" href="' + stylesUri + '" media="screen">' ); // Appel des styles
 	}
 } )( jQuery );
-
-// @archive Ancienne méthode avant $getScript() :
-//$( 'body > footer' ).append( '<script src="../Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js"><\/script>' );
-//$( 'audio, video' ).mediaelementplayer();
 
 
 // -----------------------------------------------------------------------------

@@ -142,6 +142,28 @@ blockquote {
 }
 
 /* line 99 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+[class*="figure"] {
+  float: right;
+  display: block;
+  margin: 0 0 0 20px;
+  border: 1px solid #ddd;
+}
+
+/* line 105 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+[class*="figure"] img {
+  width: 100%;
+  height: inherit;
+  max-width: 200px;
+  max-height: 200px;
+  margin: 10px;
+}
+
+/* line 112 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+[class*="figure"] figcaption {
+  margin: 0 10px 10px;
+}
+
+/* line 115 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 [class*="message"] {
   padding: 10px 20px;
   margin-bottom: 10px;
@@ -149,22 +171,22 @@ blockquote {
   border-radius: 5px;
 }
 
-/* line 105 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+/* line 121 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 [class*="map"] {
   min-height: 300px;
 }
 
-/* line 108 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+/* line 124 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 [class^="table"] {
   border: 1px dotted #ddd;
 }
 
-/* line 111 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+/* line 127 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 [class^="table"][class*="fixed"] {
   table-layout: fixed;
 }
 
-/* line 114 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
+/* line 130 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/Print.styl */
 [class^="table"] td,
 [class^="table"] th {
   padding-left: 0.5rem;
