@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.31
-// @lastmodified 2016-06-08 05:33:25
+// @version      0.0.33
+// @lastmodified 2016-07-01 22:11:23
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -45,6 +45,30 @@
 
 
 // -----------------------------------------------------------------------------
+// @section     Protected
+// @description Protège partiellement le texte en empêchant sa sélection
+// -----------------------------------------------------------------------------
+
+// @note Script conforté par règle css @see Core.styl
+// @note Script no jQuery
+
+window.onload = function() {
+  var protect = document.getElementsByClassName( 'protected' );
+  for( var i = 0; i < protect.length; i++ ) {
+    protect[i].onmousedown = function( e ) {
+      e = e || window.event;
+      if( e.preventDefault ) {
+        e.preventDefault();
+      } else {
+        e.returnValue = false;
+      }
+      return false;
+    };
+  }
+};
+
+
+// -----------------------------------------------------------------------------
 // @section     Media Element JS
 // @description Configuration pour MediaElement.js
 // -----------------------------------------------------------------------------
@@ -53,9 +77,9 @@
 	var element = $( 'audio, video' );
 	if ( element.length ) {
 		// Appel des sripts
-		var scriptUri = templateUri + '/Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js';
+		var scriptsUri = templateUri + '/Scripts/Vendors/MediaElementJS/mediaelement-and-player.min.js';
 		var stylesUri = templateUri + '/Scripts/Vendors/MediaElementJS/mediaelementplayer.css';
-		$.getScript( scriptUri, function() { // Chargement via Ajax
+		$.getScript( scriptsUri, function() { // Chargement via Ajax
 			$( 'audio, video' ).mediaelementplayer(); // Initialisation du script
 		} );
 		$( 'head' ).append( '<link rel="stylesheet" href="' + stylesUri + '" media="screen">' ); // Appel des styles
@@ -68,7 +92,7 @@
 // @description Gestion des liens externes au site
 // -----------------------------------------------------------------------------
 
-// #note Par défaut, tous les liens externes conduisent à l'ouverture d'un nouvel onglet, sauf les liens de téléchargement
+// @note Par défaut, tous les liens externes conduisent à l'ouverture d'un nouvel onglet, sauf les liens de téléchargement
 
 ( function( $ ) { // Ajout d'un attribut target_blank sur les liens externes
 	$( document ).find( 'a:not(.download-link)' ).filter( function() {
@@ -481,8 +505,8 @@
 			pause.css( { 'display' : 'block' } );
 		} );
 		// Auto-Initialization:
-		var uriScript = templateUri + '/Scripts/Vendors/Cycle.js';
-		$.getScript( uriScript, function() {  // Chargement via Ajax
+		var scriptsUri = templateUri + '/Scripts/Vendors/Cycle.js';
+		$.getScript( scriptsUri, function() {  // Chargement via Ajax
 			$( '.slideshow' ).cycle(); // Initialisation du script
 		} );
 	}

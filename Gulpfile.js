@@ -16,7 +16,7 @@
 // `gulp images` : traitement des images
 // `gulp glyphmin` : minification des svg de la police d'icônes GlyphIcons
 // `gulp icons` : refonte de la police d'icônes GlyphIcons avec ses styles et le html de démonstration
-// Les autres commandes sont lancées automatiquement arpès la surveillance des fichiers (watcher) initialisée par la commande globale.
+// Les autres commandes sont lancées automatiquement après la surveillance des fichiers (watcher) initialisée par la commande globale.
 
 
 // -----------------------------------------------------------------------------
@@ -134,8 +134,11 @@ gulp.task( 'jade', function() {
     .pipe( replace( /(<_elseif>)(.*)(<\/_elseif>)/g, '<?php elseif ($2): ?>' ) ) // _elseif => elseif(string):
     .pipe( replace( /<_endif><\/_endif>/g, '<?php endif; ?>' ) ) // _endif => endif;
     .pipe( replace( /(<_require>)(.*)(<\/_require>)/g, '<?php require \'$2.php\'; ?>' ) ) // _require => require 'string.php';
-    .pipe( replace( /<_require_wp>/g, '<?php require locate_template(\'' ) ) // Require de WordPress
+    .pipe( replace( /(<_require_once>)(.*)(<\/_require_once>)/g, '<?php require_once \'$2.php\'; ?>' ) ) // _require => require 'string.php';
+    .pipe( replace( /<_require_wp>/g, '<?php require locate_template(\'' ) ) // `require` lié à WordPress
     .pipe( replace( /<\/_require_wp>/g, '.php\'); ?>' ) )
+    .pipe( replace( /<_require_once_wp>/g, '<?php require_once locate_template(\'' ) ) // `require_once` lié à WordPress
+    .pipe( replace( /<\/_require_once_wp>/g, '.php\'); ?>' ) )
     .pipe( replace( /( \?>)(\n.*)(<\?php )/g, '$2      ' ) ) // Suppression des balises d'ouverture et de fermeture si saut de ligne. @note Cette regex doit être placée après toutes les autres traitant des balises php block.
     .pipe( replace( /({% )(\$\S*)( %})/g, '<?php echo $2; ?>' ) ) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : {% $name %} => <?php echo $name; ?>
     .pipe( replace( /({% )(.*)( %})/g, '<?php $2; ?>' ) ) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne

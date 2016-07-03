@@ -210,6 +210,18 @@ if $bundleHidden
 
 
 // -----------------------------------------------------------------------------
+// @section     Protected
+// @description Protège partiellement le texte en empêchant sa sélection
+// -----------------------------------------------------------------------------
+
+// @link https://developer.mozilla.org/fr/docs/Web/CSS/user-select
+// @note Règle css confortée par JavaScript @see Main.js
+
+.protected
+  user-select none
+
+
+// -----------------------------------------------------------------------------
 // @section Blocks
 // -----------------------------------------------------------------------------
 
@@ -3043,7 +3055,8 @@ if $bundleMainNav
 
 // -----------------------------------------------------------------------------
 // @section     Nav Bottom
-// @description Menu en bas pour résolution inférieure à la taille du menu de base
+// @description Menu en bas pour les petites définitions d'écran
+// @todo        Incompatibilité avec Safari et Google shearch pour iPhone
 // -----------------------------------------------------------------------------
 if $bundleNavBottom
 
@@ -3450,12 +3463,12 @@ if $bundleComments
     @extend .gradient-right
     ifBoxShadow($colorBS036)
 
-  .comment [href^="#index"]
+  .comment [href^="#comment"]
     transition color .3s
 
   @media (max-width $sizeXS)
 
-    .comment [href^="#index"]
+    .comment [href^="#comment"]
       padding-left 1em
 
   @media (min-width $sizeXS)
@@ -3463,14 +3476,14 @@ if $bundleComments
     .comment
       position relative
 
-    .comment [href^="#index"]
+    .comment [href^="#comment"]
       position absolute
       top .5rem
       right 1rem
 
-  .comment [href^="#index"]:focus
-  .comment [href^="#index"]:hover
-  .comment [href^="#index"]:active
+  .comment [href^="#comment"]:focus
+  .comment [href^="#comment"]:hover
+  .comment [href^="#comment"]:active
     color #efefef
     text-decoration none
 
@@ -3481,6 +3494,7 @@ if $bundleComments
     display table-cell
     width 4rem
     height 4rem
+    background-color #444
     background-size cover
 
   .author-comment p
