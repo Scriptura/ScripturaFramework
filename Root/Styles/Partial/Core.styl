@@ -1111,26 +1111,36 @@ if $bundleHighlight
 if $bundleEmphasized
 
   .emphasized
-    overflow hidden
-    position relative
     text-align center
 
-  .emphasized::before
-  .emphasized::after
-    content ''
-    display inline-block
-    width 100%
-    vertical-align middle
-    margin-top .3em
-    border-bottom .15em solid $colorBD029
+  @media (max-width $sizeS)
 
-  .emphasized::before
-    margin-left -100%
-    margin-right 1%
+    .emphasized
+      margin-bottom 1rem
+      border-bottom .15em solid $colorBD029
 
-  .emphasized::after
-    margin-right -100%
-    margin-left 1%
+  @media (min-width $sizeS)
+
+    .emphasized
+      overflow hidden
+      position relative
+
+    .emphasized::before
+    .emphasized::after
+      content ''
+      display inline-block
+      width 100%
+      vertical-align middle
+      margin-top .3em
+      border-bottom .15em solid $colorBD029
+
+    .emphasized::before
+      margin-left -100%
+      margin-right 1%
+
+    .emphasized::after
+      margin-right -100%
+      margin-left 1%
 
 
 // @subsection Surround
@@ -3444,6 +3454,9 @@ if $bundleAside
     background-color #444
     border-radius 0
 
+if $bundleAside and $bundleEmphasized
+
+  .aside .emphasized
   .aside .emphasized::before
   .aside .emphasized::after
   .aside .separator::after
