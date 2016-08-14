@@ -15,7 +15,7 @@ if $bundleGrid
 
   [class^="wrap"] // @note Englobe tous les contenus
     margin 0 auto
-  
+
   .wrap
     max-width $wrap
 
@@ -2074,22 +2074,13 @@ if $bundleSearch
     display block
     width 3em
     height 2.2em // @note Plus grand que l'input, afin de prendre en compte le mouvement induit par la transition
+    color #777
     background-color transparent // @affected All browsers
     border none // @affected All browsers
     transition translateZ .1s linear
     transform translateZ(0)
 
-  .search button::before
-    content ''
-    display block
-    width 1em
-    height 1em
-    margin 0 auto
-    background-image $image003
-    background-size contain
-    background-repeat no-repeat
-
-  .search span // @note Supprime le contenu du boutton au profit de l'icône
+  .search span:last-child // @note Supprime le contenu du boutton au profit de l'icône
     display none
 
   .search button:focus
@@ -2098,6 +2089,13 @@ if $bundleSearch
 
   .search button:active
     transform translate(0, .3em)
+
+  .aside .search
+    max-width 22rem
+    margin 0 auto 1rem
+
+  .aside .search input
+    background-color #555
 
 
 // @subsection Checkbox & Radio avec .checkbox
@@ -3505,6 +3503,93 @@ if $bundleComments
 
   .comment + form
     margin-top 1rem
+
+
+// -----------------------------------------------------------------------------
+// @section     Box
+// @description Boîtes d'extrait de contenu
+// -----------------------------------------------------------------------------
+if $bundleBox
+  //.box
+  //  position relative
+  //  padding 1rem
+  //  background-color #ddd
+
+  //.box::before
+  //.box::after
+  //  content ''
+  //  position absolute
+  //  width 100%
+  //  height 100%
+
+  //.box::before
+  //  z-index: -1
+  //  top: -.5rem
+  //  left: -.5rem
+  //  border: .5rem solid transparent
+  //  border-image: url(../../Images/border31.svg) 100 repeat
+
+  //.box::after
+  //  z-index -2
+  //  top 0
+  //  left 0
+  //  box-shadow 0 0 2rem rgba(0, 0, 0, .2)
+
+  [class*="box"]
+    position relative
+    background-color $colorBG002
+    background-image linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5))
+    ifBorderRadius($r1)
+    box-shadow 0 0 2em rgba(0, 0, 0, .1)
+
+  .box
+    padding 1em
+
+  [class*="box"]::before
+  [class*="box"]::after
+    content ''
+    z-index -1
+    position absolute
+    bottom 2em
+    left 1em
+    width 80%
+    height 1.5em
+    max-width 30em
+    box-shadow 0 1.5em 2em rgba(0, 0, 0, .4)
+    transform rotate(-3deg) translateZ(0)
+
+  [class*="box"]::after
+    right 1em
+    left auto
+    transform rotate(3deg)
+
+  //.emphasized::before
+  //.emphasized::after
+  //  border-image url('../../Images/border4.svg') 0 100 100 repeat
+
+  [class*="ribbon-container"][class*="box"]
+    background-image none
+
+  .box0 h2
+  .box0 p
+    //margin 1em 1rem // @note em units pour le height en fonction de la taille de la font, rem units pour la largeur
+    margin-left 1rem
+    margin-right 1rem
+    padding-bottom .5rem
+
+  .box0 .magimg
+    width 100% // @note Si petites images
+    padding-bottom 50%
+    background-color #333
+    background-size cover
+    background-position 50% 50%
+    border-radius $r1 $r1 0 0
+    transition all 1s
+
+  a:focus .magimg
+  a:hover .magimg
+  a:active .magimg
+    background-position 0% 0%
 
 
 // -----------------------------------------------------------------------------
