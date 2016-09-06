@@ -1117,7 +1117,7 @@ if $bundleEmphasized
 
     .emphasized
       margin-bottom .5em
-      padding-bottom .1em
+      padding-bottom .25em
       border-bottom .15em solid $colorBD029
 
   @media (min-width $sizeS)
@@ -2616,6 +2616,7 @@ if $bundleTabs
 // @description Tableaux
 // -----------------------------------------------------------------------------
 if $bundleTables
+  // @note Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
   // @note La mise en place de .table sur l'élément html <table> suffit pour styler un tableau
 
   [class^="table"]
@@ -2674,7 +2675,6 @@ if $bundleTables
     //  border-right .2em solid $colorBD097
 
   @media (min-width $sizeXS)
-    // Pour les tableaux, de part leur nature, l'approche adaptatif design prend le pas sur le mobile first
 
     [class^="table"][class*="fixed"]
       table-layout fixed
@@ -2920,13 +2920,29 @@ if $bundleMainNav
 
   .brand-image
     background-image $image000
-    background-size 2em 2em
+    background-size 1.5em 1.5em
     background-position 1em 50%
     background-repeat no-repeat
-    //padding-left 4em
 
   .brand-image a
-    padding-left 3em
+    padding-left 2em
+
+  @media (min-width $sizeNav)
+
+    .brand-image ~ ul li:first-child > *
+      display block
+      background-image $image000
+      background-size 1.5em 1.5em
+      background-position 50% 50%
+      background-repeat no-repeat
+
+    .brand-image ~ ul li:first-child
+      min-width 4em
+
+    .brand-image ~ ul li:first-child [class*=icon]::before
+    .brand-image ~ ul li:first-child > * > :last-child
+      display none
+
 
   // @subsection Items Main Nav
   // -----------------------------------------------------------------------------
@@ -3551,6 +3567,7 @@ if $bundleBox
 
   [class*="box"]
     position relative
+    padding-bottom .5rem
     background-color $colorBG002
     background-image linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5))
     ifBorderRadius($r1)
@@ -3584,12 +3601,10 @@ if $bundleBox
   [class*="ribbon-container"][class*="box"]
     background-image none
 
-  .box0 h2
-  .box0 p
+  .box0 > :not(:first-child):not(:last-child)
     //margin 1em 1rem // @note em units pour le height en fonction de la taille de la font, rem units pour la largeur
     margin-left 1rem
     margin-right 1rem
-    padding-bottom .5rem
 
   .box0 .magimg
     width 100% // @note Si petites images
@@ -3639,6 +3654,7 @@ if $bundleRelationship
 
   .relationship [class*="ratio"]
     background-size cover
+    background-position 50% 50%
 
   .relationship a:focus
   .relationship a:hover

@@ -1,9 +1,9 @@
 
-/* line 297 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
+/* line 297 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
 
-/* line 1 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
+/* line 1 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
 
-/* line 6 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
+/* line 6 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
 body {
   background-color: #fffffa;
   background-image: -webkit-linear-gradient(top, #aaa, #fffffa 0.1em) !important;
@@ -14,27 +14,27 @@ body {
   background-attachment: scroll !important;
 }
 
-/* line 14 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
+/* line 14 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
 .header {
   background: rgba(255,55,55,0.1) !important;
 }
 
-/* line 17 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
+/* line 17 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
 body > nav {
   background: rgba(255,55,55,0.4) !important;
 }
 
-/* line 20 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
+/* line 20 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
 .content {
   background: rgba(255,55,55,0.1) !important;
 }
 
-/* line 23 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
+/* line 23 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
 .box {
   background: rgba(55,55,55,0.1) !important;
 }
 
-/* line 26 : /Users/olivierchavarin/Documents/Archives/web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
+/* line 26 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticGrids.styl */
 .footer {
   background: rgba(255,55,55,0.4) !important;
 }

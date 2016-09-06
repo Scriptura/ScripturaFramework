@@ -6,3 +6,6 @@ Sandbox
 
 # If using Sass
 .sass-cache
+
+# Mac files
+.DS_Store
