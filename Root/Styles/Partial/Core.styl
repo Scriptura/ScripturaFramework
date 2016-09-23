@@ -222,6 +222,17 @@ if $bundleHidden
 
 
 // -----------------------------------------------------------------------------
+// @section     On a line
+// @description Texte sur une ligne sans dépassement
+// -----------------------------------------------------------------------------
+
+.onaline
+  overflow hidden
+  white-space nowrap
+  text-overflow ellipsis
+
+
+// -----------------------------------------------------------------------------
 // @section Blocks
 // -----------------------------------------------------------------------------
 
@@ -901,13 +912,13 @@ if $bundleRibbons
 if $bundleLists
 
   [class*="list"]
-  [class*="list"] *
+  [class*="list"] > *
     padding-left 0
 
   [class*="list"] li
     display block
 
-  [class*="list-"] a // Ne cible que les listes améliorées
+  [class*="list-"] > a // Ne cible que les liens directs des listes améliorées
     display block
     text-decoration none
 
@@ -919,16 +930,16 @@ if $bundleLists
     padding .3em 1em
 
   [class*="list-"][class*="-stripe"]:not([class*="-link"]) > *
-  [class*="list-"][class*="-stripe"] a
+  [class*="list-"][class*="-stripe"] > a
     ifBackgroundColor($colorBG023)
     ifBoxShadow($colorBS023)
 
-  [class*="list-"][class*="-stripe"] a
+  [class*="list-"][class*="-stripe"] > a
     position relative
 
-  [class*="list-"] a:focus
-  [class*="list-"] a:hover
-  [class*="list-"] a:active
+  [class*="list-"] > a:focus
+  [class*="list-"] > a:hover
+  [class*="list-"] > a:active
     ifBackgroundColor($colorBG024)
     ifBoxShadow($colorBS024)
     animation animList .1s ease-in-out
@@ -2900,9 +2911,6 @@ if $bundleMainNav
     padding-left 1em
     padding-right 4rem
     background-color $colorBG1101
-    overflow hidden // @note Pour couper les titres longs
-    white-space nowrap
-    text-overflow ellipsis
     color $colorCL120
 
   [class^="brand"] a
@@ -3147,6 +3155,7 @@ if $bundleLoginAvatar
     display flex
 
   .login .avatar
+    flex-shrink 0 // @note Évite la compression si élément poussé par nom d'utilisateur trop long
     width 2.5rem
     height 2.5rem
 
@@ -3187,6 +3196,7 @@ if $bundleLoginAvatar
     
     .login > * :nth-child(2)
       margin-left .5rem
+      max-width 10rem
 
 
 // -----------------------------------------------------------------------------
@@ -3202,9 +3212,6 @@ if $bundleBreadcrumb
   .breadcrumb ul
     margin -.5rem 0 .5rem !important
     padding-left 0 !important
-    overflow hidden // @note Pour couper les textes longs
-    white-space nowrap
-    text-overflow ellipsis
 
   .breadcrumb li
     display inline
@@ -3492,22 +3499,9 @@ if $bundleComments
     ifBoxShadow($colorBS036)
 
   .comment [href^="#comment"]
+    margin-left auto
+    padding-left 1em
     transition color .3s
-
-  @media (max-width $sizeXS)
-
-    .comment [href^="#comment"]
-      padding-left 1em
-
-  @media (min-width $sizeXS)
-
-    .comment
-      position relative
-
-    .comment [href^="#comment"]
-      position absolute
-      top .5rem
-      right 1rem
 
   .comment [href^="#comment"]:focus
   .comment [href^="#comment"]:hover
@@ -3516,10 +3510,10 @@ if $bundleComments
     text-decoration none
 
   .author-comment
-    display table
+    display flex
 
   .author-comment .avatar
-    display table-cell
+    flex-shrink 0 // @note Évite la compression si élément poussé par nom d'utilisateur trop long
     width 4rem
     height 4rem
     background-color #444

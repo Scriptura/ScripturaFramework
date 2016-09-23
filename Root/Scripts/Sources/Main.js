@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.38
-// @lastmodified 2016-09-06 08:19:28
+// @version      0.0.39
+// @lastmodified 2016-09-23 12:15:13
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -46,26 +46,31 @@
 
 // -----------------------------------------------------------------------------
 // @section     Protected
-// @description Protège partiellement le texte en empêchant sa sélection
+// @description Protège partiellement un texte en empêchant sa sélection
 // -----------------------------------------------------------------------------
 
-// @note Script conforté par règle css @see Core.styl
-// @note Script no jQuery
+// @note Script no jQuery conforté par la règle css `user-select:none`
+// @see Core.styl
+// @note Le fait de placer la fonction en dehors de la boucle évite une erreur jshint
+// @link http://stackoverflow.com/questions/10320343/dont-make-functions-within-a-loop
 
-window.onload = function() {
-  var protect = document.getElementsByClassName( 'protected' );
-  for( var i = 0; i < protect.length; i++ ) {
-    protect[i].onmousedown = function( e ) {
-      e = e || window.event;
-      if( e.preventDefault ) {
-        e.preventDefault();
-      } else {
-        e.returnValue = false;
-      }
-      return false;
-    };
-  }
-};
+( function( $ ) {
+	var eventTest = function( e ) {
+		e = e || window.event;
+		if( e.preventDefault ) {
+			e.preventDefault();
+		} else {
+			e.returnValue = false;
+		}
+		return false;
+	};
+	window.onload = function() {
+		var protect = document.getElementsByClassName( 'protected' );
+		for( var i = 0; i < protect.length; i++ ) {
+			protect[i].onmousedown = eventTest;
+		}
+	};
+} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
