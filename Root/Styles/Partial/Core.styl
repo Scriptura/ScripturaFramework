@@ -582,8 +582,9 @@ pre code
   position relative
   display block
   margin-top 3em
-  padding-left .5em
+  padding 2em 0 0 .5em
   white-space pre-wrap // @affected All browsers
+  color $color6
   background $colorBG008a linear-gradient(to top, $colorBG008b, transparent .1em)
   background-size 100% 1.5em
   border none // @affected All browsers @note Ecrase le style par défaut
@@ -594,7 +595,7 @@ pre code
 pre code::before
   position absolute
   content '# Code' attr(data-code)
-  top -1.9em
+  top 0
   left -.5em
   float left
   padding .2em .5em
@@ -605,6 +606,9 @@ pre code::before
   ifBoxShadow($colorBS009)
 
 pre code button
+  position absolute
+  bottom -1em
+  right 0
   width inherit !important // @note Compense la règle css par défaut
   font-size 50%
 
@@ -3567,9 +3571,6 @@ if $bundleBox
     ifBorderRadius($r1)
     box-shadow 0 0 2em rgba(0, 0, 0, .1)
 
-  .box
-    padding 1em
-
   [class*="box"]::before
   [class*="box"]::after
     content ''
@@ -3594,6 +3595,12 @@ if $bundleBox
 
   [class*="ribbon-container"][class*="box"]
     background-image none
+
+  .box
+    padding 1em
+
+  .box0
+    padding-bottom .75rem
 
   .box0 > :not(:first-child):not(:last-child)
     //margin 1em 1rem // @note em units pour le height en fonction de la taille de la font, rem units pour la largeur

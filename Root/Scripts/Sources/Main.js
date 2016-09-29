@@ -2,7 +2,7 @@
 // @name         Scriptura
 // @description  Interface for web apps
 // @version      0.0.39
-// @lastmodified 2016-09-23 12:15:13
+// @lastmodified 2016-09-28 20:02:20
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -714,7 +714,7 @@ jQuery.fn.selectText = function() {
 			value = $( this ).data( 'value' );
 		if ( select ) {
 			var code = $( this );
-			code.parent().css( 'position', 'relative' );
+			//code.parent().css( 'position', 'relative' );
 			code.wrapInner( '<div/>' ); // @bugfix @affected IE (au minimum) @note L'ajout d'une div entre l'élément code et son contenu permet d'éviter la sélection non souhaitée de ses pseudo-éléments
 			if ( value ) {
 				code.prepend( '<button class="button">' + value + '</button>' );
@@ -722,10 +722,10 @@ jQuery.fn.selectText = function() {
 				code.prepend( '<button class="button">Select</button>' );
 			}
 			$( this ).parent().find( 'button' )
-			.css( {
-				'position' : 'absolute',
-				'right' : '0'
-			} )
+			//.css( {
+			//	'position' : 'absolute',
+			//	'right' : '0'
+			//} )
 			.on( 'click', function() {
 				code.find( 'div' ).selectText();
 			} );
