@@ -169,44 +169,60 @@ if $bundleColumns
         width $arg * 100%
 
 
-// @subsection  Hidden
+// @subsection  Hidden Unhidden
 // @description Éléments cachés/dévoilés selon taille écran
 // -----------------------------------------------------------------------------
 if $bundleHidden
+  // @note Ne pas imposer d'autres valeurs que `display:none` afin d'éviter un formatage contradictoire pour l'éléments cible.
 
   .hidden
-  [class*="unhidden"]
-  .touch .touch-hidden // @note Éléments voilés
-    display none
+  //[class*="unhidden"]
+  .touch .touch-hidden
+    display none !important
+
+  // @note Éléments cachés si augmentation de taille
+
+  @media (max-width $sizeXS)
+
+    .sizeXS-hidden
+      display none !important
+
+  @media (max-width $sizeS)
+
+    .sizeS-hidden
+      display none !important
+
+  @media (max-width $sizeL)
+
+    .sizeL-hidden
+      display none !important
+
+  @media (max-width $sizeNav)
+
+    .sizeNav-hidden
+      display none !important
+
+  // @note Éléments cachés si diminution de taille
 
   @media (min-width $sizeXS)
 
-    .sizeXS-hidden // @note Éléments voilés
-      display none
-
-    .sizeXS-unhidden // @note Éléments dévoilés
-      display inline
+    .sizeXS-unhidden
+      display none !important
 
   @media (min-width $sizeS)
 
-    .sizeS-hidden // @note Éléments voilés
-      display none
-
-    .sizeS-unhidden // @note Éléments dévoilés
-      display inline
+    .sizeS-unhidden
+      display none !important
 
   @media (min-width $sizeL)
 
-    .sizeL-hidden // @note Éléments voilés
-      display none
-
-    .sizeL-unhidden // @note Éléments dévoilés
-      display inline
+    .sizeL-unhidden
+      display none !important
 
   @media (min-width $sizeNav)
 
-    .sizeNav-hidden // @note Éléments voilés
-      display none
+    .sizeNav-unhidden
+      display none !important
 
 
 // -----------------------------------------------------------------------------
@@ -462,70 +478,82 @@ ol > li > ol
 ol > li > ol > li > ol
   list-style-type lower-greek
 
-h1, .h1
-h2, .h2
-h3, .h3
-h4, .h4
-h5, .h5
-h6, .h6
+h1
+h2
+h3
+h4
+h5
+h6
+.h1
+.h2
+.h3
+.h4
+.h5
+.h6
   ifColor($colorCL005)
   ifFontFamily($fontFamily2)
   font-weight $fontWeight2
 
-h1, .h1
+h1
+.h1
   margin-top 1.3rem
   margin-bottom .8rem
   font-size 3.2em
 
-h2, .h2
+h2
+.h2
   margin-top 1.4rem
   margin-bottom .7rem
   font-size 2.8em
 
-h3, .h3
+h3
+.h3
   margin-top 1.2rem
   margin-bottom .6rem
   font-size 2.4em
 
-h4, .h4
+h4
+.h4
   margin-top 1rem
   margin-bottom .5rem
   font-size 2em
 
-h5, .h5
+h5
+.h5
   margin-top .8rem
   margin-bottom .4rem
   font-size 1.6em
 
-h6, .h6
+h6
+.h6
   margin-top .6rem
   margin-bottom .3rem
   font-size 1.2em
 
 @media (max-width $sizeXS)
 
-  h1.vmin
-  .h1.vmin
+  h1
+  .h1
     font-size 9.6vmin // @note Not work on IE 9, Safari 5.1, Android 4.3, Opera 12.1
 
-  h2.vmin
-  .h2.vmin
+  h2
+  .h2
     font-size 7.6vmin
 
-  h3.vmin
-  .h3.vmin
+  h3
+  .h3
     font-size 7.2vmin
 
-  h4.vmin
-  .h4.vmin
+  h4
+  .h4
     font-size 6vmin
 
-  h5.vmin
-  .h5.vmin
+  h5
+  .h5
     font-size 4.2vmin
 
-  h6.vmin
-  .h6.vmin
+  h6
+  .h6
     font-size 3.6vmin
 
 b
@@ -581,10 +609,9 @@ samp
 pre code
   position relative
   display block
-  margin-top 3em
-  padding 2em 0 0 .5em
+  padding 1.9em .5em 1.5em .5em // @note `padding-top` à `1.9em` pour que les lignes en background débutent de manière plus naturelle dans la boîte qu'avec `background-position`
   white-space pre-wrap // @affected All browsers
-  color $color6
+  color #000
   background $colorBG008a linear-gradient(to top, $colorBG008b, transparent .1em)
   background-size 100% 1.5em
   border none // @affected All browsers @note Ecrase le style par défaut
@@ -611,6 +638,8 @@ pre code button
   right 0
   width inherit !important // @note Compense la règle css par défaut
   font-size 50%
+  background-color $colorBG009 !important
+  border-color $colorBG009 !important
 
 blockquote
   margin-left 0
@@ -922,28 +951,27 @@ if $bundleLists
   [class*="list"] li
     display block
 
-  [class*="list-"] > a // Ne cible que les liens directs des listes améliorées
+  [class*="list-stripe"] > a // Ne cible que les liens directs des listes améliorées
     display block
     text-decoration none
 
-  [class*="list-"][class*="-stripe"]
+  [class*="list-stripe"]
     margin 0 // @note Si éléments <ul> ou <ol>
 
-  [class*="list-"][class*="-stripe"] > *
+  :root [class*="list-stripe"] > *
     margin .5em 0 // @bugfix affected Chrome @note Problème d'interprétation avec unité rem
     padding .3em 1em
 
-  [class*="list-"][class*="-stripe"]:not([class*="-link"]) > *
-  [class*="list-"][class*="-stripe"] > a
+  [class*="list-stripe"] > *
     ifBackgroundColor($colorBG023)
     ifBoxShadow($colorBS023)
 
-  [class*="list-"][class*="-stripe"] > a
-    position relative
+  [class*="list-stripe"] > a
+    position relative // @note Effet si lien
 
-  [class*="list-"] > a:focus
-  [class*="list-"] > a:hover
-  [class*="list-"] > a:active
+  [class*="list-stripe"] > a:focus
+  [class*="list-stripe"] > a:hover
+  [class*="list-stripe"] > a:active
     ifBackgroundColor($colorBG024)
     ifBoxShadow($colorBS024)
     animation animList .1s ease-in-out
@@ -952,18 +980,8 @@ if $bundleLists
     50%
       transform scale(1.03) translateZ(0)
 
-  [class*="list-"][class*="-link"] > * // Amélioration du rendu si liens inclus dans la liste
-    padding 0
-
-  [class*="list-"][class*="-link"] a // Si un lien est placé à l'intérieur des enfants
-    padding .3em 1em
-
-  [class*="list-"][class*="-large"] > *
-  [class*="list-"][class*="-large"][class*="-link"] a
+  :root [class*="list-stripe-large"] > *
     padding .5em 1em
-
-  [class*="list-"][class*="-large"][class*="-link"] > *
-    padding 0
 
 
 // @subsection Summary
@@ -1017,8 +1035,16 @@ if $bundleNumberlists
     position relative
     display block
     padding .3em 1em
+    text-decoration none
     ifBackgroundColor($colorBG025)
     ifBoxShadow($colorBS025)
+    transition all 1s ease-in-out
+
+  [class^="list-number"] a:focus
+  [class^="list-number"] a:hover
+  [class^="list-number"] a:active
+    color darken($colorBG026, 20%)
+    ifBackgroundColor(lighten($colorBG026, 80%))
 
   [class^="list-number"] a::before
     position absolute
