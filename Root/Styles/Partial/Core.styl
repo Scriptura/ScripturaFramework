@@ -58,9 +58,9 @@ if $bundleGrid
       width 100%
       margin 0
 
-    for $arg in ($columns - 1)...0 // 10 8 6 4 3 2
-      .sizeXS-m{$arg}
-        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in ($columns - 1)...0 // 10 8 6 4 3 2
+      .sizeXS-m{$i}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
         margin-left $gutter
 
   @media (min-width $sizeXS)
@@ -72,56 +72,56 @@ if $bundleGrid
     [class^="grid"] .grid12
       width 100%
 
-    for $arg in ($columns - 1)...0
-      .grid{$arg}
-        width 'calc(%s - %s)' % (floor(100% / $columns * $arg, 2) $bugfixGrid)
+    for $i in ($columns - 1)...0
+      .grid{$i}
+        width 'calc(%s - %s)' % (floor(100% / $columns * $i, 2) $bugfixGrid)
 
-    for $arg in ($columns - 1)...0 // .m12 déjà inclus dans valeur par défaut
-      .m{$arg}
-        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in ($columns - 1)...0 // .m12 déjà inclus dans valeur par défaut
+      .m{$i}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
-    for $arg in ($columns - 1)...0
-      .o{$arg}
-        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in ($columns - 1)...0
+      .o{$i}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
   @media (min-width $sizeXS) and (max-width $sizeS)
 
     .sizeS-grid12
       width 100% // @note Pas de retrait de gouttière
 
-    for $arg in ($columns - 1)...0
-      .sizeS-grid{$arg}
-        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in ($columns - 1)...0
+      .sizeS-grid{$i}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
-    for $arg in $columns...0
-      .sizeS-m{$arg}
-        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in $columns...0
+      .sizeS-m{$i}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
-    for $arg in ($columns - 1)...0
-      .sizeS-o{$arg}
-        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in ($columns - 1)...0
+      .sizeS-o{$i}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
     .sizeS-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
       margin-left $gutter
 
   @media (min-width $sizeS) and (max-width $sizeL)
 
-    for $arg in $columns...0
-      .sizeL-m{$arg}
-        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in $columns...0
+      .sizeL-m{$i}
+        width 'calc(%s - %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
-    for $arg in ($columns - 1)...0
-      .sizeL-o{$arg}
-        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in ($columns - 1)...0
+      .sizeL-o{$i}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
     .sizeL-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
       margin-left $gutter
 
   @media (min-width $sizeL)
 
-    for $arg in ($columns - 1)...0
-      .sizeXL-o{$arg}
-        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $arg, 2) $gutter $bugfixGrid)
+    for $i in ($columns - 1)...0
+      .sizeXL-o{$i}
+        margin-left 'calc(%s + %s - %s)' % (floor(100% / $columns * $i, 2) $gutter $bugfixGrid)
 
     .sizeXL-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
       margin-left $gutter
@@ -164,9 +164,9 @@ if $bundleColumns
       padding-right $gutter
 
     // @note Pour une colonne équivalant à plusieurs colonnes de large :
-    for $arg in 2...6 // 2-5 colonnes
-      [class^="columns"] > .c{$arg}
-        width $arg * 100%
+    for $i in 2...6 // 2-5 colonnes
+      [class^="columns"] > .c{$i}
+        width $i * 100%
 
 
 // @subsection  Hidden Unhidden
@@ -298,13 +298,13 @@ if $bundleSizesBlocks
   [class*="height"]
     height 100%
 
-  for $arg in 2 3 4 5 6 8 10 12 14 16 18 20 22 24 26 28 30 32
-    .width{$arg}
-      max-width $arg * 1rem // @note Pas d'unité em sur ces éléments car changement du comportement block
+  for $i in 2 3 4 5 6 8 10 12 14 16 18 20 22 24 26 28 30 32
+    .width{$i}
+      max-width $i * 1rem // @note Pas d'unité em sur ces éléments car changement du comportement block
 
-  for $arg in 80 85 90 100
-    .vh{$arg}
-      min-height $arg * 1vh
+  for $i in 80 85 90 100
+    .vh{$i}
+      min-height $i * 1vh
 
 
 // -----------------------------------------------------------------------------
@@ -550,11 +550,13 @@ h6
 
   h5
   .h5
-    font-size 4.2vmin
+    //font-size 4.2vmin
+    font-size 1.2rem
 
   h6
   .h6
-    font-size 3.6vmin
+    //font-size 3.6vmin
+    font-size 1rem
 
 b
 strong
@@ -720,10 +722,10 @@ if $bundleZoom
   // @note Pas de '.zoom100' : aucun intérêt...
   // @todo Pas de possibilité de zoom avec cette technique au-dessous de 50%
 
-  for $arg in 1000 900 800 700 600 500 400 300 250 200 150 140 130 120 115 110 105 95 90 85 80 75 70 60 50
-    $abstr = $arg / 100
-    .zoom{$arg}
-      font-size $arg * 1%
+  for $i in 1000 900 800 700 600 500 400 300 250 200 150 140 130 120 115 110 105 95 90 85 80 75 70 60 50
+    $abstr = $i / 100
+    .zoom{$i}
+      font-size $i * 1%
       font-size 'calc(1em * %s)' % $abstr // @bugfix @affected IE 9-IE11
 
   .zoom-reset // @note Réinitialisation d'un élément enfant si élément parent zoomé
@@ -1152,12 +1154,12 @@ if $bundleHighlight
 if $bundleEmphasized
 
   .emphasized
+    margin-bottom .7em
     text-align center
 
   @media (max-width $sizeS)
 
     .emphasized
-      margin-bottom .5em
       padding-bottom .25em
       border-bottom .15em solid $colorBD029
 
@@ -1344,6 +1346,8 @@ if $bundleImages
     padding-top .5em
     text-align center
 
+  [class^="figure"] + [class^="figure"]
+    margin-top 2em
 
   // @subsection .align
   // -----------------------------------------------------------------------------
@@ -1464,7 +1468,7 @@ if $bundleFocus
 
   .focus-off img
     max-height 100vh
-    //padding $gutter
+    background-color #000 // @note Pour les .png transparents
     box-shadow 0 0 0 1000rem $colorBS040
 
 
@@ -1950,9 +1954,9 @@ if $bundleInputs
   //[class*="input"].invalid input:not(:focus)
   //[class*="input"].invalid select:not(:focus)
   //[class*="input"].invalid textarea:not(:focus)
-    animation anim-inputinvalid 2s infinite
-    
-  @keyframes anim-inputinvalid
+    animation animInvalidInput 2s infinite
+
+  @keyframes animInvalidInput
     0%
       border-color $colorBD053
     50%
@@ -2141,6 +2145,8 @@ if $bundleSearch
 
   .search button:active
     transform translate(0, .3em)
+
+if $bundleSearch and $bundleAside
 
   .aside .search
     max-width 22rem
@@ -2940,8 +2946,10 @@ if $bundleMainNav
     height 2.5em
     padding-left 1em
     padding-right 4rem
-    background-color $colorBG1101
     color $colorCL120
+    background-color $colorBG1101
+    //font-weight 100
+    letter-spacing .1em
 
   [class^="brand"] a
     color $colorCL120 // @note Même couleur que pour .brand
@@ -3100,17 +3108,30 @@ if $bundleMainNav
       width 100% // @note Nescessité de définir une largeur
       flex-direction column
       background-color $colorBG107
-      transform translateZ(0) // @note Accélération matérielle
-      transition left .2s ease-in-out
       will-change left // @note Précalcul sur les valeurs déclarées
       ifBoxShadow($colorBS1062)
-
-    .main-nav :checked ~ ul
-      left 0
 
     .main-nav li
       border-top .1em solid $colorBD108a
       border-bottom .1em solid $colorBD108b
+
+
+    //// BEGIN Test
+
+    .main-nav li
+      width 100%
+      transform translateZ(0) // @note Accélération matérielle
+      transition margin-left .3s ease-in-out
+
+    .main-nav :checked ~ ul li
+      margin-left 100vw
+
+    for $i in 1...10
+      $abstr = $i / 10
+      .main-nav li:nth-child({$i})
+        transition-delay '%ss' % $abstr
+
+    //// END Test
 
   .main-nav + *
     padding-top 3.5em !important // @note Décalage sur le conteneur suivant afin de laisser une place pour le menu de navigation en position absolute.
@@ -3188,6 +3209,7 @@ if $bundleLoginAvatar
     flex-shrink 0 // @note Évite la compression si élément poussé par nom d'utilisateur trop long
     width 2.5rem
     height 2.5rem
+    background-color #000
 
   @media (min-width $sizeNav)
     .login .active .avatar
@@ -3477,9 +3499,6 @@ if $bundleArticles
   .article > div
     margin 1rem 1rem 0
 
-  .article h1
-    margin-bottom 0
-
   @media (max-width $sizeXS)
 
     .article .button-group
@@ -3487,6 +3506,10 @@ if $bundleArticles
 
   .article aside .message
     margin-bottom 0
+
+  [itemprop="articleBody"] > :first-child
+  .article aside > :first-child
+    margin-top 0
 
 
 // -----------------------------------------------------------------------------
@@ -3546,7 +3569,7 @@ if $bundleComments
     flex-shrink 0 // @note Évite la compression si élément poussé par nom d'utilisateur trop long
     width 4rem
     height 4rem
-    background-color #444
+    background-color #000
     background-size cover
 
   .author-comment p
@@ -3564,36 +3587,15 @@ if $bundleComments
 // @description Boîtes d'extrait de contenu
 // -----------------------------------------------------------------------------
 if $bundleBox
-  //.box
-  //  position relative
-  //  padding 1rem
-  //  background-color #ddd
-
-  //.box::before
-  //.box::after
-  //  content ''
-  //  position absolute
-  //  width 100%
-  //  height 100%
-
-  //.box::before
-  //  z-index: -1
-  //  top: -.5rem
-  //  left: -.5rem
-  //  border: .5rem solid transparent
-  //  border-image: url(../../Images/border31.svg) 100 repeat
-
-  //.box::after
-  //  z-index -2
-  //  top 0
-  //  left 0
-  //  box-shadow 0 0 2rem rgba(0, 0, 0, .2)
 
   [class*="box"]
     position relative
+    display flex
+    flex-direction column
+    min-height 33rem
     padding-bottom .5rem
-    background-color $colorBG002
-    background-image linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5))
+    background-color #f5f5f5
+    //background-image linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.5))
     ifBorderRadius($r1)
     box-shadow 0 0 2em rgba(0, 0, 0, .1)
 
@@ -3615,12 +3617,25 @@ if $bundleBox
     left auto
     transform rotate(3deg)
 
+  [class*="box"] h2
+    text-align center
+
+  [class*="box"] h2 a
+    color $color6
+
+  [class*="box"] .vertical
+    flex-grow 2
+  
+  [class*="box"] [class*="icon"]
+    margin-bottom 2rem // Permet un meilleur centrage de l'icône
+    color #ccc
+
   //.emphasized::before
   //.emphasized::after
   //  border-image url('../../Images/border4.svg') 0 100 100 repeat
 
-  [class*="ribbon-container"][class*="box"]
-    background-image none
+  //[class*="ribbon-container"][class*="box"]
+  //  background-image none
 
   .box
     padding 1em
@@ -3645,7 +3660,7 @@ if $bundleBox
   a:focus .magimg
   a:hover .magimg
   a:active .magimg
-    background-position 0% 0%
+    background-position 50% 0%
 
 
 // -----------------------------------------------------------------------------
@@ -3702,6 +3717,7 @@ if $bundleRelationship
 // -----------------------------------------------------------------------------
 
 .avatar
+  background-color #000
   background-size cover
 
 
