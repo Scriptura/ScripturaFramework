@@ -1924,11 +1924,11 @@ if $bundleInputs
   [class*="input"] select
   [class*="input"] textarea
     width 100%
-    padding .5em 1em
+    padding .4em 1em
     background-color $colorBG050
-    border none
+    border .1em solid $colorBD050 // @note Permet d'anticiper le comportement des bordures colorées de '.invalid' en évitant des rattrapages en padding, aléatoires selon le type d'input
 
-  .input input // @note La déclaration '.input input' évite l'application de la règle sur '.input-group'
+  .input input // @note Évite l'application de la règle sur '.input-group'
   [class*="input"] select
   [class*="input"] textarea
     ifBorderRadius($r2)
@@ -1944,10 +1944,8 @@ if $bundleInputs
   [class*="input"].invalid input
   [class*="input"].invalid select
   [class*="input"].invalid textarea
-    padding-left .7em // @note Rattrapage de la bordure
-    padding-right .7em // @note idem
     background-color $colorBG053
-    border .3em solid $colorBD053
+    border-color $colorBD053
     background-position right .7em center // @note Révision de l'emplacement de l'astérisque si champ obligatoire
 
   [class*="input"].invalid :not(:focus)
@@ -2904,6 +2902,7 @@ if $bundleMainNav
       height 3px
       background-color $colorBG110
       transition all .2s
+      //will-change transform // @note Précalcul sur les valeurs déclarées, gourmand en ressource matérielle, ne pas utiliser si animation fluide
 
     //.main-nav label span
     //  position relative
@@ -2920,14 +2919,6 @@ if $bundleMainNav
     .main-nav label span::after
       top 8px // @bugfix @affected Chrome @note Décalage si utilisation des unités rem
 
-    .no-touch .main-nav label:hover span
-      transform rotate(-90deg)
-
-    .no-touch .main-nav label:hover span::before
-    .no-touch .main-nav label:hover span::after
-      top 0
-      transform rotate(90deg)
-
     .main-nav :checked + label span
       transform rotate(45deg)
 
@@ -2935,6 +2926,21 @@ if $bundleMainNav
     .main-nav :checked + label span::after
       top 0
       transform rotate(90deg)
+
+    .no-touch .main-nav :not(:checked) + label:hover span
+      transform rotate(-90deg)
+
+    .no-touch .main-nav :not(:checked) + label:hover span::before
+    .no-touch .main-nav :not(:checked) + label:hover span::after
+      top 0
+      transform rotate(90deg)
+
+    .no-touch .main-nav :checked + label:hover span
+      transform rotate(0)
+
+    .no-touch .main-nav :checked + label:hover span::before
+    .no-touch .main-nav :checked + label:hover span::after
+      transform rotate(0)
 
 
   // @subsection  Brand
@@ -3108,7 +3114,7 @@ if $bundleMainNav
       width 100% // @note Nescessité de définir une largeur
       flex-direction column
       background-color $colorBG107
-      will-change left // @note Précalcul sur les valeurs déclarées
+      //will-change left // @note Précalcul sur les valeurs déclarées, gourmand en ressource matérielle, ne pas utiliser si animation fluide
       ifBoxShadow($colorBS1062)
 
     .main-nav li
@@ -3120,11 +3126,13 @@ if $bundleMainNav
 
     .main-nav li
       width 100%
-      transform translateZ(0) // @note Accélération matérielle
-      transition margin-left .3s ease-in-out
+      //transform translateZ(0) // @note Accélération matérielle
+      //will-change margin-left // @note Précalcul sur les valeurs déclarées, gourmand en ressource matérielle, ne pas utiliser si animation fluide
+      transition transform .3s ease-in-out
 
     .main-nav :checked ~ ul li
-      margin-left 100vw
+      //margin-left 100vw
+      transform translateX(100vw)
 
     for $i in 1...10
       $abstr = $i / 10

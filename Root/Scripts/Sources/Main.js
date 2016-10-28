@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.41
-// @lastmodified 2016-10-13 10:45:16
+// @version      0.0.42
+// @lastmodified 2016-10-28 07:55:19
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -617,8 +617,43 @@ jQuery( '.dropcap' ).dropcap();
 // @description Effet "machine à écrire"
 // -----------------------------------------------------------------------------
 
-jQuery.fn.typewriter = function( options ) {
-	var opts = $.extend( true, {}, $.fn.typewriter.defaults, options );
+// @name jTypeWriter, JQuery plugin
+// @version 1.1 
+// @license GPL
+// @date 2008
+// @author Nikos "DuMmWiaM" Kontis, info@dummwiam.com
+// @link https://searchcode.com/codesearch/view/99910621/
+/*
+eval(function(p, a, c, k, e, r) {
+    e = function(c) {
+        return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
+    };
+    if (!''.replace(/^/, String)) {
+        while (c--) r[e(c)] = k[c] || e(c);
+        k = [function(e) {
+            return r[e]
+        }];
+        e = function() {
+            return '\\w+'
+        };
+        c = 1
+    };
+    while (c--)
+        if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+    return p
+}('(7($){$.u.v=7(b){5 c,8,w,r,x,A;5 d=$.W({},$.u.v.H,b);5 e=d.I*J;5 f=d.K.X();5 g=d.L;5 h=d.M;5 j=d.9;5 k=d.N;5 l=d.O;5 m=(f=="Y")?" ":".";5 n=P Q();5 o=0;y(i=0;i<q.p;i++){4(j){$(q[i]).9(j)}4(f=="s")n.R({3:$(q[i]),6:$(q[i]).9()});t n.R({3:$(q[i]),6:$(q[i]).9().Z(m)});4(!g)o=n[i].6.p>o?n[i].6.p:o;t o+=n[i].6.p;$(q[i]).9("")}B();7 B(){c=e/o;8=0;w=r=0;x=(!g)?C(S,c):C(T,c)};7 S(){8++;y(i=0;i<n.p;i++){5 a=n[i];4(a.6.p>=8){4(f=="s"){a.3.9(a.6.U(0,8))}t{a.3.z(a.6[8-1]);4(8<o){a.3.z(m)}}}}4(8>=o){D()}};7 T(){$3=n[w];4(f=="s"){$3.3.9($3.6.U(0,++r))}t{$3.3.z($3.6[r++]);4(r<$3.6.p)$3.3.z(m)}4(r>=$3.6.p){w++;r=0}8++;4(8>=o){D()}};7 D(){E(x);4(f!="s"){}4(k){4(l)A=C(V,l*J);t F()}h()};7 F(){y(i=0;i<n.p;i++){n[i].3.9("")}B()};7 V(){F();E(A)};7 G(){E(x);y(i=0;i<n.p;i++){n[i].3.9(n[i].6)}};q.G=G;10 q};$.u.v.H={I:2,K:"s",L:11,M:7(){},9:"",N:12,O:0};$.u.v.13={14:P Q()}})(15);', 62, 68, '|||obj|if|var|initialText|function|nIntervalCounter|text||||||||||||||||length|this|nSequentialCounterInternal|letter|else|fn|jTypeWriter|nSequentialCounter|nInterval|for|append|nLoopInterval|init|setInterval|circleEnd|clearInterval|newLoop|endEffect|defaults|duration|1000|type|sequential|onComplete|loop|loopDelay|new|Array|push|typerSimultaneous|typerSequential|substr|loopInterval|extend|toLowerCase|word|split|return|true|false|variables|aObjects|jQuery'.split('|'), 0, {}));
+
+$( '.typewriter' ).jTypeWriter();
+*/
+
+
+// -----------------------------------------------------------------------------
+// @section     Unveiling
+// @description Dévoilement progressif du texte
+// -----------------------------------------------------------------------------
+
+jQuery.fn.unveiling = function( options ) {
+	var opts = $.extend( true, {}, $.fn.unveiling.defaults, options );
 	return this.each( function( i, item ) {
 		var interval = parseInt(opts.interval , 10) || 100,
 			tabString = $( item ).text().split( '' ),
@@ -645,10 +680,10 @@ jQuery.fn.typewriter = function( options ) {
 };
 
 ( function( $ ) {
-	$.fn.typewriter.defaults = {
+	$.fn.unveiling.defaults = {
 		'interval' : 50
 	};
-	$( '.typewriter' ).typewriter();
+	$( '.unveiling' ).unveiling();
 } )( jQuery );
 
 
