@@ -444,15 +444,15 @@ html
   color $colorCL001
 
 body
-  ifBackgroundColor($colorBG002)
+  ifBackgroundColor(#f0f0f0)
 
 ::selection
-  ifBackgroundColor($colorBG003)
+  ifBackgroundColor(rgba(255, 111, 125, .5))
 
 a
 a:link
 a:visited
-  color $colorCL004
+  color $color1
   text-decoration none
 
 a:focus
@@ -490,7 +490,7 @@ h6
 .h4
 .h5
 .h6
-  ifColor($colorCL005)
+  ifColor($color1)
   ifFontFamily($fontFamily2)
   font-weight $fontWeight2
 
@@ -604,8 +604,8 @@ code
 kbd
 samp
   word-break break-all
-  background-color $colorBG007
-  border 1px solid $colorBD007
+  background-color rgba(255, 255, 255, .6)
+  border 1px solid rgba(0, 0, 0, .1)
   border-radius .2em
 
 pre code
@@ -614,12 +614,12 @@ pre code
   padding 1.9em .5em 1.5em .5em // @note `padding-top` à `1.9em` pour que les lignes en background débutent de manière plus naturelle dans la boîte qu'avec `background-position`
   white-space pre-wrap // @affected All browsers
   color #000
-  background $colorBG008a linear-gradient(to top, $colorBG008b, transparent .1em)
+  background #fff linear-gradient(to top, rgba(0, 0, 0, .2), transparent .1em)
   background-size 100% 1.5em
   border none // @affected All browsers @note Ecrase le style par défaut
-  border-left .5em solid $colorBD008
+  border-left .5em solid $color6
   border-radius 0 // @note Compense la règle par défaut
-  ifBoxShadow($colorBS008)
+  ifBoxShadow(.5rem .5rem 2rem rgba(0, 0, 0, .1))
 
 pre code::before
   position absolute
@@ -629,10 +629,10 @@ pre code::before
   float left
   padding .2em .5em
   font-family monospace, serif
-  color $colorCL009
-  background-color $colorBG009
+  color #fff
+  background-color $color6
   ifBorderRadius($r3 $r3 $r3 0)
-  ifBoxShadow($colorBS009)
+  ifBoxShadow(.5rem .5rem 2rem rgba(0, 0, 0, .1))
 
 pre code button
   position absolute
@@ -640,13 +640,13 @@ pre code button
   right 0
   width inherit !important // @note Compense la règle css par défaut
   font-size 50%
-  background-color $colorBG009 !important
-  border-color $colorBG009 !important
+  background-color $color6 !important
+  border-color $color6 !important
 
 blockquote
   margin-left 0
   padding-left 1.5em
-  border-left .5em solid $colorBD010
+  border-left .5em solid #ebebeb
 
 blockquote footer::before
   content '\2014 \00A0'
@@ -737,7 +737,7 @@ if $bundleZoom
 if $bundleVerses
 
   .verse
-    color $colorCL011
+    color $color1
     ifFontFamily($fontFamily) // @note Définition obligatoire
     font-size .7rem !important
 
@@ -759,8 +759,8 @@ if $bundleDropCaps
     ifFontFamily($fontFamily3)
     font-weight 600
     font-size 3em
-    ifColor($colorCL012)
-    ifBackgroundColor($colorBG012)
+    ifColor(#777)
+    ifBackgroundColor(#ebebeb)
 
 
 // @subsection  Letters
@@ -774,8 +774,8 @@ if $bundleLetters
 
   .letter
     // @note Ne pas déclarer ici de font-family afin d'éviter un effet de rechargement de la police après le chargement de la page.
-    ifColor($colorCL0121)
-    
+    ifColor(#333)
+
 
 // @subsection  Headbands
 // @description Bandeau de bord de page
@@ -797,7 +797,7 @@ if $bundleHeadbands
     padding 6rem 11rem .5rem 11rem
     width 30rem
     text-align center
-    background-color $colorBG013
+    background-color #eee
     transform rotate(45deg)
     transform-origin 18rem 1.5rem
 
@@ -810,7 +810,7 @@ if $bundleHeadbands
   .headband > :hover
   .headband > :active // @note Si balise a
     text-decoration none
-    background-color $colorBG014
+    background-color #000
 
 
 // @subsection  Ribbons
@@ -821,7 +821,7 @@ if $bundleRibbons
   [class*="ribbon-container"]
     position relative
     min-height 7em // @note Minimum de hauteur nécessaire pour contenir un ribbon
-    background-image linear-gradient(45deg, $colorBG015a 80%, $colorBG015b)
+    background-image linear-gradient(45deg, transparent 80%, rgba(255, 255, 255, .2))
 
   .ribbon
     overflow hidden
@@ -840,15 +840,15 @@ if $bundleRibbons
     height 2em
     line-height 2
     text-align center
-    ifColor($colorCL016)
-    background $colorBG016a linear-gradient(to top, $colorBG016b, $colorBG016c)
-    ifBoxShadow($colorBS016)
+    ifColor(#eee !important)
+    background $color1 linear-gradient(to top, rgba(0, 0, 0, .1), rgba(255, 255, 255, .05))
+    ifBoxShadow(0 .3em 1em -.5em rgba(0, 0, 0, 1))
     transform rotate(45deg)
 
   .ribbon :hover
   .ribbon :focus
   .ribbon :active
-    ifColor($colorCL017)
+    ifColor(#fff !important)
     text-decoration none
 
   .ribbon ::before
@@ -857,7 +857,7 @@ if $bundleRibbons
     position absolute
     z-index -1
     top 100%
-    border .4em solid $colorBD018
+    border .4em solid darken($color1, 20%)
 
   [class*="ribbon-container"] > .ribbon ::before
     left 0
@@ -874,7 +874,7 @@ if $bundleRibbons
     border-bottom-color transparent
 
   .ribbon-container-bottom
-    background-image linear-gradient(135deg, $colorBG019a 80%, $colorBG019b)
+    background-image linear-gradient(135deg, transparent 80%, rgba(255, 255, 255, .2))
 
   .ribbon-container-bottom > .ribbon
   .ribbon-container-dual > .ribbon:last-of-type
@@ -890,21 +890,21 @@ if $bundleRibbons
   .ribbon-container-bottom > .ribbon ::before
   .ribbon-container-dual > .ribbon:last-of-type ::before
     top -.7em
-    border .4em solid $colorBD020
+    border .4em solid darken($color1, 20%)
     border-top-color transparent
     border-right-color transparent
 
   .ribbon-container-bottom > .ribbon ::after
   .ribbon-container-dual > .ribbon:last-of-type ::after
     top -.7em
-    border .4em solid $colorBD020
+    border .4em solid darken($color1, 20%)
     border-top-color transparent
     border-left-color transparent
 
   @media (max-width $sizeXS)
 
     .sizeXS-ribbon-container-bottom
-      background-image linear-gradient(135deg, $colorBG021a 80%, $colorBG021b)
+      background-image linear-gradient(135deg, transparent 80%, rgba(255, 255, 255, .2))
 
     .sizeXS-ribbon-container-bottom > .ribbon
       top inherit
@@ -918,20 +918,20 @@ if $bundleRibbons
     .sizeXS-ribbon-container-bottom > .ribbon ::before
       top -.7em
       left 0
-      border .4em solid $colorBD020
+      border .4em solid darken($color1, 20%)
       border-top-color transparent
       border-right-color transparent
 
     .sizeXS-ribbon-container-bottom > .ribbon ::after
       top -.7em
       right 0
-      border .4em solid $colorBD020
+      border .4em solid darken($color1, 20%)
       border-top-color transparent
       border-left-color transparent
 
   .ribbon-container-dual
     min-height 15em // @note Minimum de hauteur nécessaire pour contenir deux ribbons
-    background-image linear-gradient(45deg, $colorBG022a 80%, $colorBG022b), linear-gradient(135deg, $colorBG022a 80%, $colorBG022b)
+    background-image linear-gradient(45deg, transparent 80%, rgba(255, 255, 255, .2)), linear-gradient(135deg, transparent 80%, rgba(255, 255, 255, .2))
 
   .ribbon-container-dual > .ribbon ::before
     border-right-color transparent
@@ -965,8 +965,8 @@ if $bundleLists
     padding .3em 1em
 
   [class*="list-stripe"] > *
-    ifBackgroundColor($colorBG023)
-    ifBoxShadow($colorBS023)
+    ifBackgroundColor(#fff)
+    ifBoxShadow(.5rem .5rem 2rem rgba(0, 0, 0, .1))
 
   [class*="list-stripe"] > a
     position relative // @note Effet si lien
@@ -974,8 +974,8 @@ if $bundleLists
   [class*="list-stripe"] > a:focus
   [class*="list-stripe"] > a:hover
   [class*="list-stripe"] > a:active
-    ifBackgroundColor($colorBG024)
-    ifBoxShadow($colorBS024)
+    ifBackgroundColor(#fefefe)
+    ifBoxShadow(.5rem .5rem 2rem rgba(0, 0, 0, .25))
     animation animList .1s ease-in-out
 
   @keyframes animList
@@ -1038,15 +1038,15 @@ if $bundleNumberlists
     display block
     padding .3em 1em
     text-decoration none
-    ifBackgroundColor($colorBG025)
-    ifBoxShadow($colorBS025)
+    ifBackgroundColor(#fff)
+    ifBoxShadow(.5rem .5rem 2rem rgba(0, 0, 0, .1))
     transition all 1s ease-in-out
 
   [class^="list-number"] a:focus
   [class^="list-number"] a:hover
   [class^="list-number"] a:active
-    color darken($colorBG026, 20%)
-    ifBackgroundColor(lighten($colorBG026, 80%))
+    color darken($color1, 20%)
+    ifBackgroundColor(lighten($color1, 80%))
 
   [class^="list-number"] a::before
     position absolute
@@ -1060,11 +1060,11 @@ if $bundleNumberlists
     width 2em
     text-align center
     font-weight bold
-    color $colorCL026
-    background-color $colorBG026
+    color #fff
+    background-color $color1
 
   .list-number a::before // @note À dissocier de .list-number-rounded
-    ifBoxShadow($colorBS0261)
+    ifBoxShadow(.5rem .5rem 2rem rgba(0, 0, 0, .1))
 
   .list-number a::after
     content ''
@@ -1079,7 +1079,7 @@ if $bundleNumberlists
   .list-number a:hover::after
   .list-number a:active::after
     left -.5rem
-    border-left-color $colorBD027
+    border-left-color $color1
 
   .list-number-rounded a
     border-radius 1em // @note Non définie par une variable car indépendante des autres valeurs.
@@ -1541,15 +1541,6 @@ if $bundleSlideshow
 
   .cycle-text > div *
     color #fff
-
-  :root .cycle-text *:not(button)
-    font-size 8vmin
-  //  color $colorTest
-
-  @media (min-width $sizeXS)
-
-    :root .cycle-text *:not(button)
-      font-size 3rem
 
   .slideshow button
   .slideshow button::after
@@ -3221,7 +3212,7 @@ if $bundleLoginAvatar
 
   @media (min-width $sizeNav)
     .login .active .avatar
-      animation animLogin 5s infinite ease-in-out
+      animation animLogin 5s ease-in-out infinite
 
     @keyframes animLogin
       0%
@@ -3361,7 +3352,7 @@ if $bundleLoaders
     border .2em solid $colorBD113a
     border-left-color $colorBD113b
     border-radius 50%
-    animation animLoader 1s infinite linear
+    animation animLoader 1s linear infinite
 
   .loader2
     border 1em solid $colorBD114a
@@ -3382,8 +3373,8 @@ if $bundleLoaders
     width 1em
     height 1em
     border-radius 50%
+    animation animLoader3 1.2s ease-in-out infinite
     animation-fill-mode both
-    animation animLoader3 1.2s infinite ease-in-out
 
   .loader3
     top -3.5em // @note Les margins et top servent à donner une hauteur au visuel
@@ -3537,6 +3528,7 @@ if $bundleAside
   .aside textarea
     color $colorCL036
     background-color #444
+    border-color #444
     border-radius 0
 
 if $bundleAside and $bundleEmphasized
@@ -3596,7 +3588,7 @@ if $bundleComments
 // -----------------------------------------------------------------------------
 if $bundleBox
 
-  [class*="box"]
+  .box
     position relative
     display flex
     flex-direction column
@@ -3607,8 +3599,8 @@ if $bundleBox
     ifBorderRadius($r1)
     box-shadow 0 0 2em rgba(0, 0, 0, .1)
 
-  [class*="box"]::before
-  [class*="box"]::after
+  .box::before
+  .box::after
     content ''
     z-index -1
     position absolute
@@ -3620,32 +3612,32 @@ if $bundleBox
     box-shadow 0 1.5em 2em rgba(0, 0, 0, .4)
     transform rotate(-3deg) translateZ(0)
 
-  [class*="box"]::after
+  .box::after
     right 1em
     left auto
     transform rotate(3deg)
 
-  [class*="box"] h2
+  .box h2
     text-align center
 
-  [class*="box"] h2 a
+  .box h2 a
     color $color6
 
-  [class*="box"] .vertical
+  .box .vertical
     flex-grow 2
   
-  [class*="box"] [class*="icon"]
+  .box [class*="icon"]
     margin-bottom 2rem // Permet un meilleur centrage de l'icône
-    color #ccc
+    //color #ccc
 
   //.emphasized::before
   //.emphasized::after
   //  border-image url('../../Images/border4.svg') 0 100 100 repeat
 
-  //[class*="ribbon-container"][class*="box"]
+  //[class*="ribbon-container"].box
   //  background-image none
 
-  .box
+  .box:not(.box0)
     padding 1em
 
   .box0
@@ -3740,6 +3732,24 @@ if $bundleMessagesBox and $bundleInputs
       opacity 1
     50%
       opacity .2
+
+
+// -----------------------------------------------------------------------------
+// @section     Unveiling
+// @description Dévoilement en fondu
+// -----------------------------------------------------------------------------
+if $bundleUnveiling
+
+  .unveiling-start
+    opacity 0
+    animation animUnveiling 2s .2s ease-in-out 1
+    animation-fill-mode forwards
+
+    @keyframes animUnveiling
+      0%
+        opacity 0
+      100%
+        opacity 1
 
 
 // -----------------------------------------------------------------------------

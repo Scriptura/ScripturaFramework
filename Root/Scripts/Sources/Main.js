@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         Scriptura
 // @description  Interface for web apps
-// @version      0.0.42
-// @lastmodified 2016-10-28 07:55:19
+// @version      0.0.43
+// @lastmodified 2016-11-21 23:51:11
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -13,35 +13,34 @@
 // @description Détecte les supports et ajoute des classes dans le tag html
 // -----------------------------------------------------------------------------
 
-// @note Remplace le script Modernizr
+// @note Remplace le script Modernizr pour les deux seuls tests dont nous avons besoin
 
-( function( $ ) {
-	$( 'html' ).addClass( 'js' ).removeClass( 'no-js' ); // Vérification de Javascript
-	// Vérification du support de touch ( jQuery )
-	//	$(window).one({
-	//		tap : function() {
-	//			Modernizr.touch = false; // Add this line if you have Modernizr
-	//			$( 'html' ).addClass( 'touch' );
-	//		}
-	//	} );
-	// Vérification du support de touch (Vanilla js) :
+function jsDetect() { // Vérification de la présence de Javascript (Vanilla js)
+	var el = document.getElementsByClassName( 'no-js' )[0];
+	el.classList.remove( 'no-js' );
+	el.classList.add( 'js' );
+}
+jsDetect();
+
+function touchDetect() { // Vérification du support de touch (Vanilla js)
 	var supports = ( function() {
 		var html = document.documentElement,
 			touch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 		if (touch) {
-			html.className += ' touch';
+			html.classList.add( 'touch' );
 			return {
 				touch: true
 			};
 		}
 		else {
-			html.className += ' no-touch';
+			html.classList.add( 'no-touch' );
 			return {
 				touch: false
 			};
 		}
 	} )();
-} )( jQuery );
+}
+touchDetect();
 
 
 // -----------------------------------------------------------------------------
@@ -54,7 +53,7 @@
 // @note Le fait de placer la fonction en dehors de la boucle évite une erreur jshint
 // @link http://stackoverflow.com/questions/10320343/dont-make-functions-within-a-loop
 
-( function( $ ) {
+function protected() {
 	var eventTest = function( e ) {
 		e = e || window.event;
 		if( e.preventDefault ) {
@@ -70,7 +69,8 @@
 			protect[i].onmousedown = eventTest;
 		}
 	};
-} )( jQuery );
+}
+protected();
 
 
 // -----------------------------------------------------------------------------
@@ -104,25 +104,6 @@
 		return this.hostname && this.hostname !== location.hostname;
 	} ).attr( 'target', '_blank' );
 } )( jQuery );
-
-
-// -----------------------------------------------------------------------------
-// @section     Main Nav
-// @description Menu de navigation principal
-// -----------------------------------------------------------------------------
-
-// @note Script remplacé par une solution full CSS
-// @see _core.scss
-/*
-( function( $ ) {
-	var nav = $( '.main-nav ul' );
-	$( '.brand' ).append( '<button type="button" id="cmd-main-nav" class=""><span></span></button>' );
-	$( '#cmd-main-nav' ).on( 'click', function() {
-		$( '.main-nav ul' ).slideToggle( 300 ).css( 'display', 'flex' );
-		$( this ).toggleClass( 'active' ); // Permet de cibler le bouton si actif
-	} );
-} )( jQuery );
-*/
 
 
 // -----------------------------------------------------------------------------
@@ -211,8 +192,8 @@
 		if ( location.pathname.replace( /^\//,'' ) == this.pathname.replace( /^\//,'' ) && location.hostname == this.hostname ) {
 			var target = $( this.hash );
 			target = target.length ? target : $( '[name=' + this.hash.slice(1) +']' );
-			if (target.length) {
-				$( 'html, body' ).animate({
+			if ( target.length ) {
+				$( 'html, body' ).animate( {
 					scrollTop: target.offset().top
 				}, 400 );
 				// @note Pas de 'return false', afin de préserver les ancres
@@ -227,9 +208,10 @@
 // @description Ajout d'une ID sur le body pour permettre un ciblage de retour en haut
 // -----------------------------------------------------------------------------
 
-( function( $ ) {
-	$( 'body' ).attr( 'id', 'index' );
-} )( jQuery );
+function bodyIndex() {
+	document.body.id = 'index';
+}
+bodyIndex();
 
 
 // -----------------------------------------------------------------------------
@@ -652,39 +634,17 @@ $( '.typewriter' ).jTypeWriter();
 // @description Dévoilement progressif du texte
 // -----------------------------------------------------------------------------
 
-jQuery.fn.unveiling = function( options ) {
-	var opts = $.extend( true, {}, $.fn.unveiling.defaults, options );
-	return this.each( function( i, item ) {
-		var interval = parseInt(opts.interval , 10) || 100,
-			tabString = $( item ).text().split( '' ),
-			length = tabString.length,
-			letter = [];
-		$( item ).text( '' );
-		for( var k = 0; k < length; k++ ) {
-			letter.push(
-				$( '<span/>', {
-					'css' : {
-						'display' : 'none'
-					},
-					'text' : tabString[k]
-				} )
-			);
-		}
-		$( item ).queue( function() {
-			for( var i = 0; i < length; i++ ) {
-				letter.shift().appendTo( item ).delay( interval * i ).fadeIn( 600 );
-			}
-			$( this ).dequeue();
-		} );
-	} );
-};
+// @note Classe à injecter selon de niveau de scroll
+// @todo À développer...
+//$( '.unveiling' ).addClass( 'unveiling-start' ); // jQuery
 
-( function( $ ) {
-	$.fn.unveiling.defaults = {
-		'interval' : 50
-	};
-	$( '.unveiling' ).unveiling();
-} )( jQuery );
+function unveiling() {
+	var unveiling = document.getElementsByClassName( 'unveiling' );
+	for( var i = 0; i < unveiling.length; i++ ) {
+		document.getElementsByClassName( 'unveiling' )[i].classList.add( 'unveiling-start' );
+	}
+}
+unveiling();
 
 
 // -----------------------------------------------------------------------------
