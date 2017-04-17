@@ -1,9 +1,3 @@
-// @note Les classes sont utilisées dans la logique OSCSS, à la manière des espaces de nom, seule la classe '.active' est utilisée de manière transversale
-
-// selector
-//   property value
-
-
 // -----------------------------------------------------------------------------
 // @section     Grid
 // @description Grille css flexible
@@ -125,6 +119,43 @@ if $bundleGrid
 
     .sizeXL-o0 // @note Cette classe permet l'annulation d'un offset dans cette définition
       margin-left $gutter
+
+
+// -----------------------------------------------------------------------------
+// @section     Masonry
+// @description Position optimale en fonction de l'espace vertical disponible
+// -----------------------------------------------------------------------------
+if $bundleMasonry
+  // @note Solution CSS only
+  // @toto En développement...
+
+  .masonry
+    margin $gutter 0
+    column-gap $gutter
+
+  @media (min-width $sizeXS)
+    .masonry
+      column-count 2
+
+  @media (min-width $sizeS)
+    .masonry
+      column-count 3
+
+  @media (min-width $sizeL)
+    .masonry
+      column-count 4
+
+  @media (min-width $sizeXL)
+    .masonry
+      column-count 5
+
+  .masonry > *
+    display inline-block
+    width 100%
+    margin 0 0 $gutter
+    padding 0 1em
+    box-sizing border-box
+
 
 // -----------------------------------------------------------------------------
 // @section     Columns
@@ -359,7 +390,7 @@ if $bundleRatios
 
     :root .sizeXS-ratio
       padding-bottom 100%
-      
+
     :root .sizeXS-ratio-1-2
       padding-bottom 50%
 
@@ -377,8 +408,8 @@ if $bundleRatios
   box-sizing border-box
 
 html
-  height 100% // @bugfix @affected IE @note Pour les hauteur de page à 100%
-  width 100%
+  height 100% // @bugfix @affected All browers @note Important a définir pour certains cas d'utilisation
+  //width 100%
 
 body
   display flex
@@ -438,9 +469,9 @@ html
   // @note Pour des raisons de saut au chargement ou dans certaines conditions de resize (pour Chrome) il est déconseillé d'utiliser le font-size pour obtenir un zoom général sur l'élément html.
   // font-size 62.5% // @note 62.5% pour 1rem = 10px
   // font-size calc(1em * .625) // @bugfix @affected IE 9-IE11 @note Correctif de la règle précédente
-  text-size-adjust 100% // @bugfix @affected iOS Safari @note Améliore le zoom sur le text pour petits écrans. Propriété en cour de standardisation.
+  text-size-adjust 100% // @bugfix @affected IE pour Windows Phone @note Améliore le zoom sur le texte
   font $fontWeight 1em $fontFamily // @bugfix @affected IE 9-10 @note Pas d'unités rem en raccourcis
-  line-height 1.5
+  line-height 1.5 // @bugfix @affected All browsers
   color $colorCL001
 
 body
@@ -496,9 +527,9 @@ h6
 
 h1
 .h1
-  margin-top 1.3rem
-  margin-bottom .8rem
-  font-size 3.2em
+  margin-top 1.3rem // @bugfix @affected Chrome, Firefox et Safari @note Si éléments inclus dans `section` et `article`
+  margin-bottom .8rem // @note Idem
+  font-size 3.2em // @note Idem
 
 h2
 .h2
@@ -631,7 +662,8 @@ pre code::before
   font-family monospace, serif
   color #fff
   background-color $color6
-  ifBorderRadius($r3 $r3 $r3 0)
+  if $r3 != false
+    border-radius $r3 $r3 $r3 0
   ifBoxShadow(.5rem .5rem 2rem rgba(0, 0, 0, .1))
 
 pre code button
@@ -995,7 +1027,7 @@ if $bundleSummary
   .summary
     display flex
     flex-wrap wrap
-    width 'calc(100% + %s - %s)' % $gutter $bugfixGrid
+    width 'calc(100% + %s - %s)' % ($gutter $bugfixGrid)
     margin-left - $gutter !important
 
   .summary > *
@@ -1006,17 +1038,17 @@ if $bundleSummary
   @media (min-width $sizeXS)
 
     .summary > *
-      width 'calc(%s - %s - %s)' % ((100% / 12 * 6) $gutter $bugfixGrid)
+      width 'calc(%s - %s - %s)' % (floor(100% / 12 * 6, 2) $gutter $bugfixGrid)
 
   @media (min-width $sizeS)
 
     .summary > *
-      width 'calc(%s - %s - %s)' % ((100% / 12 * 4) $gutter $bugfixGrid)
+      width 'calc(%s - %s - %s)' % (floor(100% / 12 * 4, 2) $gutter $bugfixGrid)
 
   @media (min-width $sizeL)
 
     .summary > *
-      width 'calc(%s - %s - %s)' % ((100% / 12 * 3) $gutter $bugfixGrid)
+      width 'calc(%s - %s - %s)' % (floor(100% / 12 * 3, 2) $gutter $bugfixGrid)
 
 
 // @subsection Number Lists
@@ -1160,7 +1192,7 @@ if $bundleEmphasized
   @media (max-width $sizeS)
 
     .emphasized
-      padding-bottom .25em
+      padding-bottom .5em
       border-bottom .15em solid $colorBD029
 
   @media (min-width $sizeS)
@@ -2021,7 +2053,7 @@ if $bundleInputs
     width 1em !important // @bugfix Firefox
     margin 0 1em 0 0
     cursor pointer
-  
+
   .input-password input:not([type="checkbox"])
     padding-right 3em
     ifBorderRadius($r2)
@@ -3033,7 +3065,7 @@ if $bundleMainNav
       ifColor($colorCL1051)
       ifBackgroundColor($colorBG1051)
 
-    if($colorBS1052) // @note Si box-shadow, alors tout le code suivant pour la mise en place de cette règle (création d'un ::after, position relative, etc) :  
+    if($colorBS1052) // @note Si box-shadow, alors tout le code suivant pour la mise en place de cette règle (création d'un ::after, position relative, etc) :
 
       .main-nav li
         position relative
@@ -3059,7 +3091,7 @@ if $bundleMainNav
         left calc(50% - 1em)
         height 2rem
         width 2rem
-        background-color transparent
+        background-color $colorBG1052
         ifBoxShadow($colorBS1052)
         transform rotate(45deg)
 
@@ -3137,63 +3169,6 @@ if $bundleMainNav
 
 
 // -----------------------------------------------------------------------------
-// @section     Nav Bottom
-// @description Menu en bas pour les petites définitions d'écran
-// @todo        Incompatibilité avec Safari et Google shearch pour iPhone
-// -----------------------------------------------------------------------------
-if $bundleNavBottom
-
-  $colorTest = Tan
-  $cmdSize = 2.5em
-
-  .sizeNav-nav-bottom button
-    display none
-
-  @media (max-width $sizeNav)
-
-    .sizeNav-nav-bottom .wrap > :last-child
-      overflow-y auto // @note Si nombre d'items du menu plus haut que l'écran
-      position fixed !important
-      z-index 10
-      top 'calc(100vh - %s)' % $cmdSize
-      left 0 !important // @todo
-      width 100%
-      height 100vh
-      background-color #333
-      transition top .3s
-
-    .sizeNav-nav-bottom .wrap > :last-child.active
-      top 0
-
-    .sizeNav-nav-bottom button
-      display flex
-      width 100%
-      height $cmdSize
-      background-color #333
-      border none
-
-    .sizeNav-nav-bottom button::before
-      content ''
-      display block
-      height .2em
-      width $cmdSize
-      margin auto
-      background-color $colorTest
-      box-shadow 0 floor(- $cmdSize / 4, 2) 0 0 $colorTest, 0 floor($cmdSize / 4, 2) 0 0 $colorTest
-
-    .sizeNav-nav-bottom ul
-      position static // @todo
-
-  .scroll-top.hidden
-    display none !important // @note Contourne une règle posée en javascript
-
-  @media (max-width $sizeNav)
-
-    .sizeNav-nav-bottom ~ .footer
-      padding-bottom 3.5rem // @note Permet de prendre en compte le menu en position basse
-
-
-// -----------------------------------------------------------------------------
 // @section     Login Avatar
 // @description Connexion utilisateur
 // -----------------------------------------------------------------------------
@@ -3222,7 +3197,7 @@ if $bundleLoginAvatar
         transform rotate(360deg)
 
   @media (max-width $sizeNav)
-      
+
     .login .avatar
       margin-left auto
 
@@ -3230,7 +3205,7 @@ if $bundleLoginAvatar
       line-height 2.5
 
   @media (min-width $sizeNav)
-  
+
     .login
       overflow hidden // @todo Permet l'arrondit pour le gravatar mais cache le pseudo-élément de .active
       border-radius 2.5rem 0 0 2.5rem
@@ -3241,10 +3216,10 @@ if $bundleLoginAvatar
     .login .avatar
       order -1
       border-radius 50%
-      
+
     .login > * :first-child
       display none
-    
+
     .login > * :nth-child(2)
       margin-left .5rem
       max-width 10rem
@@ -3267,7 +3242,7 @@ if $bundleBreadcrumb
   .breadcrumb li
     display inline
 
-  .breadcrumb li:not(:first-child):before
+  .breadcrumb li:not(:first-child)::before
     box-sizing border-box
     content ''
     display inline-block
@@ -3409,7 +3384,7 @@ if $bundleLoaders
 // @subsection  Terms of use & No Script
 // -----------------------------------------------------------------------------
 
-.terms-use
+#terms-use
 .noscript
   position fixed
   z-index 4000
@@ -3417,7 +3392,7 @@ if $bundleLoaders
   right 0
   padding 1rem
 
-.terms-use
+#terms-use
   display none // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
 
 
@@ -3625,7 +3600,7 @@ if $bundleBox
 
   .box .vertical
     flex-grow 2
-  
+
   .box [class*="icon"]
     margin-bottom 2rem // Permet un meilleur centrage de l'icône
     //color #ccc
@@ -3672,7 +3647,7 @@ if $bundleRelationship
   .relationship
     display flex
     flex-wrap wrap
-    width 'calc(100% + %s - %s)' % $gutter $bugfixGrid
+    width 'calc(100% + %s - %s)' % ($gutter $bugfixGrid)
     margin-left - $gutter !important
 
   .relationship a
@@ -3871,4 +3846,3 @@ if $bundleOrganizationalChart
 
   :root .organizational-chart li:empty // @note Permet le support des cases vides
     visibility hidden // @note Pas de 'display none' afin de ne pas désorganiser les items
-

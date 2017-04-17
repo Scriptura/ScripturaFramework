@@ -10,6 +10,7 @@
 // -----------------------------------------------------------------------------
 
   $bundleGrid =                true
+  $bundleMasonry =             false
   $bundleColumns =             true
   $bundleHidden =              true
   $bundlePositions =           true
@@ -53,7 +54,6 @@
   $bundlePopins =              true
   $bundleTooltips =            true
   $bundleMainNav =             true
-  $bundleNavBottom =           false
   $bundleLoginAvatar =         true
   $bundleBreadcrumb =          true
   $bundleAnchors =             true
@@ -141,11 +141,11 @@
 // @subsection Typography
 // -----------------------------------------------------------------------------
 
-//fontFamily =	'Open Sans', 'Helvetica Light', Helvetica, 'Droid Sans', Arial, sans-serif
-  $fontFamily =	sans-serif                  // Default fonts
-  $fontFamily2 = sans-serif                 // Titles
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans:400,700')
+
+  $fontFamily = 'Droid Sans', sans-serif    // Default fonts
+  $fontFamily2 = 'Droid Sans', sans-serif   // Titles
   $fontFamily3 = false                      // Dropcap
-  //$fontFamily4 = false
   $fontFamily5 = 'GFS Didot', 'Palatino Linotype', Palatino, sans-serif // :lang(grc)
   $fontFamily6 = 'Libre Baskerville', 'Palatino Linotype', Palatino, sans-serif // :lang(he)
   $fontWeight = 300                         // épaisseur par défaut
@@ -153,17 +153,20 @@
 
 
 // @subsection  Colors
-// @description Propagation des couleurs prédéfinies
+// @description Propagation des couleurs pour le thème
 // -----------------------------------------------------------------------------
 
-// Palette de référence pour les couleurs du thème
-  $color0 = #fff                            // couleur de fond
-  $color1 = #ff6f7d                         // couleur dominante 1
+  // @documentation :
+  // [1] Correctif pour les gris foncés, afin que l'impression de profondeur du gris soit visuellement équivalente entre les deux couleurs :
+
+  // Palette de référence pour les couleurs du thème
+  $color0 = IndianRed                       // couleur de fond
+  $color1 = #b03c57                         // couleur dominante 1
   $color2 = #b9515d                         // couleur dominante 2
-  $color4 = #dff0d8                         // couleur secondaire (vert)
-  $color5 = #f2dede                         // couleur secondaire (rouge)
-  $color6 = #d9edf7                         // couleur secondaire (bleu)
-  $color7 = #fcf8e3                         // couleur secondaire (jaune)
+  $color4 = #7ca166                         // couleur secondaire (vert)
+  $color5 = #bb7c3c                         // couleur secondaire (orange)
+  $color6 = #5a728a                         // couleur secondaire (bleu)
+  $color7 = #f8fed8                         // couleur secondaire (jaune)
   $colorG = desaturate($color1, 100%)       // gris de référence
 
 
@@ -177,24 +180,26 @@
 // colorTS000 = text-shadow
 // colorFI080 = fill
 
-  $colorCL0001 = false                      // Footer
-  $colorBG0001 = #333
-  $colorCL0002 = false
-  $colorCL0003 = false
+  $colorCL0001 = #aaa                       // Footer
+  $colorBG0001 = #555
+  $colorCL0002 = #efefef
+  $colorCL0003 = #777
   
   $colorCL001 = #777                        // html
-  $colorBG002 = $color0                     // body
+  $colorBG002 = #f0f0f0                     // body
   $colorBG003 = rgba(255, 111, 125, .5)     // ::selection
   $colorCL004 = $color1                     // Links
-  $colorCL005 = #333                        // Titles
+  $colorCL005 = $color1                     // Titles
+  $colorBG006 = darken($colorBG002, 10%)    // Tabs
+  $colorBD006 = #aaa
   $colorBG007 = rgba(255, 255, 255, .6)
   $colorBD007 = rgba(0, 0, 0, .1)
-  $colorBG008a = $color0
+  $colorBG008a = #fff //darken($colorBG002, 5%)
   $colorBG008b = rgba(0, 0, 0, .2)
-  $colorBD008 = $color1
-  $colorBS008 = false
+  $colorBD008 = $color6
+  $colorBS008 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
   $colorCL009 = $color0
-  $colorBG009 = $color1
+  $colorBG009 = $colorBD008
   $colorBS009 = $colorBS008
   $colorBD010 = #ebebeb                     // blockquote
   $colorCL011 = $color1                     // Verses
@@ -202,52 +207,53 @@
   $colorBG012 = false
   $colorBG013 = #eee                        // Headbands
   $colorBG014 = #000
-  $colorBG015a = rgba(0, 0, 0, 0)           // Ribbons
-  $colorBG015b = rgba(0, 0, 0, .05)
-  $colorCL016 = $colorG !important
-  $colorBG016a = #333
+  $colorBG015a = transparent                // Ribbons
+  $colorBG015b = rgba(255, 255, 255, .2)
+  $colorCL016 = #eee !important
+  $colorBG016a = $color1
   $colorBG016b = rgba(0, 0, 0, .1)
   $colorBG016c = rgba(255, 255, 255, .05)
   $colorBS016 = 0 .3em 1em -.5em rgba(0, 0, 0, 1)
   $colorCL017 = #fff !important
-  $colorBD018 = #333
-  $colorBG019a = rgba(0, 0, 0, 0)
-  $colorBG019b = rgba(0, 0, 0, .1)
-  $colorBD020 = #333
-  $colorBG021a = rgba(0, 0, 0, 0)
-  $colorBG021b = rgba(0, 0, 0, .1)
+  $colorBD018 = darken($colorBG016a, 20%)
+  $colorBG019a = $colorBG015a
+  $colorBG019b = $colorBG015b
+  $colorBD020 = darken($colorBG016a, 20%)
+  $colorBG021a = $colorBG015a
+  $colorBG021b = $colorBG015b
   $colorBG022a = $colorBG021a
   $colorBG022b = $colorBG021b
-  $colorBG023 = #ebebeb                     // Special Lists
-  $colorBS023 = false
-  $colorBG024 = #ddd
-  $colorBS024 = false
+  $colorBG023 = #fff                        // Special Lists
+  $colorBS023 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
+  $colorBG024 = #fefefe
+  $colorBS024 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
   $colorBG025 = $colorBG023                 // Number Lists
-  $colorBS025 = false
+  $colorBS025 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
   $colorCL026 = $color0
   $colorBG026 = $color1
-  $colorBS0261 = false
-  $colorBD027 = $color1
-  $colorBS0271 = false
+  $colorBS0261 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
+  $colorBD027 = $colorBG026
+  $colorBS0271 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
   $colorBD028 = #ebebeb                     // Separators
-  $colorBD029 = #ebebeb                     // Emphasized Titles
-  $colorCL0291 = $color0                    // Surround
+  $colorBD029 = $color6                     // Emphasized Titles
+  $colorCL0291 = #ddd                       // Surround
   $colorBG0291 = $color1
-  $colorBS0291 = false
-  $colorBG030 = #ebebeb                     // Messages Box
-  $colorBD030 = $color0
-  $colorBS030 = false
-  $colorBG031 = #ebebeb
+  $colorBS0291 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
+  $colorCL030 = false
+  $colorBG030 = darken($colorBG002, 5%)     // Messages Box
+  $colorBD030 = $colorBG002
+  $colorBS030 = .5rem .5rem 2rem rgba(0, 0, 0, .1)
+  $colorBG031 = $colorBG030
   $colorBD031 = $colorBD030
   $colorBS031 = $colorBS030
-  $colorBG032 = $color6
-  $colorBG033 = $color4
-  $colorBG034 = $color5
-  $colorBG035a = color7
+  $colorBG032 = lighten($color6, 70%)
+  $colorBG033 = lighten($color4, 70%)       // lighten() for Stylus : 70% = Sass : 35%
+  $colorBG034 = lighten($color5, 70%)
+  $colorBG035a = lighten($color7, 70%)
   $colorBG035b = rgba(0, 0, 0, .05)
-  $colorFI0351 = #333                       // Svg
-  $colorCL036 = false                       // Figures
-  $colorBG036 = #fefefe
+  $colorFI0351 = $color1                    // Svg
+  $colorCL036 = #ddd                        // Figures
+  $colorBG036 = #555
   $colorBS036 = .5rem .5rem 2rem rgba(0, 0, 0, .2)
   $colorCL037 = $color0                     // Caption Slides
   $colorTS037 = rgba(0, 0, 0, .5)
@@ -257,7 +263,7 @@
   $colorBS039 = .5rem .5rem 2rem rgba(0, 0, 0, .3) // Focus
   $colorCL040 = #aaa
   $colorBS040 = #333
-  $colorBS0401 = false                      // Medias
+  $colorBS0401 = .5rem .5rem 2rem rgba(0, 0, 0, .2) // Medias
   $colorBS041 = $colorBS0401
   $colorBG041 = #000
   $colorBS0411 = $colorBS0401               // Players
@@ -272,7 +278,7 @@
   $colorCL121 = #aaa                        // ::placeholder
 //$colorCL049 = colorCL121                  // Inputs
 //$colorBG049 = #eee
-  $colorBG050 = #eee
+  $colorBG050 = darken($colorBG002, 5%)
   $colorBD050 = $colorBG050
   $colorCL051 = #b8b8b8
   $colorBG052a = #efefef
@@ -283,7 +289,7 @@
   $colorCL054 = $color1
   $colorCL055 = #efefef                     // Input Groups
   $colorBG055 = $color1
-  $colorCL056 = $color0                     // Buttons
+  $colorCL056 = #efefef                     // Buttons
   $colorBG056 = $color1
   $colorBD056 = $color1
   $colorBS056 = 0 .5rem 2rem rgba(0, 0, 0, .3)
@@ -294,26 +300,26 @@
   $colorBG059a = #858585
   $colorBG059b = rgba(255, 255, 255, .2)
   $colorBD059 = #858585
-  $colorBG060 = #eee										     // Search
-  $colorBG061 = #fefefe									     // Checkbox & Radio
+  $colorBG060 = $colorBG050                 // Search
+  $colorBG061 = darken($colorBG002, 5%)     // Checkbox & Radio
   $colorBD061 = #ccc
   $colorBS061 = inset 0 .1em .3em rgba(0, 0, 0, .3)
   $colorBD062 = #888
   $colorCL063 = $color1
   $colorCL064 = #b8b8b8
   $colorBG065 = rgba(255, 255, 255, .2)
-  $colorBG066 = #ebebeb									     // Switchs
+  $colorBG066 = #ebebeb                     // Switchs
   $colorBS066 = inset 0 .2em .5em rgba(0, 0, 0, .2)
-  $colorBG067 = #dff0d8
+  $colorBG067 = $color1
   $colorBG068 = #fefefe
   $colorBS068 = 0 .2em .5em rgba(0, 0, 0, .3)
   $colorBS069 = inset 0 .1em .3em rgba(0, 0, 0, .5)
-  $colorCL0721 = false
+  $colorCL0721 = #eee
   $colorCL119 = $colorCL064
   $colorBG070 = rgba(255, 255, 255, .2)
   $colorBG071 = #ebebeb
   $colorCL072 = #777
-  $colorBG073 = #eee
+  $colorBG073 = darken($colorBG002, 5%)     // Ranges
   $colorBG074a = $color1
   $colorBG074b = rgba(0, 0, 0, .1)
   $colorBG074c = rgba(255, 255, 255, .05)
@@ -325,84 +331,83 @@
   $colorBD076 = $color1
   $colorBG077 = $color1
   $colorCL078 = #fefefe
-  $colorBG078 = $color1
-  $colorBG079 = rgba(0, 0, 0, .1)						   // Progress
+  $colorBG078 = $color1                     // Progress
+  $colorBG079 = rgba(0, 0, 0, .1)
   $colorBG080 = $color1
   $colorBS080 = inset 0 2px 9px rgba(255, 255, 255, .3), inset 0 -2px 6px rgba(0, 0, 0, .4)
   $colorBG081 = rgba(255, 255, 255, .2)
-  $colorFI082 = #000									         // Scroll top
-  $colorBS0821 = false									       // Accordions
-  $colorCL083 = #fefefe
+  $colorFI082 = #000                        // Scroll top
+  $colorBS0821 = .5rem .5rem 2rem rgba(0, 0, 0, .25) // Accordions
+  $colorCL083 = #fff
   $colorBG083 = $color1
-  $colorBG084 = $color2
-  $colorBG085 = #eee
-  $colorBG086 = #ddd
+  $colorBG084 = $color5
+  $colorBG085 = darken($colorBG002, 10%)
+  $colorBG086 = lighten($colorBG002, 10%)
   $colorBD086 = $colorBG084
-  $colorBG006 = false									         // Tabs
-  $colorBD006 = #eee
-  $colorBG087 = $color0
-  $colorCL099 = false
+  $colorBG087 = $colorBG002
+  $colorCL099 = $color1
   $colorBD089 = $colorBD006
-  $colorBS089 = false
-  $colorBD0891 = false									       // Tables
-  $colorBS0891 = false
-  $colorCL090 = #fefefe
-  $colorCL091 = $colorCL090
+  $colorBS089 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
+  $colorBD0891 = #fefefe                    // Tables
+  $colorBS0891 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
+  $colorCL090 = #eee
   $colorBG090 = $color1
-  $colorBG091 = #444
-  $colorCL092 = #fefefe
-  $colorBG092 = $color1
-  $colorBD093 = #eee
+  $colorCL091 = $colorCL090
+  $colorBG091 = $color1
+  $colorCL092 = $colorCL090
+  $colorBG092 = $color6
+  $colorBD093 = #ddd
   $colorBG094 = rgba(0, 0, 0, .1)
   $colorBG095 = rgba(0, 0, 0, .2)
-  $colorCL096 = #fefefe
-  $colorBG096 = #444
-  $colorBD097 = #444
-  $colorBG098 = $color0									       // Popins
-  $colorBS098 = 0 0 0 10000rem rgba(0, 0, 0, .8)
-  $colorBG099 = #efefef
-  $colorBS099 = false
-  $colorBG100 = #ddd
-  $colorCL101 = false									         // Tooltips
-  $colorBG101 = #222
+  $colorCL096 = $colorCL090
+  $colorBG096 = $color1
+  $colorBD097 = $colorBG096
+  $colorBG098 = $colorBG002                 // Popins
+  $colorBS098 =  .5rem .5rem 2rem rgba(0, 0, 0, .25), 0 0 0 10000rem rgba(255, 255, 255, .85)
+  $colorBG099 = #ddd
+  $colorBS099 = .5rem .5rem 2rem rgba(0, 0, 0, .25)
+  $colorBG100 = #efefef
+  $colorCL101 = #efefef                     // Tooltips
+  $colorBG101 = $color1
   $colorBD102 = $colorBG101
-  $colorBG103 = #333									         // Items Main Nav
+  $colorBG103 = #555                        // Items Main Nav
   $colorCL104 = #ddd
-  $colorCL105 = #333
-  $colorBG105 = $color0
-  $colorCL106 = $color0
-  $colorBG106 = $color2
-  $colorCL1051 = false
+  $colorCL105 = false
+  $colorBG105 = #444
+  $colorCL106 = false
+  $colorBG106 = #444
+  $colorCL1051 = #fff
   $colorBG1051 = false
-  $colorBS1052 = false
+  $colorBG1052 = $colorBG105
+  $colorBS1052 = .5rem .5rem 2rem rgba(0, 0, 0, .15)
   $colorCL1061 = false
   $colorBG1061 = false
-  $colorBS1062 = false
+  $colorBS1062 = 0 .5rem 2rem rgba(0, 0, 0, .15)
   $colorBG107 = #333
   $colorBD108a = rgba(255, 255, 255, .2)
   $colorBD108b = rgba(0, 0, 0, .2)
   $colorBD1081 = $colorBD108b
-  $colorBS1082 = false									       // Main Nav
-  $colorBG109 = #222									         // Cmd Main Nav
-  $colorBG1090 = #000
-  $colorBG110 = $color0
-  $colorBG1101 = #333									         // Brand
-  $colorCL120 = $colorCL104
-  $colorCL0121 = false                         // .letter
-  $colorBD111 = $color1									       // Download Links
+  $colorBS1082 = $colorBS1062               // Main Nav
+  $colorBG109 = #444                        // Cmd Main Nav
+  $colorBG1090 = $colorBG109
+  $colorBG110 = #aaa
+  $colorBG1101 = #555                       // Brand
+  $colorCL0121 = #333                       // Letter
+  $colorBD111 = $color1                     // Download Links
   $colorCL112 = $color0
   $colorBG112 = $color1
-  $colorBD113a = #ddd									         // Loaders
+  $colorBD113a = darken($colorBG002, 5%)    // Loaders
   $colorBD113b = $color1
-  $colorBD114a = #ddd
+  $colorBD114a = $colorBD113a
   $colorBD114b = $color1
   $colorBS115a = 0 4em 0 0 $color1
   $colorBS115b = 0 4em 0 -.5em transparent
-  $colorCL117 = $color0									       // Old Browers
+  $colorCL117 = $color0                     // Old Browers
   $colorBG117 = #000
   $colorCL118 = $color0
+  $colorCL120 = #aaa !important
 
-  $colorBGd001 = #eee									         // Styles de démonstration
+  $colorBGd001 = #fff                       // Styles de démonstration
 
 
 // @subsection Images
@@ -417,7 +422,7 @@
 // @subsection Rounds
 // -----------------------------------------------------------------------------
 
-  $r1 = false											// Boites
-  $r2 = false											// Éléments internes
-  $r3 = false											// Éléments d'informations
-  $r4 = false											// Bouttons
+  $r1 = .3rem                     // Boites
+  $r2 = $r1                       // Éléments internes
+  $r3 = false                     // Éléments d'informations
+  $r4 = false                     // Bouttons

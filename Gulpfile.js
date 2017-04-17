@@ -42,7 +42,7 @@ const gulp = require( 'gulp' ),
       del = require( 'del' ),
       ftp = require( 'vinyl-ftp' ),
       lodash = require( 'lodash' ),
-      browserSync = require( 'browser-sync' ),
+      bs = require( 'browser-sync' ).create(),
       gulpsync = require( 'gulp-sync' )( gulp ),
       gutil = require( 'gulp-util' ),
       plumber = require( 'gulp-plumber' ),
@@ -53,7 +53,7 @@ const gulp = require( 'gulp' ),
       header = require( 'gulp-header' ),
       imageResize = require( 'gulp-image-resize' ),
       imagemin = require( 'gulp-imagemin' ),
-      jade = require( 'gulp-jade' ),
+      pug = require( 'gulp-pug' ),
       markdown = require( 'gulp-markdown' ),
       coffee = require( 'gulp-coffee' ),
       jshint = require( 'gulp-jshint' ),
@@ -79,6 +79,7 @@ var consoleLog = function( event ) {
     console.log( 'File ' + event.path + ' was ' + event.type + ', running tasks...' );
 };
 
+
 // -----------------------------------------------------------------------------
 // @section Browser Sync
 // -----------------------------------------------------------------------------
@@ -86,8 +87,8 @@ var consoleLog = function( event ) {
 // @link https://www.browsersync.io/docs/gulp/
 // @documentation https://www.browsersync.io/docs/options/
 
-gulp.task( 'browserSync', function() {
-  browserSync( {
+gulp.task( 'bs', function() {
+  bs.init( {
     server : {
       baseDir : source
     },
@@ -102,28 +103,30 @@ gulp.task( 'browserSync', function() {
 
 
 // -----------------------------------------------------------------------------
-// @section Jade
+// @section Pug
 // -----------------------------------------------------------------------------
 
-// @link https://www.npmjs.com/package/gulp-jade
-// @documentation Jade @see http://jade-lang.com/api/
+// @link https://www.npmjs.com/package/gulp-pug
+// @documentation :
+// @link https://pugjs.org/api/getting-started.html
+// @link https://pugjs.org/api/reference.html#options
 
-var inputJade = source + '/**/*.jade',
-    inputHtmlJade = source + '/**/*.html.jade',
-    inputPhpJade = source + '/**/*.php.jade';
+var inputPug = source + '/**/*.pug',
+    inputHtmlPug = source + '/**/*.html.pug',
+    inputPhpPug = source + '/**/*.php.pug';
 
-gulp.task( 'jade', function() {
+gulp.task( 'pug', function() {
   return gulp
-    .src( [ inputHtmlJade, inputPhpJade ] )
+    .src( [ inputHtmlPug, inputPhpPug ] )
     //.pipe( changed( source ) ) // Traitement pour les fichiers changé uniquement @todo En test...
     .pipe( plumber() )
-    .pipe( jade( {
-      pretty : true // Idendation du code
+    .pipe( pug( {
+      pretty : true // Indendation du code
     } ) )
     .pipe( rename( function( path ) {
-      path.extname = '' // Enlève l'extention '.jade' sur le fichier créé
+      path.extname = '' // Enlève l'extention '.pug' sur le fichier créé
     } ) )
-    .pipe( replace( /@@pkg.version/g, pkg.version ) ) // récupération de la version du build
+    .pipe( replace( /@@pkg.version/g, pkg.version ) ) // Récupération de la version du build
     // BEGIN PHP
     .pipe( replace( /(<_php>)(\$\S*)(<\/_php>)/g, '<?php echo $2; ?>' ) ) // Si instruction $ suivit de caractères sans espaces blancs, alors il s'agit d'une variable php isolée à afficher. Ex : _php $name => <?php echo $name; ?>
     .pipe( replace( /(<_php>)((.|\r|\n|\t)*?)(<\/_php>)/g, '<?php $2; ?>' ) ) // _php => balises php d'ouverture et de fermeture avec point virgule final)
@@ -144,10 +147,13 @@ gulp.task( 'jade', function() {
     .pipe( replace( /({% )(.*)( %})/g, '<?php $2; ?>' ) ) // Sinon il s'agit de balises php d'ouverture et de fermeture en ligne
     .pipe( replace( /;; ?>/g, '; ?>' ) ) // Suppression points virgules doublés
     // END PHP
-    .pipe( replace( /(\n)(<)/, '$2' ) ) // Correction pour Jade : enlève le premier saut de ligne en début de fichier
-    .pipe( replace( /(-->)/, ' $1' ) ) // Correction pour Jade : ajout d'un espace en fin de commentaire
+    // BEGIN Pug
+    //.pipe( replace( /<!DOCTYPE html>/, '<!DOCTYPE html>\n' ) ) // Saut de ligne après le doctype
+    //.pipe( replace( /(\n)(<)/, '$2' ) ) // Enlève le premier saut de ligne en début de fichier
+    .pipe( replace( /(-->)/g, ' $1' ) ) // Ajout d'un espace en fin de commentaire
+    // END Pug
     .pipe( gulp.dest( source ) )
-    .pipe( browserSync.stream( { match : '**/*.html' } ) );
+    .pipe( bs.stream( { match : '**/*.html' } ) );
 } );
 
 
@@ -183,7 +189,7 @@ gulp.task( 'scripts', function() {
     .pipe( jshint.reporter( 'default' ) )
     //.pipe( concat( 'Main.js' ) ) // @todo Concat n'est pas nécessaire pour l'instant, juste en prévision de...
     .pipe( uglify() )
-    .pipe( browserSync.stream( { match : '**/*.js' } ) )
+    .pipe( bs.stream( { match : '**/*.js' } ) )
     .pipe( gulp.dest( outputScripts ) );
 } );
 
@@ -226,7 +232,7 @@ gulp.task( 'styles', function() { // Version de production
     .pipe( autoprefixer( autoprefixerOptions ) )
     .pipe( sourcemaps.write( '../Styles/Maps', { addComment : true } ) )
     .pipe( gulp.dest( outputStyles ) )
-    .pipe( browserSync.stream( { match : '**/*.css' } ) );
+    .pipe( bs.stream( { match : '**/*.css' } ) );
 } );
 
 gulp.task( 'stylesexp', function() { // Version non compressée permettant un contrôle du code généré en sortie
@@ -236,7 +242,7 @@ gulp.task( 'stylesexp', function() { // Version non compressée permettant un co
     //.pipe( sourcemaps.init() )
     .pipe( stylus( {
         compress : false,
-        linenos : true
+        linenos : false
     } ) )
     .on( 'error', function( err ) {
         console.error( 'Error!', err.message );
@@ -520,7 +526,7 @@ gulp.task( 'glyphicons', function() {
     .src( source + '/Fonts/GlyphIconsSources/*.svg' )
     .pipe( iconfont( {
       fontName : 'GlyphIcons', // required
-      appendUnicode : true, // recommended option
+      prependUnicode : true, // recommended option
       formats : [ 'ttf', 'eot', 'woff', 'woff2', 'svg' ], // default : 'ttf', 'eot', 'woff'
       fontHeight : 1024, // Retaille des icônes en 1024X1024
       round : 10e3, // Trois décimales (default value: 10e12)
@@ -541,7 +547,7 @@ gulp.task( 'glyphicons', function() {
       gulp.src( source + '/Styles/Templates/Icons.styl' )
         .pipe( consolidate( 'lodash', options ) )
         .pipe( gulp.dest( source + '/Styles/Partial' ) );
-      gulp.src( source + '/Includes/Templates/GlyphIcons.jade' )
+      gulp.src( source + '/Includes/Templates/GlyphIcons.pug' )
         .pipe( consolidate( 'lodash', options ) )
         .pipe( gulp.dest( source + '/Includes' ) );
       console.log( glyphs, options );
@@ -557,10 +563,10 @@ gulp.task( 'glyphicons', function() {
 // @note Fonctionnalité watch native sous Gulp
 // @link https://www.npmjs.com/package/gulp-sync
 
-gulp.task( 'watchjade', function() {
+gulp.task( 'watchpug', function() {
   return gulp.watch(
-        inputJade,
-        [ 'jade' ]
+        inputPug,
+        [ 'pug' ]
     )
     .on( 'change', consoleLog );
 } );
@@ -599,9 +605,9 @@ gulp.task( 'watchstyles', function() {
 // @subsection Default tasks
 // -----------------------------------------------------------------------------
 
-var tasks = [ 'watchjade', 'watchscripts', 'watchstyles' ]
+var tasks = [ 'watchpug', 'watchscripts', 'watchstyles' ]
 
-gulp.task( 'default', gulpsync.sync( [ 'browserSync', tasks ] ) );
+gulp.task( 'default', gulpsync.sync( [ 'bs', tasks ] ) );
 
 
 // @subsection  Noserver tasks

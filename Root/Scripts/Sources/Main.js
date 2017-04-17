@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
-// @name         Scriptura
+// @name         scriptura
 // @description  Interface for web apps
-// @version      0.0.43
-// @lastmodified 2016-11-21 23:51:11
+// @version      0.1.0
+// @lastmodified 2017-02-20 10:18:01
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -65,7 +65,7 @@ function protected() {
 	};
 	window.onload = function() {
 		var protect = document.getElementsByClassName( 'protected' );
-		for( var i = 0; i < protect.length; i++ ) {
+		for( var i = 0, len = protect.length; i < len; i++ ) {
 			protect[i].onmousedown = eventTest;
 		}
 	};
@@ -99,36 +99,15 @@ protected();
 
 // @note Par défaut, tous les liens externes conduisent à l'ouverture d'un nouvel onglet, sauf les liens de téléchargement
 
-( function( $ ) { // Ajout d'un attribut target_blank sur les liens externes
-	$( document ).find( 'a:not(.download-link)' ).filter( function() {
-		return this.hostname && this.hostname !== location.hostname;
-	} ).attr( 'target', '_blank' );
-} )( jQuery );
-
-
-// -----------------------------------------------------------------------------
-// @section     Main Nav Bottom
-// @description Menu de navigation principal, position en bas
-// -----------------------------------------------------------------------------
-
-// @bugfix @todo La propriété 'overflow:hidden' reste sur le body si redimentionnement de la fenêtre avant fermeture du menu
-
-( function( $ ) {
-	var body = $( 'body' );
-	var menu = $( '.sizeNav-nav-bottom .wrap > :last-child' );
-	var scrollTop = $( '.scroll-top' );
-	$( '.sizeNav-nav-bottom button' ).on( 'click touchmove', function() {
-		menu.toggleClass( 'active' );
-		if (menu.hasClass( 'active' )) {
-			body.css( 'overflow', 'hidden' ); // Évite la confusion avec un scrool sur la page
-			scrollTop.addClass( 'hidden' );
-		} else {
-			body.css( 'overflow', 'visible' );
-			menu.removeClass( 'active' );
-			scrollTop.removeClass( 'hidden' );
-		}
-	} );
-} )( jQuery );
+function externalLinks() {
+	var anchors = document.querySelectorAll( 'a' );
+	for( var i = 0, len = anchors.length; i < len; i++ ) {
+		if ( anchors[i].hostname !== window.location.hostname ) {
+			anchors[i].setAttribute( 'target', '_blank' );
+	 	}
+	}
+}
+externalLinks();
 
 
 // -----------------------------------------------------------------------------
@@ -187,6 +166,117 @@ protected();
 // @description Défilement fluide
 // -----------------------------------------------------------------------------
 
+// @link https://www.sitepoint.com/smooth-scrolling-vanilla-javascript/
+// @link http://codepen.io/SitePoint/pen/YqewzZ
+
+//initSmoothScrolling();
+//function initSmoothScrolling() {
+//  if (isCssSmoothSCrollSupported()) {
+//    document.getElementById( 'css-support-msg' ).className = 'supported';
+//    return;
+//  }
+//  var duration = 400;
+//  var pageUrl = location.hash ?
+//    stripHash(location.href) :
+//    location.href;
+//  delegatedLinkHijacking();
+//  //directLinkHijacking();
+//  function delegatedLinkHijacking() {
+//    document.body.addEventListener( 'click', onClick, false );//
+
+//    function onClick( e ) {
+//      if ( !isInPageLink( e.target ) )
+//        return;
+//      e.stopPropagation();
+//      e.preventDefault();
+//      jump(e.target.hash, {
+//        duration: duration,
+//        callback: function() {
+//          //setFocus(e.target.hash); // @note Désactivation de l'effet outline bleu sur le focus
+//        }
+//      });
+//    }
+//  }
+//  function directLinkHijacking() {
+//    [].slice.call( document.querySelectorAll( 'a' ) )
+//      .filter(isInPageLink)
+//      .forEach(function( a ) {
+//        a.addEventListener( 'click', onClick, false );
+//      });
+//    function onClick( e ) {
+//      e.stopPropagation();
+//      e.preventDefault();
+//      jump(e.target.hash, {
+//        duration: duration,
+//      });
+//    }
+//  }
+//  function isInPageLink( n ) {
+//    return n.tagName.toLowerCase() === 'a' &&
+//      n.hash.length > 0 &&
+//      stripHash(n.href) === pageUrl;
+//  }
+//  function stripHash( url ) {
+//    return url.slice(0, url.lastIndexOf('#'));
+//  }
+//  function isCssSmoothSCrollSupported() {
+//    return 'scrollBehavior' in document.documentElement.style;
+//  }
+//  // Adapted from:
+//  // https://www.nczonline.net/blog/2013/01/15/fixing-skip-to-content-links/
+//  // @note Fonction désactivée pour éviter l'effet outline bleu sur le focus... l'appel à la fonction est désactivé plus haut dans le code
+//  //function setFocus(hash) {
+//  //  var element = document.getElementById(hash.substring(1));
+//  //  if (element) {
+//  //    if (!/^(?:a|select|input|button|textarea)$/i.test(element.tagName)) {
+//  //      element.tabIndex = -1;
+//  //    }
+//  //    element.focus();
+//  //  }
+//  //}
+//}
+//function jump( target, options ) {
+//  var
+//    start = window.pageYOffset,
+//    opt = {
+//      duration: options.duration,
+//      offset: options.offset || 0,
+//      callback: options.callback,
+//      easing: options.easing || easeInOutQuad
+//    },
+//    distance = typeof target === 'string' ?
+//    opt.offset + document.querySelector(target).getBoundingClientRect().top :
+//    target,
+//    duration = typeof opt.duration === 'function' ?
+//    opt.duration(distance) :
+//    opt.duration,
+//    timeStart, timeElapsed;
+//  requestAnimationFrame( function( time ) {
+//    timeStart = time;
+//    loop(time);
+//  } );
+//  function loop( time ) {
+//    timeElapsed = time - timeStart;
+//    window.scrollTo( 0, opt.easing( timeElapsed, start, distance, duration ) );
+//    if ( timeElapsed < duration )
+//      requestAnimationFrame( loop );
+//    else
+//      end();
+//  }
+//  function end() {
+//    window.scrollTo( 0, start + distance );
+//    if ( typeof opt.callback === 'function' )
+//      opt.callback();
+//  }
+//  // Robert Penner's easeInOutQuad - http://robertpenner.com/easing/
+//  function easeInOutQuad( t, b, c, d ) {
+//    t /= d / 2;
+//    if (t < 1) return c / 2 * t * t + b;
+//    t--;
+//    return -c / 2 * (t * (t - 2) - 1) + b;
+//  }
+//}
+
 ( function( $ ) {
 	$( document ).on( 'click', 'a[href*="#"]:not([href="#"])', function() {
 		if ( location.pathname.replace( /^\//,'' ) == this.pathname.replace( /^\//,'' ) && location.hostname == this.hostname ) {
@@ -215,11 +305,15 @@ bodyIndex();
 
 
 // -----------------------------------------------------------------------------
-// @section     Scroll top
+// @section     Scroll Top
 // @description Défilement vers le haut
 // -----------------------------------------------------------------------------
 
 // @note Vanilla Js de 'scrollTop: 0' : 'window.scrollTo( 0, 0 )'
+// Hauteur de la fenêtre : window.innerHeight
+// Hauteur du scroll : document.body.scrollTop
+// Hauteur totale du document : document.body.scrollHeight
+// @link https://openclassrooms.com/forum/sujet/recuperer-position-scroll
 
 ( function( $ ) {
 	$( 'body > footer' ).append( '<a href="" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>' ); // Création de l'élément 'a.scroll-top'
@@ -236,6 +330,44 @@ bodyIndex();
 		}
 	} );
 } )( jQuery );
+
+//function arrowScrollTop() {
+//	var id = document.getElementsByClassName( 'footer' )[0];
+//	id.insertAdjacentHTML( 'beforeend', '<a href="" class="scroll-top"><svg xmlns="http://www.w3.org/2000/svg"><path d="M20 32v-16l6 6 6-6-16-16-16 16 6 6 6-6v16z"/></svg></a>' );
+//	var el = document.getElementsByClassName( 'scroll-top' )[0];
+//	var es = el.style;
+//	es.transition = 'opacity 2s ease-in-out';
+//	es.display = 'none';
+//	es.opacity = 0;
+//	window.onscroll = function() {
+//		var scrollTop = document.body.scrollTop;
+//		if ( scrollTop > 100 ) {
+//			es.display = 'block';
+//			es.opacity = 1;
+//		} else {
+//			es.opacity = 0;
+//			el.addEventListener( 'transitionend', function( event ) {
+//				es.display = 'none';
+//			}, false);
+//		}
+//	};
+//	el.onclick = function( e ){
+//		e.preventDefault();
+//		window.scrollTo( 0, 0 );
+//		//scroolToTop();
+//	};
+//	function scroolToTop(){
+//		var top = 0;
+//		var start = window.pageYOffset;
+//		function toTop(){
+//			if ( start > 0 )
+//				start -= 1;
+//			window.scrollTo( 0, start );
+//		}
+//		requestAnimationFrame( toTop );
+//	}
+//}
+//arrowScrollTop();
 
 
 // -----------------------------------------------------------------------------
@@ -501,16 +633,21 @@ bodyIndex();
 
 
 // -----------------------------------------------------------------------------
-// @section     Print
+// @section     Cmd Print
 // @description Commande pour l'impression
 // -----------------------------------------------------------------------------
 
-( function( $ ) {
-	$( document ).on( 'click', '.cmd-print', function() {
+function cmdPrint() {
+	var p = document.getElementsByClassName( 'cmd-print' );
+	function startPrint(){
 		window.print();
 		return false;
-	} );
-} )( jQuery );
+	}
+	for( var i = 0, len = p.length; i < len; i++ ) {
+		p[i].onclick = startPrint;
+	}
+}
+cmdPrint();
 
 
 // -----------------------------------------------------------------------------
@@ -631,17 +768,16 @@ $( '.typewriter' ).jTypeWriter();
 
 // -----------------------------------------------------------------------------
 // @section     Unveiling
-// @description Dévoilement progressif du texte
+// @description Dévoilement progressif d'un texte
 // -----------------------------------------------------------------------------
 
 // @note Classe à injecter selon de niveau de scroll
 // @todo À développer...
-//$( '.unveiling' ).addClass( 'unveiling-start' ); // jQuery
 
 function unveiling() {
-	var unveiling = document.getElementsByClassName( 'unveiling' );
-	for( var i = 0; i < unveiling.length; i++ ) {
-		document.getElementsByClassName( 'unveiling' )[i].classList.add( 'unveiling-start' );
+	var u = document.getElementsByClassName( 'unveiling' );
+	for( var i = 0, len = u.length; i < len; i++ ) {
+		u[i].classList.add( 'unveiling-start' );
 	}
 }
 unveiling();
@@ -668,17 +804,18 @@ unveiling();
 			} );
 			tooltip.animate({
 				'opacity' : '1'
-			}, 500 );
+			}, 300 );
 		} );
 		link.on( 'mouseout', function() {
 			var tooltip = $( '.tooltip' );
-			tooltip.fadeOut( 500, function() {
+			tooltip.fadeOut( 300, function() {
 				tooltip.remove();
 				link.attr( 'title', title ); // Réinjecter la valeur du title pour l'accessibilité
 			} );
 		} );
 	} );
 } )( jQuery );
+
 
 // -----------------------------------------------------------------------------
 // @section     Text selection
@@ -687,6 +824,8 @@ unveiling();
 
 // @see http://stackoverflow.com/questions/985272/selecting-text-in-an-element-akin-to-highlighting-with-your-mouse
 // @link http://jsfiddle.net/edelman/KcX6A/1506/
+// @link https://www.creativejuiz.fr/blog/tutoriels/copier-presse-papier-en-javascript
+
 jQuery.fn.selectText = function() {
 	var element = this[0],
 		doc = document.body;
@@ -722,7 +861,9 @@ jQuery.fn.selectText = function() {
 			//	'right' : '0'
 			//} )
 			.on( 'click', function() {
-				code.find( 'div' ).selectText();
+				code.find( 'div' ).selectText(); // Sélection du texte
+				document.execCommand( 'copy' ); // Copie de la sélection
+				return false;
 			} );
 		}
 	} );
@@ -735,10 +876,6 @@ jQuery.fn.selectText = function() {
 // -----------------------------------------------------------------------------
 
 ( function( $ ) {
-	// @note La solution javascript de création du checkbox a été supprimée et remplacée par la solution html : elle donne le choix ou non de cette fonction et est plus souple pour les traductions du title du checkbox.
-	//$('.input [type="password"]')
-	//	.after( '<input type="checkbox"/>' )
-	//	.parent().addClass( 'input-password' );
 	$( document ).on( 'click', '.input-password [type="checkbox"]', function() {
 		var visiblePassword = $( this );
 		if( visiblePassword.is(':checked' ) ) {
@@ -748,22 +885,6 @@ jQuery.fn.selectText = function() {
 		}
 	} );
 } )( jQuery );
-
-
-// -----------------------------------------------------------------------------
-// @section     Font CDN fails
-// @description Solution de repli si font CDN de police défaillante
-// -----------------------------------------------------------------------------
-
-// @see http://wordpress.stackexchange.com/questions/142241/how-to-provide-a-local-fallback-for-font-awesome-if-cdn-fails
-// @todo En développement...
-//	( function test( $ ) {
-//		var $span = $( '<span style="display:none;font-family:Tangerine"></span>' ).appendTo( 'body' ); // création d'un span de test
-//		if ($span.css( 'fontFamily' ) !== 'Tangerine' ) {
-//			$( 'head' ).append( '<link href="./Styles/Public/Fonts.css" rel="stylesheet">' ); // lien de repli
-//		}
-//		$span.remove();
-// 	} )( jQuery );
 
 
 // -----------------------------------------------------------------------------
@@ -856,56 +977,64 @@ jQuery.fn.selectText = function() {
 
 // @note Ce script peut-être désactivé si les données utilisateurs ne sont pas récupérées lors de la navigation sur les pages
 
-( function( $ ) {
-	$( '.terms-use' ).css( 'display', 'inline' ); // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
-	$( document ).on( 'click', '#terms-use', function() {
-		localStorage.setItem( 'termsuse', 'true' );
-		$( '.terms-use' ).remove();
-	} );
-	if (localStorage.getItem( 'termsuse' ) === 'true' ) {
-		$( '.terms-use' ).remove();
-	}
-	//	localStorage.removeItem( 'termsuse' ); // Réinitialisation de la valeur pour les tests, la clef peut aussi s'effacer directement via l'outil d'inspection
-} )( jQuery );
-
-
-// -----------------------------------------------------------------------------
-// @section Console
-// -----------------------------------------------------------------------------
-
-// @note Attention : IE avec son mode "développement" désactivé plantera si les scripts dédiés à la console sont actifs.
-// @note Recommandation de désactiver les scripts dédiés à la console en mode production.
-
-/*
-// Évite à IE de planter si mode "développement" désactivé
-( function( $ ) {
-	var f = function() {};
-	if ( !window.console ) {
-		window.console = {
-			log:f, info:f, warn:f, debug:f, error:f
+function termsUse() {
+	var el = document.getElementById( 'terms-use' );
+	if ( el ) {
+		var cmd = el.querySelectorAll( 'button' )[0];
+		el.style.display = 'block'; // @note Par défaut l'élément est caché afin d'éviter un visuel désagréable au chargement de la page
+		cmd.onclick = function(){
+			localStorage.setItem( 'termsuse', 'true' );
+			el.style.display = 'none';
 		};
+		if (localStorage.getItem( 'termsuse' ) === 'true' ) {
+			el.style.display = 'none';
+		}
+		//localStorage.removeItem( 'termsuse' ); // Réinitialisation de la valeur pour les tests, la clef peut aussi s'effacer directement via l'outil d'inspection
+	}
+}
+termsUse();
+
+
+// -----------------------------------------------------------------------------
+// @section     Snowstorm
+// @description Effet flocons de neige sur la page web
+// -----------------------------------------------------------------------------
+
+// @link http://www.schillmania.com/projects/snowstorm/
+
+( function( $ ) {
+	var element = $( '.snowstorm' );
+	if ( element.length ) {
+		var scriptsUri = templateUri + '/Scripts/Vendors/Snowstorm/snowstorm-min.js';
+		$.getScript( scriptsUri, function() { // Chargement via Ajax
+			//snowStorm.snowColor = '#99ccff';
+			//snowStorm.flakesMaxActive = 64; // Nombre de flocon actif max
+			//snowStorm.useTwinkleEffect = true; // Scintillemment de la neige hors de vue écran
+			//snowStorm.snowCharacter = '•'; // Caractère utilisé ('•' recommandé)
+		} );
 	}
 } )( jQuery );
 
-// Code de la touche du clavier actuellement pressée
-jQuery( document ).keydown( function( e ) {
-	console.info( 'Code keyboard key: ' + e.keyCode );
-} );
+
+// -----------------------------------------------------------------------------
+// @section Debug/Test
+// -----------------------------------------------------------------------------
+
+// @warning IE en mode développement désactivé plantera si les scripts dédiés à la console sont actifs, les désactiver en mode production.
 
 // Test du temps d'éxecution d'un script
-console.time( 'test' );
+//console.time( 'test' );
 // Le script
-console.timeEnd( 'test' );
+//console.timeEnd( 'test' );
 
 // Repère les éléments dépassants en responsive
-var docWidth = document.documentElement.offsetWidth;
-[].forEach.call(
-  document.querySelectorAll( '*' ),
-  function( el ) {
-    if (el.offsetWidth > docWidth) {
-      console.log( el );
-    }
-  }
-);
-*/
+//var docWidth = document.documentElement.offsetWidth;
+//[].forEach.call(
+//  document.querySelectorAll( '*' ),
+//  function( el ) {
+//    if (el.offsetWidth > docWidth) {
+//      console.log( el );
+//    }
+//  }
+//);
 

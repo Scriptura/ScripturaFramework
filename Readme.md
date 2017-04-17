@@ -1,5 +1,5 @@
 # Scriptura
-> Interface for web apps. A framework [Jade](http://jade-lang.com/)/[Stylus](https://learnboost.github.io/stylus/)/[jQuery](https://jquery.com/).
+> Interface for web apps. A framework [Pug](https://pugjs.org/)/[Stylus](https://learnboost.github.io/stylus/)/[jQuery](https://jquery.com/).
 
 * [Demo website and style guide](https://scriptura.github.io/)
 
@@ -31,6 +31,8 @@ Ces technologies impliquent une limitation de la rétrocompatibilité aux naviga
 
 ## Get Started
 
+Scriptura uses ([Gulp](http://gulpjs.com/)) to compile its code, so it is necessary to work under a ([Node.js](https://nodejs.org/)).
+
 ### First stage
 
 Work with the workflow by running this command with your terminal to the file in the root:
@@ -43,7 +45,7 @@ And monitoring of the folder:
 
 ### Second stage
 
-Create an .html.jade or an .php.jade file in the folder.
+Create an .html.pug or an .php.pug file in the folder.
 
 With in the file's header:
 
@@ -56,7 +58,7 @@ And in the file's footer:
 
 ### Third stage
 
-That's all! You can start creating with jade syntaxe.
+That's all! You can start creating with pug syntaxe.
 
 ## Folder tree and key files
 
@@ -67,7 +69,7 @@ That's all! You can start creating with jade syntaxe.
     └── Root/
         ├── Fonts/
         ├── Images/
-        ├── index.html.jade
+        ├── index.html.pug
         ├── index.html
         ├── Public/
         │   ├── Scripts/

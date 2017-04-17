@@ -1,17 +1,9 @@
-
-/* line 297 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
-
-/* line 1 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/node_modules/stylus/lib/functions/index.styl */
-
-/* line 11 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 div:empty,
 span:empty,
 li:empty,
 p:empty {
   outline: 5px dotted #ff0 !important;
 }
-
-/* line 18 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 *[title=""],
 *[class=""],
 *[id=""],
@@ -19,8 +11,6 @@ a[href=""],
 table[summary=""] {
   outline: 5px solid #ff0 !important;
 }
-
-/* line 27 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 applet,
 basefont,
 center,
@@ -36,13 +26,9 @@ big,
 tt {
   outline: 5px dotted #f00 !important;
 }
-
-/* line 43 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 input[type="button"] {
   outline: 5px dotted #3f0 !important;
 }
-
-/* line 47 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 *[background],
 *[bgcolor],
 *[clear],
@@ -73,43 +59,29 @@ ol[type],
 li[type] {
   outline: 5px solid #f00 !important;
 }
-
-/* line 76 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 *[border],
 table[cellpadding],
 table[cellspacing],
 *[name] {
   outline: 5px solid #3f0 !important;
 }
-
-/* line 84 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 iframe:not([title]) {
   outline: 5px solid #f00 !important;
 }
-
-/* line 92 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 img[ismap] {
   outline: 5px solid #f00;
 }
-
-/* line 96 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 img:not([alt]) {
   outline: 5px solid #f00;
 }
-
-/* line 100 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 div[role="img"]:not([aria-label]) {
   outline: 5px solid #f00;
 }
-
-/* line 104 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 img:not([src]),
 img[src=""],
 img[src="#"] {
   outline: 5px solid #f00 !important;
 }
-
-/* line 114 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 a[href=""],
 a[href="#"],
 a:not([href]),
@@ -117,24 +89,16 @@ a[href*=javascript:],
 a[onclick] {
   outline: 5px solid #f00 !important;
 }
-
-/* line 125 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 a:empty {
   outline: 5px solid #f00 !important;
 }
-
-/* line 133 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 fieldset > :not(legend):first-child,
 fieldset > legend:not(:first-child) {
   outline: 5px dashed #f00 !important;
 }
-
-/* line 138 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 fieldset > legend:first-child {
   outline: 3px solid #008000 !important;
 }
-
-/* line 161 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 input[type="image"][alt=""],
 input[type="image"]:not([alt]) {
   display: block;
@@ -142,13 +106,9 @@ input[type="image"]:not([alt]) {
   width: 200px !important;
   height: 3em !important;
 }
-
-/* line 169 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 label:not([for]) {
   outline: 5px solid #f00 !important;
 }
-
-/* line 175 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 input[type="text"]:not([id]),
 input[type="password"]:not([id]),
 input[type="checkbox"]:not([id]),
@@ -158,24 +118,16 @@ select:not([id]),
 textarea:not([id]) {
   outline: 5px solid #f00 !important;
 }
-
-/* line 185 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 input[type="file"]:not([id]) {
   background-color: #f00 !important;
 }
-
-/* line 189 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 input[type="checkbox"]:not([id]),
 input[type="radio"]:not([id]) {
   outline: 5px solid #f00 !important;
 }
-
-/* line 195 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 [dir]:not([dir="rtl"]):not([dir="ltr"]) {
   background-color: #ff69b4 !important;
 }
-
-/* line 198 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 [dir="rtl"]::before,
 [dir="ltr"]::before {
   content: "dir: " attr(dir);
@@ -183,14 +135,10 @@ input[type="radio"]:not([id]) {
   color: #006400 !important;
   background-color: #ffffe0 !important;
 }
-
-/* line 206 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 head,
 title {
   display: block;
 }
-
-/* line 210 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 title::before {
   content: 'TITLE';
   margin: 0 0.4em;
@@ -199,8 +147,6 @@ title::before {
   background-color: #d0d0d0;
   border-radius: 3px;
 }
-
-/* line 218 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 head > title {
   margin: 0;
   padding: 0.2em 0;
@@ -208,39 +154,27 @@ head > title {
   color: #444;
   background-color: #fff;
 }
-
-/* line 226 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 title:empty::after {
   content: "ERROR: title -moz-element is empty and it shouldn't";
   content: "ERROR: title element is empty and it shouldn't";
   color: #c22;
   background-color: #fff;
 }
-
-/* line 231 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 title:empty::before,
 title ~ title::before {
   color: #fff;
   background-color: #c22;
 }
-
-/* line 236 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 title ~ title::after {
   content: ' (ERROR: why more than one title element?)';
 }
-
-/* line 239 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 title ~ title {
   color: #c22;
   background-color: #fff;
 }
-
-/* line 246 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 meta[http-equiv=refresh]::before {
   content: 'meta refresh detected';
 }
-
-/* line 249 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 meta[http-equiv=refresh] {
   display: block;
   padding: 0.4em;
@@ -248,14 +182,10 @@ meta[http-equiv=refresh] {
   color: #fff;
   background-color: #8b0000;
 }
-
-/* line 258 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 html[lang] {
   display: block;
   margin-top: 0.4em;
 }
-
-/* line 262 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 html:not([lang])::before {
   content: 'no lang attribute detected';
   margin: 0.4em;
@@ -264,33 +194,23 @@ html:not([lang])::before {
   background-color: #8b0000;
   border-radius: 3px;
 }
-
-/* line 270 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 html[lang]::before {
   content: 'Default language of the page: ' attr(lang);
   margin: 0.4em;
   color: #444;
   background-color: #fff;
 }
-
-/* line 278 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 *[accesskey] {
   border: 5px solid #f00;
 }
-
-/* line 288 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 th:empty {
   padding: 20px;
   border: 5px solid #ff0 !important;
 }
-
-/* line 293 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 table > tr:only-child,
 table > tbody > tr:only-child {
   border: 5px solid #f00;
 }
-
-/* line 298 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 table[align],
 table[bgcolor],
 table[border],
@@ -301,20 +221,14 @@ td[width],
 td[valign] {
   border: 5px solid #f00;
 }
-
-/* line 310 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 td[scope] {
   border: 2px solid #ffa500 !important;
 }
-
-/* line 313 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 td[scope]::before {
   content: 'Better use th! ';
   color: #fff;
   background-color: #ffa500;
 }
-
-/* line 319 : /Users/olivierchavarin/Documents/Archives/Web/Scriptura/ScripturaFramework/Root/Styles/DiagnosticTags.styl */
 th[colspan][scope],
 th[rowspan][scope] {
   border: 3px solid #f00 !important;
