@@ -680,6 +680,9 @@ blockquote
   padding-left 1.5em
   border-left .5em solid #ebebeb
 
+blockquote footer
+  text-align right
+
 blockquote footer::before
   content '\2014 \00A0'
 
@@ -701,6 +704,10 @@ sup
 
 sub
   bottom -.25em
+
+@media (max-width $sizeXS)
+  .br // @note un 'br' volontairement non sémantique à destination des petites définitions d'écran, à placer sur un span englobant un espace
+    display block
 
 
 // @subsection Links
@@ -1217,6 +1224,20 @@ if $bundleEmphasized
     .emphasized::after
       margin-right -100%
       margin-left 1%
+
+  //if $bundleEmphasizedMeta // @todo En test. Ne convient pas aux titres sans span...
+  //  .emphasized
+  //    position relative
+  //    margin-bottom 0
+  //    padding-bottom 1em
+  //  @media (min-width $sizeS)
+  //    .emphasized
+  //      padding-bottom .7em
+  //  .emphasized span
+  //    position absolute
+  //    right 0
+  //    display block
+  //    font-size .5em
 
 
 // @subsection Surround
@@ -3484,6 +3505,16 @@ if $bundleArticles
   [itemprop="articleBody"] > :first-child
   .article aside > :first-child
     margin-top 0
+
+  @media (min-width $sizeS)
+
+    .article aside > .sticky // @note Sticky pour les métadonnées inclues dans la div ad hoc
+      position sticky
+      top 1rem
+      margin-top -1.5rem
+
+    .article aside > .message + .sticky // @note Si message d'information
+      margin-top 0
 
 
 // -----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 // -----------------------------------------------------------------------------
 // @name         scriptura
 // @description  Interface for web apps
-// @version      0.1.0
-// @lastmodified 2017-02-20 10:18:01
+// @version      0.1.2
+// @lastmodified 2017-07-07 06:03:46
 // @author       Olivier Chavarin
 // @homepage     http://scriptura.github.io/
 // @license      ISC
@@ -555,14 +555,16 @@ bodyIndex();
 	$( '[class*="-focus"]' ).prepend( '<span class="icon-enlarge"/>' ); // Ajout d'une icône si classe détectée
 	$( document ).on( 'click', '[class*="-focus"]', function( e ) { // @note Event si utilisation sur <a>
 		$( this )
-			.find( 'picture' ) // .find( 'img' )
+			.find( 'picture' )
 			.clone()
-			.find( 'img' ).removeAttr( 'width' ).removeAttr( 'height' ) // @note La suppression des attributs de dimention de l'image permet le responsive en zoom
 			.css( 'display', 'inherit' ) // @bugfix @affected Firefox @note Neutralise une déclaration inligne style 'display:inline' induite (via jQuery ?) sous ce navigateur
 			.fadeIn( 300 )
 			.appendTo( 'body > footer' )
 			.wrap( '<div class="focus-off"><div></div></div>' ) // @bugfix @affected All browsers @note Image en flex item n'a pas son ratio préservé si resize ; une div intermédiaire entre le conteneur .focus-off et l'image corrige ce problème
-			.before( '<span class="icon-shrink zoom200"/>' );
+			.before( '<span class="icon-shrink zoom200"/>' )
+			.find( 'img' )
+			.removeAttr( 'width' ) // @note La suppression de ces attributs permet le responsive en zoom
+			.removeAttr( 'height' ); // @note Idem
 		$( 'body' ).css( 'overflow', 'hidden' ); // @note Pas de scroll sur la page si photo en focus
 		$( document ).find( '.focus-off' ).on( 'click', function( e ) {
 			$( '.focus-off' ).fadeOut( 300 );
@@ -626,7 +628,7 @@ bodyIndex();
 		// Auto-Initialization:
 		var scriptsUri = templateUri + '/Scripts/Vendors/Cycle.js';
 		$.getScript( scriptsUri, function() {  // Chargement via Ajax
-			$( '.slideshow' ).cycle(); // Initialisation du script
+			$( slideshow ).cycle(); // Initialisation du script
 		} );
 	}
 } )( jQuery );

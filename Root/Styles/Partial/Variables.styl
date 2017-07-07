@@ -29,6 +29,7 @@
   $bundleSeparators =          true
   $bundleHighlight =           true
   $bundleEmphasized =          true
+  $bundleEmphasizedMeta =      true
   $bundleSurround =            true
   $bundleMessagesBox =         true
   $bundleImages =              true
@@ -91,7 +92,7 @@
   $sizeL =    90.01rem
   $sizeXL =  120.01rem
   $sizeXXL = 140.01rem
-  $sizeNav =  55.01rem // @note À caler sur la taille de '.nav-main ul'. Prévoir de la marge en raison des différences d'interprétation des fonts selon les navigateurs
+  $sizeNav =  65.01rem // @note À caler sur la taille de '.nav-main ul'. Prévoir de la marge en raison des différences d'interprétation des fonts selon les navigateurs
 
 
 // @subsection Maintenance pour les points de rupture
@@ -141,7 +142,7 @@
 // @subsection Typography
 // -----------------------------------------------------------------------------
 
-@import url('https://fonts.googleapis.com/css?family=Droid+Sans:400,700')
+  @import url('https://fonts.googleapis.com/css?family=Droid+Sans:400,700')
 
   $fontFamily = 'Droid Sans', sans-serif    // Default fonts
   $fontFamily2 = 'Droid Sans', sans-serif   // Titles
@@ -160,7 +161,7 @@
   // [1] Correctif pour les gris foncés, afin que l'impression de profondeur du gris soit visuellement équivalente entre les deux couleurs :
 
   // Palette de référence pour les couleurs du thème
-  $color0 = IndianRed                       // couleur de fond
+  $color0 = #fff                            // couleur de fond
   $color1 = #b03c57                         // couleur dominante 1
   $color2 = #b9515d                         // couleur dominante 2
   $color4 = #7ca166                         // couleur secondaire (vert)
@@ -173,12 +174,12 @@
 // Application des couleurs
 
 // Memo variables :
-// colorCL000 = color
-// colorBG000 = background-color
-// colorBD000 = border-color
-// colorBS000 = box-shadow
-// colorTS000 = text-shadow
-// colorFI080 = fill
+// $colorCL : color
+// $colorBG : background-color
+// $colorBD : border-color
+// $colorBS : box-shadow
+// $colorTS : text-shadow
+// $colorFI : fill
 
   $colorCL0001 = #aaa                       // Footer
   $colorBG0001 = #555
@@ -255,10 +256,10 @@
   $colorCL036 = #ddd                        // Figures
   $colorBG036 = #555
   $colorBS036 = .5rem .5rem 2rem rgba(0, 0, 0, .2)
-  $colorCL037 = $color0                     // Caption Slides
+  $colorCL037 = $colorCL036                 // Caption Slides
   $colorTS037 = rgba(0, 0, 0, .5)
   $colorBG037 = rgba(0, 0, 0, .5)
-  $colorCL038 = $color0
+  $colorCL038 = $colorCL036
   $colorBG038 = rgba(0, 0, 0, .5)
   $colorBS039 = .5rem .5rem 2rem rgba(0, 0, 0, .3) // Focus
   $colorCL040 = #aaa
