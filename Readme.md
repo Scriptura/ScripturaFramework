@@ -37,7 +37,7 @@ Scriptura uses ([Gulp](http://gulpjs.com/)) to compile its code, so it is necess
 
 Work with the workflow by running this command with your terminal to the file in the root:
 
-    $ npm install
+    $ yarn install
 
 And monitoring of the folder:
 

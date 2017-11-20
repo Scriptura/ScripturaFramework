@@ -211,7 +211,7 @@ gulp.task( 'scripts', function() {
 var inputStyles = source + '/Styles/*.styl',
     outputStyles = source + '/Public/Styles',
     outputStylesExpanded = source + '/Public/Styles/Expanded',
-    autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%' ] };
+    autoprefixerOptions = { browsers : [ 'last 2 versions', '> 5%', 'safari 8' ] };
 
 // gulp.task( 'deletstyles', function() { // Suppression des anciens fichiers de styles
 //     del( [ outputStyles, outputStylesExpanded ] );

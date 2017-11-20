@@ -1,9 +1,18 @@
 // -----------------------------------------------------------------------------
+// @section     CSS Variables
+// @description Déclaration des variables CSS
+// -----------------------------------------------------------------------------
+
+//:root
+//  --main-nav-height -3.5rem
+
+// -----------------------------------------------------------------------------
 // @section     Grid
 // @description Grille css flexible
-// @affected    All Browers and IE10+
-// @note        Utilisation de flexbox et calc()
 // -----------------------------------------------------------------------------
+// @affected All Browers and IE10+
+// @note Utilisation de flexbox et calc()
+
 if $bundleGrid
   // @note La grille est configurée en 12 colonnes. En sizeXS la grille comporte 6 colonnes max (bug sur certains navigateurs en dessous de cette valeur), mais la dénomination reste dans la logique des 12 colonnes pour garder une unité de nommage avec les définitions plus élevées.
 
@@ -685,6 +694,9 @@ blockquote footer
 
 blockquote footer::before
   content '\2014 \00A0'
+
+blockquote footer::after
+  content '.'
 
 q
   quotes "\201C" "\201D" "\2018" "\2019" // Harmonisation des citations
@@ -1526,6 +1538,69 @@ if $bundleFocus
 
 
 // -----------------------------------------------------------------------------
+// @section     Gallery
+// @description Diaporama sur les images sélectionnées
+// -----------------------------------------------------------------------------
+if $bundleGallery
+
+  .js gallery
+    background-color #555
+    ifBoxShadow($colorBS036)
+
+  .js gallery > :first-child figure
+    margin 0
+    background-color #222
+    transition-duration 1s
+
+  .js gallery > :first-child figcaption
+    padding-bottom 0 !important
+
+  .js gallery > :first-child img
+    display block
+    max-height calc(70vh - 9.5rem)
+    max-width 100%
+    margin auto
+
+  .js gallery > :first-child figcaption
+    padding .5rem
+    font-family Arial
+    color #777
+
+  .js gallery > :last-child div
+    overflow auto
+    display flex
+    //flex-wrap wrap
+    justify-content space-between
+    align-items center
+    margin-top .5rem
+    padding .3rem
+    background-color #222
+
+  .js gallery > :last-child a
+    outline none
+
+  .js gallery > :last-child figure
+    margin 0
+
+  .js gallery > :last-child img
+    max-width 5rem
+    max-height 5rem
+    margin .3rem
+
+  .js gallery > :last-child figcaption
+    display none
+
+  .js gallery > :last-child a
+    transition .3s transform
+    transform scale(1)
+
+  .js gallery > :last-child a:focus
+  .js gallery > :last-child a:hover
+  .js gallery > :last-child a:active
+    transform scale(1.05)
+
+
+// -----------------------------------------------------------------------------
 // @section     Slideshow
 // @description Diaporama en full page
 // -----------------------------------------------------------------------------
@@ -1538,10 +1613,8 @@ if $bundleSlideshow
     position relative
     z-index 0
     display flex
-    margin-top -3.5rem // @note Compense le height de .main-nav
-    //padding 0 // @note Compense le padding de .section
     width 100%
-    height 100vh
+    height calc(100vh - 2.5rem) // @note Compense le height de .main-nav
     background-color #000
 
   .cycle-item
@@ -1908,6 +1981,7 @@ if $bundleForms
   button
   input
     line-height normal // @affected Firefox 4+
+    border-radius 0 // @affected Chrome 62+/OS X
 
   button
   select
@@ -3044,9 +3118,9 @@ if $bundleMainNav
   // -----------------------------------------------------------------------------
 
   .main-nav
-    position absolute // @note Le fait de sortir l'élément du flux permet la possibilité de l'élément frère suivant en 100vh sans décalage
-    z-index 30
-    width 100%
+    //position absolute
+    //z-index 30
+    //width 100%
     ifBoxShadow($colorBS1082)
 
   .main-nav ul
@@ -3165,9 +3239,6 @@ if $bundleMainNav
       border-top .1em solid $colorBD108a
       border-bottom .1em solid $colorBD108b
 
-
-    //// BEGIN Test
-
     .main-nav li
       width 100%
       //transform translateZ(0) // @note Accélération matérielle
@@ -3182,11 +3253,6 @@ if $bundleMainNav
       $abstr = $i / 10
       .main-nav li:nth-child({$i})
         transition-delay '%ss' % $abstr
-
-    //// END Test
-
-  .main-nav + *
-    padding-top 3.5em !important // @note Décalage sur le conteneur suivant afin de laisser une place pour le menu de navigation en position absolute.
 
 
 // -----------------------------------------------------------------------------
@@ -3257,8 +3323,8 @@ if $bundleBreadcrumb
     padding 0 1rem
 
   .breadcrumb ul
-    margin -.5rem 0 .5rem !important
-    padding-left 0 !important
+    margin .5rem 0
+    padding-left 0
 
   .breadcrumb li
     display inline

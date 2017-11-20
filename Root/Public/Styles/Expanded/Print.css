@@ -107,6 +107,26 @@ blockquote {
   padding: 0 0 0 15px;
   border-left: 5px solid #aaa;
 }
+[class^="columns"] {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+[class^="columns"] > * {
+  display: table-cell;
+  vertical-align: top;
+  width: 100%;
+  padding: 0 1rem 0.75rem 1rem;
+}
+[class^="columns"] > :first-child {
+  padding-left: 0;
+}
+[class^="columns"] > :last-child {
+  padding-right: 0;
+}
+[class^="columns"] + p {
+  margin-top: 0;
+}
 [class*="figure"] {
   overflow: hidden;
   display: block;
